@@ -25,7 +25,7 @@
 \documentclass[
 11pt, % The default document font size, options: 10pt, 11pt, 12pt
 %oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
-english, % ngerman for German
+french, % ngerman for German
 singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
 %draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
 %nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
@@ -54,6 +54,7 @@ headsepline, % Uncomment to get a line under the header
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
 \usepackage{makecell}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,epsfig,epstopdf,titling,url,array}
 
 \renewcommand\theadalign{bc}
 \renewcommand\theadfont{\bfseries}
@@ -182,56 +183,56 @@ headsepline, % Uncomment to get a line under the header
 
 \vspace*{0.2\textheight}
 
-\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
-
-\hfill Dave Barry
+%\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
+%
+%\hfill Dave Barry
 
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
-
-\begin{abstract}
-\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
-\end{abstract}
+%
+%\begin{abstract}
+%\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
+%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+%\end{abstract}
 
 
 %----------------------------------------------------------------------------------------
 %	DEDICATION
 %----------------------------------------------------------------------------------------
-
-\dedicatory{
-	\textbf{Dédicaces}\\
-	Tous les mots ne sauraient exprimer la gratitude,\\
-	L'amour, le respect, la reconnaissance…\\
-	Aussi, c’est tout simplement que\\
-	\textbf{Je dédie cette thèse …} \\
-	
-	A la mémoire de mon père. Que Dieu ait vos âmes dans sa sainte
-	miséricorde.
-	A ma mère, aucune dédicace ne saurait exprimer mon respect, mon
-	amour éternel et ma considération pour les sacrifices que vous avez
-	consenti pour mon instruction et mon bien être.
-	Puisse Dieu, le Très Haut, vous accorder santé, bonheur et longue vie
-	et faire en sorte que jamais je ne vous déçoive. \\
-	
-	A mes chers et adorable frères et sœurs.
-	A tous mes professeurs de département d’informatiques pour leurs
-	conseils.
-	A Mes amis et amies de par le monde qui n'ont cessé de m'encourager.
-	A toutes les personnes qui ont participé à
-	l’élaboration de ce travail à tous ceux que j’ai
-	omis de citer.
-	
-
-} 
+%
+%\dedicatory{
+%	\textbf{Dédicaces}\\
+%	Tous les mots ne sauraient exprimer la gratitude,\\
+%	L'amour, le respect, la reconnaissance…\\
+%	Aussi, c’est tout simplement que\\
+%	\textbf{Je dédie cette thèse …} \\
+%	
+%	A la mémoire de mon père. Que Dieu ait vos âmes dans sa sainte
+%	miséricorde.
+%	A ma mère, aucune dédicace ne saurait exprimer mon respect, mon
+%	amour éternel et ma considération pour les sacrifices que vous avez
+%	consenti pour mon instruction et mon bien être.
+%	Puisse Dieu, le Très Haut, vous accorder santé, bonheur et longue vie
+%	et faire en sorte que jamais je ne vous déçoive. \\
+%	
+%	A mes chers et adorable frères et sœurs.
+%	A tous mes professeurs de département d’informatiques pour leurs
+%	conseils.
+%	A Mes amis et amies de par le monde qui n'ont cessé de m'encourager.
+%	A toutes les personnes qui ont participé à
+%	l’élaboration de ce travail à tous ceux que j’ai
+%	omis de citer.
+%	
+%
+%} 
 
 
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
 %----------------------------------------------------------------------------------------
 
-\begin{acknowledgements}
+%\begin{acknowledgements}
 %\addchaptertocentry{} % Add the acknowledgements to the table of contents
 %Ces cinq années ont été pour moi très enrichissantes, tant sur le plan humain que sur le plan
 %intellectuel. En conséquence, je tiens tout d'abord à remercier mes directeurs de thèse pour
@@ -251,7 +252,7 @@ The Thesis Abstract is written here (and usually kept to just this page). The pa
 %
 %Je remercie sincèrement tous les professeurs qui m’ont enseigné durant mon parcours scolaire et universitaire surtout les professeurs de département d’informatique pour leur sympathie, leurs qualités humaines et tous les services qu’ils m’ont aimablement rendus.
 %Je souhaite également adresser un merci tout particulier à ma famille à qui j'ai eu du mal à expliquer ce que je faisais concrètement mais qui m'a toujours accompagné en montrant une fascination et un optimisme indéfectibles. Je pense notamment à mon père dont la moustache se frise à chaque fois que je lui explique ce que je fais. Un grand merci à ma femme Aicha pour m’avoir supporté, soutenu et encouragé durant ces longues années nécessaires à l’accomplissement de ce travail.\ldots
-\end{acknowledgements}
+%\end{acknowledgements}
 
 %\begin{Large}
 %
@@ -300,13 +301,17 @@ The Thesis Abstract is written here (and usually kept to just this page). The pa
 %----------------------------------------------------------------------------------------
 %	ABBREVIATIONS
 %----------------------------------------------------------------------------------------
-
-\begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
-
-\textbf{LAH} & \textbf{L}ist \textbf{A}bbreviations \textbf{H}ere\\
-\textbf{WSF} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or\\
-\textbf{CIE}\textbf{Commission Internationale de l'Eclairage}\\
-\end{abbreviations}
+%
+%\begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
+%
+%\textbf{CBIR} & \textbf{C}onten \textbf{B}ased \textbf{I}mage \textbf{R}etrieval\\
+%\textbf{CIE} & \textbf{C}ommission \textbf{I}nternationale de l'\textbf{E}clairage\\
+%QBIC (IBM's Query By Image Content)
+% DWT (Discrete Wavelet Transform)
+% descripteurs de Fourier (DFs)
+% Angular Radial Transform (ART)
+%la somme des valeurs absolue des différences (SVAD)
+%\end{abbreviations}
 
 %----------------------------------------------------------------------------------------
 %	PHYSICAL CONSTANTS/OTHER DEFINITIONS
@@ -349,8 +354,8 @@ The Thesis Abstract is written here (and usually kept to just this page). The pa
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 
-\include{Chapters/Chapter1}
-\include{Chapters/Chapter2} 
+%\include{Chapters/Chapter1}
+%\include{Chapters/Chapter2} 
 \include{Chapters/Chapter3}
 %\include{Chapters/Chapter4} 
 %\include{Chapters/Chapter5} 
