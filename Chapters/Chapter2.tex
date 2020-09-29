@@ -428,25 +428,25 @@ Les moments géométriques [Sonk99] permettent de décrire une forme à l’aide
 statistiques. Ils représentent les propriétés spatiales de la distribution des pixels dans l’image. La formule générale des moments géométriques est donnée par la relation suivante :
 
 \begin{equation}
-	m_{p,q} = \sum_{x=0}^{M-1}\sum_{y=0}^{N-1} x^p y^q f(x, y)
+	M_{p,q} = \sum_{x=0}^{M-1}\sum_{y=0}^{N-1} x^p y^q f(x, y)
 \end{equation}
 
-avec $p+q$ est l'ordre du moment. Le moment d’ordre $0 (m_{0,0})$  représente l’aire de la forme de l'objet, $f(x, y)$ : luminance du pixel $(x, y)$, c’est-à-dire noir ou blanc en binaire.
+avec $p+q$ est l'ordre du moment. Le moment d’ordre 0 $(M_{0,0})$  représente l’aire de la forme de l'objet, $f(x, y)$ : luminance du pixel $(x, y)$, c’est-à-dire noir ou blanc en binaire.
 
-Les deux moments d'ordre $1 (m_{1,0})$ et $(m_{0,1})$, associés au moment d’ordre $0 (m_{0,0})$ permettent de calculer le centre de gravité de l'objet. Les coordonnées de ce
+Les deux moments d'ordre $1 (M_{1,0})$ et $(M_{0,1})$, associés au moment d’ordre $0 (M_{0,0})$ permettent de calculer le centre de gravité de l'objet. Les coordonnées de ce
 centre sont:
 
 \begin{equation}
 		\begin{tabular}{cc}
-		$x_{c} = \frac{m_{1,0}}{m_{0,0}}$ & $y_{c} = \frac{m_{0,1}}{m_{0,0}}$
+		$\bar{x} = \frac{M_{1,0}}{M_{0,0}}$ & $\bar{y} = \frac{M_{0,1}}{M_{0,0}}$
 		\end{tabular}
 \end{equation}
 Il est possible de calculer à partir de ces moments l’ellipse équivalente à l’objet. Afin de calculer les axes de l’ellipse, il faut ramener les moments d’ordre 2 au centre de gravité :
 
 \begin{equation}
 \begin{tabular}{ccc}
-$m_{2, 0}^g = m_{2,0} - m_{0,0} x_{c}^2$ & $m_{1,1}^g = m_{1,1} - m_{0,0} x_{c}y_{c}$ 
-& $m_{0,2}^g = m_{0,2} - m_{0,0} y_{c}^2$ 
+$m_{2, 0}^g = M_{2,0} - M_{0,0} \bar{x}^2$ & $m_{1,1}^g = M_{1,1} - M_{0,0} \bar{x}\bar{y}$ 
+& $m_{0,2}^g = M_{0,2} - M_{0,0} \bar{y}^2$ 
 \end{tabular}
 \end{equation}
 
