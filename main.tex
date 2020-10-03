@@ -60,6 +60,7 @@ headsepline, % Uncomment to get a line under the header
 \renewcommand\theadfont{\bfseries}
 \renewcommand\theadgape{\Gape[2pt]}
 \renewcommand\cellgape{\Gape[2pt]}
+\setcounter{secnumdepth}{3}
 %----------------------------------------------------------------------------------------
 %	MARGIN SETTINGS
 %----------------------------------------------------------------------------------------
@@ -100,7 +101,8 @@ headsepline, % Uncomment to get a line under the header
 
 \begin{document}
 
-\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+%\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
 
 \pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
 
@@ -150,6 +152,7 @@ headsepline, % Uncomment to get a line under the header
 \vfill
 \end{center}
 \end{titlepage}
+
 
 %----------------------------------------------------------------------------------------
 %	DECLARATION PAGE
@@ -292,11 +295,16 @@ headsepline, % Uncomment to get a line under the header
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------
 
-\tableofcontents % Prints the main table of contents
+{
+	\hypersetup{linkcolor=black}
+	\tableofcontents % Prints the main table of contents
+	
+	\listoffigures % Prints the list of figures
+	
+	\listoftables % Prints the list of tables
+}
 
-\listoffigures % Prints the list of figures
 
-\listoftables % Prints the list of tables
 
 %----------------------------------------------------------------------------------------
 %	ABBREVIATIONS
@@ -355,7 +363,7 @@ headsepline, % Uncomment to get a line under the header
 % Uncomment the lines as you write the chapters
 
 %\include{Chapters/Chapter1}
-\include{Chapters/Chapter2} 
+%\include{Chapters/Chapter2} 
 %\include{Chapters/Chapter3}
 \include{Chapters/Chapter4} 
 %\include{Chapters/Chapter5} 
