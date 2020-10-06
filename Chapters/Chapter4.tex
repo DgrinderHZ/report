@@ -47,10 +47,11 @@ Notre système présente à l'utilisateur les descripteurs suivants :
 
 \subsubsection{Histogramme}
 \paragraph{RVB (RGB)}
-Dans la création d’application, nous avons choisi d’utiliser les histogrammes par block dans l’espace RVB comme une technique de base.
-On a choisi de diviser l'histograme en 17 blocks pour chaque composante; Rouge, Verte et Bleu. Le vecteur de caractéristiques $ V_{histRGB} $ est généralement de taille 17x17x17 = 4913.
+Dans la création d’application, nous avons choisi d’utiliser les histogrammes par bloc dans l’espace RVB comme une technique de base.
+On a choisi de diviser l'histogramme en 17 blocs pour chaque composante; Rouge, Verte et Bleu. Le vecteur de caractéristiques $ V_{histRGB} $ est généralement de taille 17x17x17 = 4913.
 \begin{table}[H]
 	\centering
+	\caption{Exemple d'histogramme par blocs}
 	\begin{tabular}{|c|c|c|c|c|c|}
 		\hline
 		\textbf{Block} & \textbf{Fréquence} & \textbf{Block} & \textbf{Fréquence} & \textbf{Block} & \textbf{Fréquence}\\
@@ -74,11 +75,16 @@ On a choisi de diviser l'histograme en 17 blocks pour chaque composante; Rouge, 
 		\makecell{216-230 } & \makecell{456} & \makecell{231-255} & \makecell{3456}   & \makecell{  } & \makecell{  }   \\
 		\hline
 	\end{tabular}
-	\caption{Exemple d'histogramme par blocks}
+	
 	
 \end{table}
 \paragraph{TSV (HSV)}
-On a choisi de diviser l'histograme en 8, 12 et 3 blocks pour chaque composante; Teinte, Saturation et Valeur respectivement. Le vecteur de caractéristiques $ V_{histHSV} $ est généralement de taille 17x17x17 = 4913.
+Pour notre moteur de recherche d'images, nous utiliserons un histogramme couleur 3D dans l'espace couleur HSV avec 8 blocs pour le canal teinte, 12 blocs pour le canal saturation et 3 blocs pour le canal valeur en divisant l'image en 5 régions, ce qui donne un vecteur de caractéristiques $ V_{histHSV} $ est de  dimension 8 x 12 x 3 x 5 = 288 x 5 = 1440.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{5regions}
+	\caption{Exemple de division d'une image en 5 régions différentes [Site06].}
+\end{figure}
 \subsubsection{Les moments de couleur}
 Pour enrichir les index de la couleur, nous avons utilisé les moments de couleur au lieu de calculer la distribution complète commepour les histogrammes. Dans cette étape, nous avons calculé les trois premiers moments de couleur (la moyenne, l’écart-type et le moment d'ordre 3) pour chaque canal (R,G,B) dans le but de garder seulement les neuf valeurs obtenues, ainsi le vecteur de caractéristiques $ V_{moments} $ est de tailles 9.
 
@@ -220,6 +226,7 @@ Pour les distributions statistiques à savoir les histogrammes, nous avons ajout
 
 \begin{table}[H]
 	\centering
+	\caption{Les distances de Minkowski}
 	\begin{tabular}{|c|c|c|}
 		\hline
 		\textbf{Distance} & \textbf{Formule}\\
@@ -245,7 +252,6 @@ Pour les distributions statistiques à savoir les histogrammes, nous avons ajout
 		
 		
 	\end{tabular}
-	\caption{Les distances de Minkowski}
 	
 \end{table}
 Ou :\\
@@ -277,7 +283,7 @@ Cette base d’images est très connue pour la reconnaissance des objets. Il y a
 Des chercheurs des universités de Columbia et d'Utrecht ont collaboré dans une étude approfondie de l'aspect visuel des surfaces du monde réel. Cet effort conjoint, parrainé en partie par REALISE de la Commission européenne, la National Science Foundation et par le DARPA/ONR dans le cadre de la subvention MURI n° N00014-95-1-0601, a donné lieu à 3 bases de données [Site05]. Nous avons choisi 33 échantillons parmi 61 échantillons avec 50 images par échantillon.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\textwidth]{curet} 
+	\includegraphics[width=0.5\textwidth]{curet} 
 	\caption{Quelques images de la base d’image CurRRET.}
 \end{figure}
 
@@ -345,7 +351,7 @@ Il faut noter que nous avons ajouter la possibilité d'afficher la matrice de co
 Le système contient une fenètre pour calculer la pértinance de chaque requête:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{mesures} 
+	\includegraphics[width=0.6\textwidth]{mesures} 
 	\caption{Exemple d'une matrice de confusion calculé par le système.}
 \end{figure}
 \section{Architecture de l’application}
@@ -369,6 +375,12 @@ Dans un système d’extraction d’images par le contenu il existe deux différ
 	\includegraphics[width=0.9\textwidth]{architecture} 
 	\caption{architecture de l’application avec utiles}
 \end{figure}
+\paragraph{La base de signatures}
+La base d’attributs ou signatures est constituée d’un ensemble de fichiers CSV (un fichier par image). Chaque fichier est constituée de $ n+1 $ champs :
+\begin{itemize}
+	\item 1 champ pour le chemin absolu de l'image (oid pour M-Tree),
+	\item n champs de vecteurs descripteurs calculer par le descripteur.
+\end{itemize}
 \section{L’interface utilisateur }
 Généralement, l'interface utilisateur de notre système permet à l'utilisateur des tâches comme:
  \begin{itemize}
@@ -391,21 +403,23 @@ L'interface principale permet à l’utilisateur (Figure 4.8):
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{gui} 
+	\includegraphics[width=0.7\textwidth]{gui} 
 	\caption{L'interface d’utilisateur.}
 \end{figure}
 
 La section des options de l'indexation et la recherche change selon les attributs visuels choisis.
 
 \begin{figure}[H]
-	\includegraphics[width=0.5\textwidth]{baseC} \space
-	\includegraphics[width=0.5\textwidth]{baseT} 
+	\centering
+	\includegraphics[width=0.35\textwidth]{baseC} \space
+	\includegraphics[width=0.35\textwidth]{baseT} 
 	\caption{L'interface d’utilisateur, section requête: \\
 	Gauche: basé couler, Droite: Basé texture.}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.5\textwidth]{baseF} \space
-	\includegraphics[width=0.5\textwidth]{baseCTS} 
+	\centering
+	\includegraphics[width=0.35\textwidth]{baseF} \space
+	\includegraphics[width=0.35\textwidth]{baseCTS} 
 	\caption{L'interface d’utilisateur, section requête: \\
 		Gauche: basé forme, Droite: Basé fusion}
 \end{figure}
@@ -415,7 +429,7 @@ Après avoir choisi la base à indexer et les autres paramètres relatives à l'
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{browse folder} 
+	\includegraphics[width=0.7\textwidth]{browse folder} 
 	\caption{Choix d'une base à indexer.}
 \end{figure}
 
@@ -423,13 +437,13 @@ Une fois l'indexation est faite, l’utilisateur peut lancer une recherche aprè
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{browse query} 
+	\includegraphics[width=0.7\textwidth]{browse query} 
 	\caption{Choix de l'mage requête.}
 \end{figure}
 Résultas:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{query result} 
+	\includegraphics[width=0.7\textwidth]{query result} 
 	\caption{L'interface d’utilisateur.}
 \end{figure}
 
@@ -438,13 +452,13 @@ Le système affiche une liste d'images ordonnées par le degré de similarité.
 Pour mesurer la qualité de la réponse on va vers le menu \textbf{fenêtre->mesures}:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{mesuresQu} 
+	\includegraphics[width=0.7\textwidth]{mesuresQu} 
 	\caption{L'interface d’utilisateur.}
 \end{figure}
 On calcule:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{QUresult} 
+	\includegraphics[width=0.7\textwidth]{QUresult} 
 	\caption{L'interface d’utilisateur.}
 \end{figure}
 
@@ -469,12 +483,25 @@ Pour cette section, nous avons effectué un ensemble de tests sur 50 images requ
 \end{figure}
 On remarque que les résultats sont proches avec les deux descripteurs sauf que l'histogramme présente presque 0,70 en précision contre 0,63 pour les moments de couleur.
 \subsection{Descripteurs de la texture}
-Pour cette section, nous avons effectué un ensemble de tests sur 25 images requêtes de la base CuRRET. On travaille avec les mêmes requêtes pour les deux descripteurs.
+Pour cette section, nous avons effectué un ensemble de tests sur 25 images requêtes de la base CuRRET. On travaille avec les mêmes requêtes pour les deux descripteurs.\\
+On fixe les options comme suite:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{Haralick options} 
+	\caption{Options des mesures de Haralick.}
+\end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{HaralickPert} 
 	\caption{Pertinence des mesures de Haralick.}
+\end{figure}
+
+On fixe les options comme suite:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{GaborOptions} 
+	\caption{Options  des filtres de Gabor.}
 \end{figure}
 
 \begin{figure}[H]
@@ -484,7 +511,14 @@ Pour cette section, nous avons effectué un ensemble de tests sur 25 images requ
 \end{figure}
 Comme les résultats le montre, les filtres de Gabor présente des réponse de bonne qualité comparant aux mesures de Haralick.
 \subsection{Descripteurs de la forme}
-Pour évaluer les descripteurs de la forme, nous avons effectué un ensemble de testes sur 25 images requêtes de la base COIL-100 avec la distance de Manhatan. On a travaillé avec les mêmes requêtes pour les deux descripteurs.
+Pour évaluer les descripteurs de la forme, nous avons effectué un ensemble de testes sur 25 images requêtes de la base COIL-100 avec la distance de Manhatan. On a travaillé avec les mêmes requêtes pour les deux descripteurs.\\
+
+On fixe les options comme suite:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{HuOptions} 
+	\caption{Options des mesures de Hu.}
+\end{figure}
 
 \begin{figure}[H]
 	\centering
@@ -492,6 +526,12 @@ Pour évaluer les descripteurs de la forme, nous avons effectué un ensemble de 
 	\caption{Pertinence des moments de Hu.}
 \end{figure}
 
+On fixe les options comme suite:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{ZernikeOptions} 
+	\caption{Options des mesures de Zernike.}
+\end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{ZernikePert} 
@@ -499,7 +539,7 @@ Pour évaluer les descripteurs de la forme, nous avons effectué un ensemble de 
 \end{figure}
 On remarque que les moments de Zernike sont plus performant que les moments de Hu.
 \subsection{Descripteurs combinés}
-Dans cette partie nous travaillons avec les mêmes bases de données et mêmes images requêtes utilisés dans les deux parties précédentes; CuRRET pour la texture et COIL-100 pour la forme.
+Dans cette partie nous travaillons avec les mêmes bases de données et mêmes images requêtes utilisés dans les deux parties précédentes; CuRRET pour la texture et COIL-100 pour la forme. Nous avons fixer$  0,5 $ pour les deux poids.
 
 \begin{figure}[H]
 	\centering
@@ -509,14 +549,35 @@ Dans cette partie nous travaillons avec les mêmes bases de données et mêmes i
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{colShpPert} 
+	\includegraphics[width=.7\textwidth]{colTxtrPert} 
 	\caption{Pertinence des moments de couleur combiné avec les moments de Zernike.}
 \end{figure}
 En générale, on remarque que la combinaison des descripteurs améliore la précisions des résultats obtenus. 
 \section{Problèmes rencontré}
+\begin{itemize}
+	\item La première problématique qui s’est imposée durant la réalisation du notre
+	application est le choix des descripteurs discriminants d’image pour s’assurer de
+	l’obtention des meilleurs résultats et pour une évaluation significative.
+	\item Aussi le choix du modèle de couleur et la mesure de distance à utiliser.
+	
+	\item Et aussi les extensions des images. Dans un premier lieu nous avons travaillé
+	qu’avec les images .jpg après, nous avons pu utiliser des images .png après une
+	petite adaptation de code (il est possible d'ajouter d'autres format en modifiant une seul ligne de code).
+	
+	\item Dans la phase d'indexation de quelques descripteur à savoir les filtres de Gabor, l'opération prend des dizaines de minutes, une qui nous a compliqué les testes d'avancement.
+	\item Pour les descripteur de forme nous avons hésiter avec la méthode de segmentation à utiliser et nous avons adobter un simple seuillage (thesholding) pour transformer les images en noir et blanc.
+	\item ...etc.
+\end{itemize}
 \section{Perspective}
+Comme perspectives, Nous proposons :
+\begin{itemize}
+	\item D’utiliser les descripteurs de l'apprentissage automatique (Machine Learning).
+	
+	\item De Travailler avec tous les format des images existant.
+	\item D’essayer autres techniques de mesures de similarité entre les descripteurs
+	d’images.
+    \item Tester notre application avec d’autres bases de données.
+\end{itemize}
 \section{Conclusion}
-Au cours de ce dernier chapitre, nous avons réalisé un programme de
-recherche d’images par le contenu en essayant d’utiliser les descripteurs les plus recommandés. Le test a été effectué avec une base d’images
-universellement connu. La comparaison de nos résultats avec ceux de la
-littérature permet de valider notre travail.
+Au cours de ce dernier chapitre, nous avons présenté de notre système de
+recherche d’images par le contenu où nous avons essayer d’utiliser les descripteurs et mesures de similarité les plus recommandés dans la littérature. Les tests ont été effectué avec des bases d’images universellement connu. La comparaison de nos résultats avec ceux de la littérature permet de valider notre travail.

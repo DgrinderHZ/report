@@ -2,14 +2,14 @@
 
 \chapter{Descripteurs d'Images \&  Mesures de Similarité} % Main chapter title
 
-\label{ChapterX} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+\label{Chapter2} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
-Aujourd’hui avec le développement des systèmes multimédias, nous utilisons de plus en plus le contenu visuel comme support de communication dans différents domaines. En effet l’image et la vidéo numérique sont partie intégrante de tels systèmes par la densité et la richesse de leur contenu. La même image peut présenter plusieurs significations à différents niveaux : analyse, description, reconnaissance et interprétation. Dans notre domaine, le premier but de n’importe quel système de recherche d’images est de fournir des résultats totalement satisfaits par l'utilisateur, ce qui nécessite d’utiliser les meilleures méthodes d’extraction de caractéristiques (Descripteurs) et les représenter d’une manière réduite afin d’atteindre un temps de réponse acceptable pour un système de recherche d'images. L'information obtenue dans cette étape d'extraction est une sorte de résumé des images de la base. La transformation est généralement gourmande en temps de calcul.\\
+Aujourd’hui avec le développement des systèmes multimédias, nous utilisons de plus en plus le contenu visuel comme support de communication dans différents domaines. En effet l’image et la vidéo numérique sont partie intégrante de tels systèmes par la densité et la richesse de leur contenu. La même image peut présenter plusieurs significations à différents niveaux : analyse, description, reconnaissance et interprétation. Dans notre domaine, le premier but de n’importe quel système de recherche d’images est de fournir des résultats totalement satisfaits pour l'utilisateur, ce qui nécessite d’utiliser les meilleures méthodes d’extraction de caractéristiques (Descripteurs) et les représenter d’une manière réduite afin d’atteindre un temps de réponse acceptable pour un système de recherche d'images. L'information obtenue dans cette étape d'extraction est une sorte de résumé des images de la base. La transformation est généralement gourmande en temps de calcul.\\
 
 Dans ce chapitre, nous présentons les différents descripteurs utilisés dans les systèmes de recherche d'image par contenu et ensuite les mesures de similarité entre les images après la définition de leurs vecteurs descripteurs (signatures ou attributs).
 
@@ -30,27 +30,28 @@ Un descripteur est défini comme la connaissance utilisée pour caractériser l'
 
 De nombreux descripteurs sont développés et utilisés dans les systèmes de recherche pour décrire les images. Ceux-ci peuvent être différenciés selon deux niveaux :
 
-\begin{table}[h]
+\begin{table}[H]
 	\begin{center}
+		\caption{Classification des descripteurs.}
 		\begin{tabular}{|l|l|}
 			\hline
 			\multicolumn{1}{|c|}{\textbf{Les descripteurs bas niveau}}                                                                                       & \multicolumn{1}{c|}{\textbf{Les descripteurs haut niveau}}                                                                                                                                                                                                   \\ \hline
 			\begin{tabular}[c]{@{}l@{}}Décrivent le contenu bas niveau de \\ l'image, principalement en termes \\ de couleur, texture et forme.\end{tabular} & \begin{tabular}[c]{@{}l@{}}Décrivent le contenu sémantique \\ de l'image, et sont principalement\\ des mots clès fournis par l'utilisateur \\ lors de l'indexation, car l'extraction\\  automatique est un problème non \\ résolu actuellement.\end{tabular} \\ \hline
 		\end{tabular}
-		\caption{Classification des descripteurs.}
+		
 	\end{center}
 \end{table}
 
-Les études que nous allons réalisés portent principalement sur des descripteurs bas-niveau, par la mise en place des descripteurs couleur, texture et forme.\\  
+Les études que nous allons réaliser portent principalement sur des descripteurs bas-niveau, par la mise en place des descripteurs couleur, texture et forme.\\  
 
-L'extraction de descripteurs peut avoir deux méthodes différentes, les descripteurs globaux qui sont extraits à partir de l’image entière et les descripteurs locaux qui sont calculés d'une partie de l'image. Les descripteurs calculés sur toute l’image permettent de minimiser le temps de calculs, la taille de données nécessaires ainsi que le coût. Au contraire, les descripteurs locaux sont bien adaptés aux images manipulées, mais l’utilisation de cette méthode reste longue et chère.
+L'extraction de descripteurs peut avoir deux méthodes différentes, les descripteurs globaux qui sont extraits à partir de l’image entière et les descripteurs locaux qui sont calculés d'une partie de l'image. Les descripteurs calculés sur toute l’image permettent de minimiser le temps de calculs, la taille de données nécessaires ainsi que le coût. Au contraire, les descripteurs locaux sont bien adaptés aux images manipulées, mais l’utilisation de cette méthode reste longue et coûteuse.
 
  
 %----------------------------------------------------------------------------------------
 %	SUBSECTION 1
 %----------------------------------------------------------------------------------------
 \subsection{Les descripteur de la couleur}
-La couleur est l’information visuelle la plus utilisée dans les systèmes de recherche par le contenu. Ces valeurs tridimensionnelles font que son potentiel discriminatoire soit supérieur à la valeur en niveaux de gris des images. Mais la caractérisation de la couleur dans une image est une opération extrêmement complexe. En effet, cette donnée varie considérablement avec l’orientation des surfaces, le point de vue de la caméra et l’illumination (positions et longueur d'onde des sources lumineuses). En outre, la perception de la couleur par l'être humain est un processus complexe et subjectif [Ouhda].
+La couleur est l’information visuelle la plus utilisée dans les systèmes de recherche par le contenu. Ces valeurs tridimensionnelles font que son potentiel discriminatoire soit supérieur à la valeur en niveaux de gris des images. Mais la caractérisation de la couleur dans une image est une opération extrêmement complexe. En effet, cette donnée varie considérablement avec l’orientation des surfaces, le point de vue de la caméra et l’illumination (positions et longueur d'onde des sources lumineuses). En outre, la perception de la couleur par l'être humain est un processus complexe et subjectif [Ouhda19].
 
 \begin{figure}[H]
 	\label{fig:imageRVB}
@@ -70,7 +71,7 @@ La plus grande majorité des systèmes de recherche d'images par le contenu se b
 
 Ce type d'histogramme est calculé typiquement sur un espace caractéristique quantifié. Chaque valeur de caractère dans l'histogramme représente donc un rang de couleur dans la palette. 
 
-L'histogramme a été introduit pour la première fois en  RIC par [Swain 91], depuis il est très utilisé à cause de sa simplicité de calcul, son invariante aux changements d'échelle et aux transformations géométriques.\\
+L'histogramme a été introduit pour la première fois en RIC (Recherche d'iformation par le contenu) par [Swain 91], depuis il est très utilisé à cause de sa simplicité de calcul, son invariante aux changements d'échelle et aux transformations géométriques.\\
 
 \begin{figure}[H]
 	\label{fig:hist}
@@ -100,10 +101,10 @@ Les inconvénients majeurs de l'histogramme sont:
 
 Des méthodes alternatives ont été proposées pour augmenter l'efficacité de l'histogramme. Nous citons quelques-unes : 
 \begin{itemize}
-	\item les moments de la couleur [Stricker 94], [Ravishankar 99],
-	\item les constantes de couleur [Flickner 95], [Worring 01],
-	\item la signature couleur [Kender 98], 
-	\item les blobs [Chang 97] et le vecteur cohérent de couleur [Pass 97].
+	\item les moments de la couleur [Stricker94], 
+	\item les constantes de couleur [Flickner95],
+	\item la signature couleur [Kender98], 
+	\item les blobs [Chang97] et le vecteur cohérent de couleur [Pass97].
 \end{itemize}
 
 
@@ -125,17 +126,17 @@ Les moments de couleur on été utilisés dans plusieurs systèmes de recherche 
 	s_i = \sqrt[3]{\frac{1}{N} \sum_{j=1}^{N} (p_{ij}-\mu_i)^3}
 \end{equation}
 
-Où $p_{ij}$ représente la position du pixel, $N$ représente le nombre total des pixels dans cette image.\\
+Où $p_{ij}$ représente la valeur du pixel, $N$ représente le nombre total des pixels dans cette image.\\
 
 
 La méthode d'histogramme utilise la distribution complète de la couleur. On doit stocker de nombreuses données. Au contraire, Les moments de couleur est une représentation compacte comparée aux autres descripteurs de couleur. Car seulement 9 valeurs (3 pour chaque composante chromatique) sont utilisées pour représenter le contenu d'une image. Dans [Stricker95], les auteurs ont prouvé que les méthodes des moments statistiques utilisées marchent plus vite et donnent des résultats meilleurs que les méthodes d’histogrammes.\\
 
 
-
-\subsubsection{Conclusion}
-L'information relative aux couleurs est particulièrement importante dans la caractérisation d’une image. Plusieurs études ont été menées pour trouver un critère de choix des descripteurs de couleurs pour l'indexation des images, mais aucune n'est pas suffisamment efficace. Ceci peut s’expliquer par le manque de subjectivité de cette information, les descripteurs couleur ne suffisent pas à indexer efficacement une image, ni à la chercher.
-
-Dans plusieurs domaines d’application, l’utilisation de descripteurs résumant l’information globale d’images couleurs n’offre pas toujours des résultats satisfaisants. Globalement, l’histogramme couleur reste le descripteur le plus utilisé vue qu'il garde un fort pouvoir de description. Bien qu’il ne contienne qu’une information partielle en raison de l’absence d’indication sur les caractéristiques spatiales.
+%
+%\subsubsection{Conclusion}
+%L'information relative aux couleurs est particulièrement importante dans la caractérisation d’une image. Plusieurs études ont été menées pour trouver un critère de choix des descripteurs de couleurs pour l'indexation des images, mais aucune n'est pas suffisamment efficace. Ceci peut s’expliquer par le manque de subjectivité de cette information, les descripteurs couleur ne suffisent pas à indexer efficacement une image, ni à la chercher.
+%
+%Dans plusieurs domaines d’application, l’utilisation de descripteurs résumant l’information globale d’images couleurs n’offre pas toujours des résultats satisfaisants. Globalement, l’histogramme couleur reste le descripteur le plus utilisé vue qu'il garde un fort pouvoir de description. Bien qu’il ne contienne qu’une information partielle en raison de l’absence d’indication sur les caractéristiques spatiales.
 
 %----------------------------------------------------------------------------------------
 %	SUBSECTION 2
@@ -169,7 +170,7 @@ En générale, la notion de texture est liée à trois concepts principaux:
 
 \begin{description}
 	\item[Définition 1:] 	
-	D'une manière générale, la texture dans une image peut être définie comme un arrangement spatial de couleurs ou d'intensités dans une région de cette image [Linda 01]. Elles peuvent consister en un placement structuré d’éléments mais peuvent aussi n’avoir aucun élément répétitif.
+	D'une manière générale, la texture dans une image peut être définie comme un arrangement spatial de couleurs ou d'intensités dans une région de cette image [Linda01]. Elles peuvent consister en un placement structuré d’éléments mais peuvent aussi n’avoir aucun élément répétitif.
 \end{description}
 
 \begin{description}
@@ -183,7 +184,7 @@ En générale, la notion de texture est liée à trois concepts principaux:
 \subsubsection{Classifications de textures}
 Il existe un grand nombre de textures. On peut les séparer en deux classes:
 \begin{itemize}
-	\item \textbf{Les textures structurées (macrotextures):} constituée par la répétition d’une primitive à intervalle régulier. On peut différencier dans cette classe les textures parfaitement périodiques (carrelage, damier, ...etc.), les textures dont la primitives subit des déformations ou des changements d'orientation (mur de briques, grains de café, ...etc.).
+	\item \textbf{Les textures structurées (macrotextures):} constituées par la répétition d’une primitive à intervalle régulier. On peut différencier dans cette classe les textures parfaitement périodiques (carrelage, damier, ...etc.), les textures dont la primitives subit des déformations ou des changements d'orientation (mur de briques, grains de café, ...etc.).
 	
 	\item \textbf{Les textures aléatoires (microtextures):} se distinguent en général par un aspect plus fin (sable, herbe, ...etc.). Contrairement aux textures de type structurel, les textures aléatoires ne comportent ni primitive isolable, ni fréquence de répétition. On ne peut donc pas extraire de ces textures une primitive qui se répète dans l’image mais plutôt un vecteur de paramètres statistiques homogènes à chaque texture.
 \end{itemize}
@@ -198,6 +199,7 @@ les approches statistiques, les méthodes géométriques, les méthodes à base 
 
 \begin{table}[H]
 	\begin{center}
+		\caption{Classification des méthodes d’extraction de texture.}
 		\begin{tabular}{ll}
 			\hline
 			\multicolumn{1}{|c|}{\textit{\textbf{Approche}}} & \multicolumn{1}{c|}{\textit{\textbf{Descripteur}}}  \\                             \hline 
@@ -209,13 +211,13 @@ les approches statistiques, les méthodes géométriques, les méthodes à base 
 			\multicolumn{1}{|c|}{\textbf{\makecell{Méthodes à base\\ de modèle}}}    & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}- Décomposition de Wold\\ - Modèles Fractals\\ - Modèles AR (Autoregressive Models)\end{tabular}}  	\\ \hline
 			
 		\end{tabular}
-		\caption{Classification des méthodes d’extraction de texture.}
+		
 	\end{center}
 \end{table}
 
 
 \subsubsection{Les matrices de co-occurrences (Mesures de Haralick)}
- En 1973, Haralick a proposé une méthode en se basant sur la matrice de co-occurrence de niveaux de gris [Haralick 73], elle est probablement une méthode classiques et la plus célèbre pour l'analyser de la texture.
+ En 1973, Haralick a proposé une méthode en se basant sur la matrice de co-occurrence de niveaux de gris [Haralick73], elle est probablement une méthode classiques et la plus célèbre pour l'analyser de la texture.
  
  La texture d'une image peut être interprétée comme la régularité d'apparition de couples de niveaux de gris selon une distance (pas $k=1, 2, 3, ...etc$) donnée dans l’image. La matrice de co-occurrences contient les fréquences spatiales relatives d’apparition des niveaux
  de gris selon quatre directions: $\theta = 0◦$,  $\theta =  \frac{\pi}{4} = 45◦$,  $\theta =  \frac{\pi}{2} = 90◦$,  $\theta =  3 \times \frac{\pi}{4} = 135◦$. Une matrice de co-occurrences est définie au moyen d’une relation entre deux pixels .\\
@@ -231,6 +233,7 @@ les approches statistiques, les méthodes géométriques, les méthodes à base 
 		\begin{equation}
 			P_{d,\theta}(i, j) = \sum_{x,y} 1_{ [I(x, y) = i \space \&\& \space  I(i + d, j + d) = v ]}
 		\end{equation}
+		Où: $ 1_{ [bool]} = 1 $ si $ bool = vrai $ sinon 0.
 	\end{itemize} 
 Pour obtenir de véritables fréquences relatives, il faut normaliser les éléments de la matrice en les divisant par le nombre total de paires de points élémentaires séparés par la distance d dans la direction dans toute l’image.
 \end{description}
@@ -252,7 +255,8 @@ On parcours l'image et pour chaque couple de pixels formé avec la distance et l
 	\label{fig:cooc_nn}
 	\centering
 	\includegraphics[width=0.8\textwidth]{Figures/cooc_non_norm} % Include the image .png
-	\caption{Princeipe d'une atrice de co-occurrence.}
+	\caption{Principe d'une atrice de co-occurrence:
+	(a) et (c): image originale, (b): debut de calcul et (d): matrice de co-occurrence finale}
 \end{figure}
 
 Le 2 de la matrice de co-occurrence (ligne 1 et colonne 4) signifie que l’on trouve deux fois un pixel de valeur 1 de distance 1 et de direction
@@ -263,6 +267,7 @@ A partir de cette matrice de co-occurrence, il est possible de définir plusieur
 
 \begin{table}[H]
 	\centering
+	\caption{Mesures de Haralick}
 	\begin{tabular}{|c|c|c|}
 		
 		\hline
@@ -277,7 +282,7 @@ A partir de cette matrice de co-occurrence, il est possible de définir plusieur
 	Moment inverse de différence & \makecell{$ M = \frac{1}{1+(i-j)^2} \sum_{i=0}^{n}\sum_{j=0}^{n} P_{d,\theta}(i, j)  $}\\
 	     \hline
 	\end{tabular}
-\caption{Mesures de Haralick}
+
 \end{table}
  
  
@@ -300,7 +305,7 @@ La transformée en ondelettes est un outil mathématique récent qui décompose 
 Où, $ \psi_{a,b}^*(t) $ est la fonction de base d’ondelette. L’étoile «*» représente le complexe conjugué.
 
 À partir de la transformée en ondelettes on peut extraire des attributs de différents types et à différents niveaux de résolution. L'image d'approximation donne des informations sur les régions qui composent l'image, d'une résolution fine à une résolution grossière. Les images de
-détails donnent des informations horizontales, verticales et diagonales sur l'image [Landré05]. Donc les ondelettes permettent de caractériser la texture en décrivant les primitives et les règles d'arrangement qui les relient.\\
+détails donnent des informations horizontales, verticales et diagonales sur l'image [Jerome05]. Donc les ondelettes permettent de caractériser la texture en décrivant les primitives et les règles d'arrangement qui les relient.\\
 
 L’approche continue des ondelettes pour un signal 2D est trop complexe pour être applicable
 rapidement sur des images. Pour résoudre ce problème, Mallat considère l'analyse en ondelettes comme une décomposition du signal par une cascade de filtres, en utilisant une
@@ -321,27 +326,27 @@ numériques. Pour toute série numérique $s(n)$ à $N$ éléments, sa transform
 $S(k)$ est définie par :
 
 \begin{equation}
-	S(k) = \frac{1}{N} \sum_{n=0}^{N-1} s(n) \exp(-2i\pi k\frac{n}{N})
+	S(k) =  \sum_{n=0}^{N-1} s(n) \exp(-2i\pi k\frac{n}{N})
 \end{equation}
 
 En deux dimensions, cette équation devient :
 
 \begin{equation}
-S(k, l) = \frac{1}{N}\frac{1}{M} \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} s(n, m) \exp(-2i\pi k\frac{n}{N}) \exp(-2i\pi l\frac{m}{M})
+S(k, l) =  \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} s(n, m) \exp(-2i\pi k\frac{n}{N}) \exp(-2i\pi l\frac{m}{M})
 \end{equation}
 
-Le domaine des fréquences est alors divisé en : Anneaux, ou en secteurs angulaires et l’énergie calculée dans ces régions définit alors une caractérisation de la texture. Toutefois le principal problème de la transformée de Fourier est son manque de résolution spatiale. Cela signifie simplement que si nous sommes effectivement capables de détecter toutes les fréquences qui apparaissent dans un signal, nous sommes en revanche incapables de déterminer à quel moment elles se produisent dans le signal. Car si nous sommes en mesure d’interpréter le module de la transformée, il en est tout autrement de la phase qui est difficile à analyser. Ainsi il existe une transformée de Fourier plus locale donnant des informations mieux localisées appelée « Transformée de Fourier à fenêtre glissante » [Land05].
+Le domaine des fréquences est alors divisé en : Anneaux, ou en secteurs angulaires et l’énergie calculée dans ces régions définit alors une caractérisation de la texture. Toutefois le principal problème de la transformée de Fourier est son manque de résolution spatiale. Cela signifie simplement que si nous sommes effectivement capables de détecter toutes les fréquences qui apparaissent dans un signal, nous sommes en revanche incapables de déterminer à quel moment elles se produisent dans le signal. Car si nous sommes en mesure d’interpréter le module de la transformée, il en est tout autrement de la phase qui est difficile à analyser. Ainsi il existe une transformée de Fourier plus locale donnant des informations mieux localisées appelée « Transformée de Fourier à fenêtre glissante » [Jerome05].
 
 \subsubsection{Les filtres de Gabor}
 
 Les filtres de Gabor sont largement utilisés en indexation, pour la description de la texture.
-Introduit par Gabor [Gabo46], ces filtres ont été largement utilisés [Chaw16] à la fois comme fonctions de décomposition en ondelettes et comme outils d'analyse texturale [Anda10]. Ces filtres peuvent prendre en compte l'orientation, l'échelle et la localisation des frontières, qui peuvent être utilisés pour caractériser la texture. Les filtres de Gabor sont des filtres passe bande, leur forme générale résulte de la multiplication d’une fonction de forme d'enveloppe gaussienne avec une fonction sinusoïdale complexe.\\
+Introduit par Gabor [Gabor46], ces filtres ont été largement utilisés [Chawki16] à la fois comme fonctions de décomposition en ondelettes et comme outils d'analyse texturale [Andaloussi10]. Ces filtres peuvent prendre en compte l'orientation, l'échelle et la localisation des frontières, qui peuvent être utilisés pour caractériser la texture. Les filtres de Gabor sont des filtres passe bande, leur forme générale résulte de la multiplication d’une fonction de forme d'enveloppe gaussienne avec une fonction sinusoïdale complexe [ElAsnaoui17].\\
 
-Les filtres de Gabor sont largement utilisés aujourd’hui pour modéliser la réponse du système visuel humain. En effet, ce dernier décompose les images texturées en un nombre important d'images filtrées dont chacune contient les variations d'intensité à travers une bande de fréquence et une orientation bien déterminées [Partio 02]. En effet, Marcelaje [Marcelaje 80] a montré que les cellules du cortex humain pouvaient être modélisées par des fonctions de Gabor à une dimension. Cette décomposition a été utilisée par Manjunath [Manjunathi 96] pour des indexations par les textures.\\
+Les filtres de Gabor sont largement utilisés aujourd’hui pour modéliser la réponse du système visuel humain. En effet, ce dernier décompose les images texturées en un nombre important d'images filtrées dont chacune contient les variations d'intensité à travers une bande de fréquence et une orientation bien déterminées [Partio02]. En effet, Marcelaje [Marcelaje80] a montré que les cellules du cortex humain pouvaient être modélisées par des fonctions de Gabor à une dimension. Cette décomposition a été utilisée par Manjunath [Manjunathi96] pour des indexations par les textures.\\
 
-Les filtres de Gabor permettent une bonne résolution spatiale à haute fréquence et une bonne résolution harmonique sans grande précision spatiale à basse fréquence [Merc01]. Sommairement, les paramètres de texture sont déterminés en calculant la moyenne et l’écart type des niveaux de gris de l’image filtrée par le filtre de Gabor. En fait, ce n’est pas une seule valeur de moyenne et d’écart type qui sera calculée, mais plutôt un ensemble de valeurs égal au nombre d’échelles multiplié par le nombre d’orientations utilisées. Nous aurons donc ce qui est parfois appelé la banque de filtre de Gabor. Mathématiquement, toutes les valeurs des moyennes et d’écarts type calculées seront regroupées dans un seul vecteur descripteur. \\
+Les filtres de Gabor permettent une bonne résolution spatiale à haute fréquence et une bonne résolution harmonique sans grande précision spatiale à basse fréquence [Mercier01]. Sommairement, les paramètres de texture sont déterminés en calculant la moyenne et l’écart type des niveaux de gris de l’image filtrée par le filtre de Gabor. En fait, ce n’est pas une seule valeur de moyenne et d’écart type qui sera calculée, mais plutôt un ensemble de valeurs égal au nombre d’échelles multiplié par le nombre d’orientations utilisées. Nous aurons donc ce qui est parfois appelé la banque de filtre de Gabor. Mathématiquement, toutes les valeurs des moyennes et d’écarts type calculées seront regroupées dans un seul vecteur descripteur. \\
 
-Un filtre de Gabor 2D est le produit d'une gaussienne elliptique dans toute rotation et un exponentiel complexe représentant une onde plane sinusoïdale. Nous rappelons que, dans le domaine spatial, la fonction de Gabor bidimensionnelle est une somme de deux fonctions sinusoïdales, l'une paire et réelle, l'autre impaire et imaginaire, modulée par une enveloppe gaussienne. Une fonction Gabor 2D $g(x, y)$ et sa transformée de Fourier $G(u, v)$ s'écrivent comme suit [Manj96]:
+Un filtre de Gabor 2D est le produit d'une gaussienne elliptique dans toute rotation et un exponentiel complexe représentant une onde plane sinusoïdale. Nous rappelons que, dans le domaine spatial, la fonction de Gabor bidimensionnelle est une somme de deux fonctions sinusoïdales, l'une paire et réelle, l'autre impaire et imaginaire, modulée par une enveloppe gaussienne. Une fonction Gabor 2D $g(x, y)$ et sa transformée de Fourier $G(u, v)$ s'écrivent comme suit [Manjunathi96]:
 
 
 
@@ -385,12 +390,12 @@ L'utilisation des filtres de Gabor permet d'extraire de l'image considérée des
  \end{figure}
  
  
-\subsubsection{Conclusion}
-
-Au même titre que l'information relative aux couleurs, Les attributs texturaux sont des attributs très importants pour la description de l'image et la reconnaissance de ses objets, cependant elles ne suffisent pas pour une bonne représentation du contenu de l'image, un inconvénient qui nécessite un autre attribut essentiel qui est celui de la forme.\\
-
-Dans la suite nous allons introduire cet attribut et les différentes approches utilisées pour
-l'extraire.
+%\subsubsection{Conclusion}
+%
+%Au même titre que l'information relative aux couleurs, Les attributs texturaux sont des attributs très importants pour la description de l'image et la reconnaissance de ses objets, cependant elles ne suffisent pas pour une bonne représentation du contenu de l'image, un inconvénient qui nécessite un autre attribut essentiel qui est celui de la forme.\\
+%
+%Dans la suite nous allons introduire cet attribut et les différentes approches utilisées pour
+%l'extraire.
 
 \subsection{Descripteur de forme}
 Comme c'était le cas pour la texture, l'information de la forme est complémentaire de celle de la couleur pour la description de l'image.  Si l'être humain est particulièrement sensible à l'attribut de couleur pour distinguer les objets, pour certains types d'ambiguïté cela n'est pas suffisant et l'on a besoin de l'attribut de forme. La forme est généralement une description très riche d’un objet. Elle permet de détecter un objet sur une image plutôt que l’image elle-même. L’extraction d’attribut géométrique a été l’objet de la recherche d’images par le contenu ces dernières années.\\
@@ -402,29 +407,28 @@ La forme est un descripteur très important dans l'indexation des images. Elle e
 \end{itemize}
 On peut ensuite distinguer deux familles pour chacune de ces catégories, une famille qui considère les objets comme une seule partie, et celle qui décrit les objets en les considérant comme un assemblage de sous parties. Une segmentation des objets est généralement utilisée avant l'extraction des attributs.\\
 
-Les techniques d’extraction de forme par régions font référence aux moments invariants et sont utilisés pour caractériser l’intégralité de la forme d’une région. Ces attributs sont robustes aux transformations géométriques comme la translation, la rotation et le changement d’échelle [Hasnaoui]. La seconde approche fait classiquement référence aux descripteurs de Fourier et porte sur une caractérisation des contours de la forme. Ils ne peuvent pas détecter la structure interne de la forme puisqu’ils sont basés sur les contours uniquement. En outre, ces méthodes ne sont pas adaptées aux formes disjointes ou creuses, qui est le cas des symboles graphiques, car l’information sur le contour n’est pas disponible. Par conséquent, elles sont limitées à un certains types d’applications [Tabb06].
+Les techniques d’extraction de forme par régions font référence aux moments invariants et sont utilisés pour caractériser l’intégralité de la forme d’une région. Ces attributs sont robustes aux transformations géométriques comme la translation, la rotation et le changement d’échelle [ElAsnaoui17]. La seconde approche fait classiquement référence aux descripteurs de Fourier et porte sur une caractérisation des contours de la forme. Ils ne peuvent pas détecter la structure interne de la forme puisqu’ils sont basés sur les contours uniquement. En outre, ces méthodes ne sont pas adaptées aux formes disjointes ou creuses, qui est le cas des symboles graphiques, car l’information sur le contour n’est pas disponible. Par conséquent, elles sont limitées à un certains types d’applications [Tabb06].
 
 \begin{figure}[H]
 	\label{fig:forme}
 	\centering
-	\includegraphics[width=0.85\textwidth]{Figures/forme} % Include the image .png
+	\includegraphics[width=1\textwidth]{Figures/forme} % Include the image .png
 	
 	\caption{Classification des méthodes d'extraction de forme.}
 	
 \end{figure}
 
-Le problème fondamental est de déterminer si deux objets sont similaires, indépendamment
-de leur position dans l’image. C’est-à-dire l’invariance aux similitudes planes (Translation suivie d'une rotation et d’une homothétie). Il est bien connu que les descripteurs de forme invariants doivent satisfaire certains critères parmi lesquels : la robustesse vis à vis des faibles variations de formes et des approximations numériques, et la simplicité pour le calcul en « temps réel ».\\
+Le problème fondamental est de déterminer si deux objets sont similaires, indépendamment de leur position dans l’image. C’est-à-dire l’invariance aux similitudes planes (Translation suivie d'une rotation et d’une homothétie). Il est bien connu que les descripteurs de forme invariants doivent satisfaire certains critères parmi lesquels : la robustesse vis à vis des faibles variations de formes et des approximations numériques, et la simplicité pour le calcul en « temps réel ».\\
 
 Dans la suite nous présentons quelques-unes de ces méthodes.
 
 \subsubsection{Descripteurs de Fourier}
-Les descripteurs de Fourier (DFs) font partie des descripteurs les plus populaires pour les applications de reconnaissance de forme et de recherche d'images. Transformée de Fourier est une représentation fréquentielle d’une image, elle consiste de remplacer chaque région par des différentes fréquences spatiales. Les descripteurs de Fourier font partie des descripteurs basés sur les contours, ils ont souvent été utilisés par leur simplicité et leurs bonnes performances en terme de reconnaissance [Zhan05] et facilitent l'étape d’appariement. De plus, ils permettent de décrire la forme de l’objet à différents niveaux de détails.\\
+Les descripteurs de Fourier (DFs) font partie des descripteurs les plus populaires pour les applications de reconnaissance de forme et de recherche d'images. Transformée de Fourier est une représentation fréquentielle d’une image, elle consiste de remplacer chaque région par des différentes fréquences spatiales. Les descripteurs de Fourier font partie des descripteurs basés sur les contours, ils ont souvent été utilisés par leur simplicité et leurs bonnes performances en terme de reconnaissance [Zhang05] et facilitent l'étape d’appariement. De plus, ils permettent de décrire la forme de l’objet à différents niveaux de détails.\\
 
 Les DFs sont calculés à partir du contour des objets. Leur principe est de représenter le contour de l'objet par un signal 1D, puis de le décomposer en séries de Fourier. Les DFs sont généralement connus comme une famille de descripteurs car ils dépendent de la façon dont sont représentés les objets sous forme de signaux.
 
 \subsubsection{Moments géométriques}
-Les moments géométriques [Sonk99] permettent de décrire une forme à l’aide de propriétés
+Les moments géométriques [Sonka99] permettent de décrire une forme à l’aide de propriétés
 statistiques. Ils représentent les propriétés spatiales de la distribution des pixels dans l’image. La formule générale des moments géométriques est donnée par la relation suivante :
 
 \begin{equation}
@@ -467,12 +471,11 @@ Nous les présenterons dans le chapitre 4.
 Par opposition aux moments géométriques qui sont définis par rapport à une base quelconque $(x^p, y^q)$, les moments orthogonaux, comme leur nom l’indique, sont définis dans une base orthogonale, ce qui évite la redondance des informations portées par chacun des moments. Les deux types de moments orthogonaux les plus utilisés sont : les moments de Legendre et les moments de Zernike. (Les moments de Zernike a voir dans le chapitre 4) .
 
 \subsubsection{Transformation ART}
-Angular Radial Transform (ART) est un descripteur de forme robuste au changement d’échelle, à la translation et à la rotation et utilisé dans plusieurs travaux [AitZ14], [Chaw16] et [Alhasnaoui]. Ce descripteur consiste à projeter l’objet à étudier sur une série de fonctions de base [Kim99].
+Angular Radial Transform (ART) est un descripteur de forme robuste au changement d’échelle, à la translation et à la rotation et utilisé dans plusieurs travaux [Chawki16] et [AlAsnaoui17]. Ce descripteur consiste à projeter l’objet à étudier sur une série de fonctions de base [Kim99].
 
-ART est un descripteur de formes par approche région qui caractérise la distribution des pixels dans un objet ou une région 2D. Il est basé sur l’étude des frontières et des pixels internes de la région à décrire. Il s’applique à un grand nombre d’objets, comme des objets complexes constitués de multiples régions discontinues ou des objets simples avec ou sans trou. Le descripteur de formes par approche régions se calcule en décomposant la forme sur plusieurs fonctions de base 2D orthogonales, définies par la transformation ART. Les coefficients ainsi obtenus sont utilisés après normalisation et quantification pour décrire la forme. ART donne un moyen compact et efficace pour exprimer la distribution de pixels dans une région de l’objet 2D [Alhasnaoui]. Il peut décrire les deux formes de la région connectés et déconnectés.\\
+ART est un descripteur de formes par approche région qui caractérise la distribution des pixels dans un objet ou une région 2D. Il est basé sur l’étude des frontières et des pixels internes de la région à décrire. Il s’applique à un grand nombre d’objets, comme des objets complexes constitués de multiples régions discontinues ou des objets simples avec ou sans trou. Le descripteur de formes par approche régions se calcule en décomposant la forme sur plusieurs fonctions de base 2D orthogonales, définies par la transformation ART. Les coefficients ainsi obtenus sont utilisés après normalisation et quantification pour décrire la forme. ART donne un moyen compact et efficace pour exprimer la distribution de pixels dans une région de l’objet 2D [AlAsnaoui17]. Il peut décrire les deux formes de la région connectés et déconnectés.\\
 
-L’ART [Kim99] décrit une forme à travers la distribution de ses pixels de façon invariante
-aux transformations affines. La transformation ART est utilisée comme descripteur par approche
+L’ART [Kim99] décrit une forme à travers la distribution de ses pixels de façon invariante aux transformations affines. La transformation ART est utilisée comme descripteur par approche
 région dans le standard MPEG-7. Elle est définie par la formule suivante :
 
 \begin{equation}
@@ -505,7 +508,7 @@ Le descripteur ART est alors défini comme l’ensemble des coefficients $ F_{nm
 	
 \end{figure}
 
-La fonction de base d’ART $ V_{nm} $ est une fonction complexe. Sur la figure ci-dessus (Figure 3-5), les parties imaginaires sont identiques aux parties réelles, avec une différence de phase. La partie réelle de chaque fonction de base est présentée sous forme d’images.\\
+La fonction de base d’ART $ V_{nm} $ est une fonction complexe. Sur la figure ci-dessus (Figure 2.10), les parties imaginaires sont identiques aux parties réelles, avec une différence de phase. La partie réelle de chaque fonction de base est présentée sous forme d’images.\\
 
 Pour chaque image donnée, il y aura $ n \times m $  coefficients ART. Ces coefficients sont utilisés pour mettre en correspondance deux images. Le problème est de savoir combien de coefficient est nécessaire pour la description d’une image. Pour déterminer le nombre de coefficients, il faut analyser les covariances entre les fonctions de base. Par définition, le comité MPEG-7 [Jean01] maintient le nombre des valeurs de n plus petit que celui de m. Il propose de fixer n à 3 et m à 12. Ce sont les valeurs que nous utilisons dans notre étude.\\
 
@@ -518,12 +521,12 @@ transformations géométriques subies par un objet à l’intérieur d’une ima
 	\item  Robustesse à la présence de bruit.
 \end{itemize}
 
-\subsubsection{Conclusion}
-L'information relative à la forme est particulièrement importante dans la description d'une image. Plusieurs études ont été menées pour trouver un critère de choix des descripteurs de la forme pour l'indexation des images pour combler les manques des descripteurs couleur et texture.\\
-
-Pour rechercher des formes similaires, des mesures de similarité entre des descripteurs sont définies pour déterminer la distance entre eux. Cependant, la comparaison n’est pas toujours simple et elle exige parfois des transformations. De plus, la dimension du descripteur est souvent élevée, ce qui augmente la complexité quand on cherche des objets similaires dans une grande collection.\\
-
-Dans ce qui suit, nous présenterons quelques mesures de similarités utilisé en recherche d'images par contenu.
+%\subsubsection{Conclusion}
+%L'information relative à la forme est particulièrement importante dans la description d'une image. Plusieurs études ont été menées pour trouver un critère de choix des descripteurs de la forme pour l'indexation des images pour combler les manques des descripteurs couleur et texture.\\
+%
+%Pour rechercher des formes similaires, des mesures de similarité entre des descripteurs sont définies pour déterminer la distance entre eux. Cependant, la comparaison n’est pas toujours simple et elle exige parfois des transformations. De plus, la dimension du descripteur est souvent élevée, ce qui augmente la complexité quand on cherche des objets similaires dans une grande collection.\\
+%
+%Dans ce qui suit, nous présenterons quelques mesures de similarités utilisé en recherche d'images par contenu.
 
 %
 % Les descripteurs basés sur le contour incluent les descripteurs de Fourier [Rui 98], [Zhang 05], et les chaînes de Freeman, qui ont été largement utilisés.
@@ -539,9 +542,9 @@ Dans ce qui suit, nous présenterons quelques mesures de similarités utilisé e
 \section{Les mesures de similarité entre attributs}
 L'étape de la recherche dans les systèmes CBIR est la raison d'être d'un tel système et nécessite des techniques de comparaison entres attributs d'image (signatures). La mesure de similarité est alors une étape fondamentale dans la recherche d'images par le contenu. Elle compte sur la mesure de la ressemblance visuelle entre une image requête et les images de la base.\\
 
-Les performances d'un CBIR dépendent largement de la mesure de similarité utilisée pour la comparaison des descripteurs des images. La mesure de similarité est aussi dépend des critères de la recherche mais également de la représentation des caractéristiques.\\
+Les performances d'un CBIR dépendent largement de la mesure de similarité utilisée pour la comparaison des descripteurs des images.  de la recherche mais également de la représentation des caractéristiques.\\
 
-La mesure de similarité quantifiée la proximité des images dans l'espace des caractéristiques. Elle est souvent métrique, les images sont considérées ressemblantes si la distance est faible. La complexité de calcul d'une distance doit être raisonnable par ce que dans un système CBIR cette tâche s'exécute en temps réel ou pseudo réel. D'autres paramètres entrent en jeu telle la dimension de l'espace caractéristique, la taille de la base... La méthode naïve de recherche calcule la distance entre la requête et toutes les images de la base puis les ordonne selon leur score. Ceci par conséquent rend le temps de réponse proportionnel au nombre d'images $ (O(N)) $. Les méthodes d'indexation du contenu permettent par ailleurs de réduire cette complexité comparée à la recherche séquentielle (Exemple de M-Tree que nous présenterons dans le chapitre qui suit). 
+La mesure de similarité quantifie la proximité des images dans l'espace des caractéristiques. Elle est souvent métrique, les images sont considérées ressemblantes si la distance est faible. La complexité de calcul d'une distance doit être raisonnable par ce que dans un système CBIR cette tâche s'exécute en temps réel ou pseudo réel. D'autres paramètres entrent en jeu telle la dimension de l'espace caractéristique, la taille de la base... La méthode naïve de recherche calcule la distance entre la requête et toutes les images de la base puis les ordonne selon leur score. Ceci par conséquent rend le temps de réponse proportionnel au nombre d'images $ (O(N)) $. Les méthodes d'indexation du contenu permettent par ailleurs de réduire cette complexité comparée à la recherche séquentielle (Exemple de M-Tree que nous présenterons dans le chapitre qui suit). 
 
 Pour résumer, la mesure de similarité vérifie généralement les propriétés [Houari10]:
 
@@ -562,13 +565,13 @@ En mathématiques, on appelle distance sur un ensemble $E$ une application $d$ d
 \end{equation}
 
 vérifiant les propriétés suivantes :
-%\begin{table}
+\begin{table}[H]
+	\caption{Les propriétés d'une distance.}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Figures/distanceProp.png} % Include the image .png
-	\caption{Les propriétés d'une distance.}
 \end{figure}
-%\end{table}
+\end{table}
 
 Un ensemble muni d'une distance est un espace métrique.\\
 
@@ -580,12 +583,13 @@ représentation de l'image : images brutes (pixels) ou attributs (vecteurs descr
 	\item \textbf{Images brutes (pixels): }Au plus bas niveau d'abstraction, les images sont tout simplement des agrégations de pixels. La comparaison entre les images, est réalisée pixel par pixel, et les mesures de similarité couramment utilisées comprennent : le coefficient de corrélation, la somme des valeurs absolue des différences (SVAD), la distance des moindres carrés, et l’information mutuelle.
 	La comparaison au niveau des pixels est très spécifique et, par conséquent, n'est utilisée que lorsque des appariements relativement précis sont nécessaires.
 	
-	\item \textbf{Attributs:} Les attributs ou vecteurs descripteurs sont des valeurs numériques de données extraites des images ou des objets dans les images, tels que la couleur, la forme et la texture. Plusieurs mesures de similarité sont couramment utilisées pour la comparaison d’attributs: la distance euclidienne, la distance de Minkowsky et la distance d’intersection  [Meskaldji09].
+	\item \textbf{Attributs:} Les attributs ou vecteurs descripteurs sont des valeurs numériques de données extraites des images ou des objets dans les images, tels que la couleur, la forme et la texture. Plusieurs mesures de similarité sont couramment utilisées pour la comparaison d’attributs: la distance euclidienne, la distance de Minkowsky et la distance d’intersection  [Khouloud09].
 \end{itemize}
 
 Julien Fauqueur à classifier les distances pour les distributions de couleurs [Fauqueurs03] comme suite:
 \begin{table}[H]
 	\centering
+	\caption{Les classe de distances.}
 	\begin{tabular}{|l|l|l|}
 		\hline
 		\textbf{\makecell{Distances cellule-à-cellule ou “daltoniennes”}
@@ -604,7 +608,7 @@ Julien Fauqueur à classifier les distances pour les distributions de couleurs [
 		 }   \\
 		\hline 
 	\end{tabular}
-	\caption{Les distances de Minkowski}
+	
 \end{table}
 
 Ci-après les distances les plus utilisées pour comparer des images considérées comme vecteurs ou comme distributions statistiques. 
@@ -620,6 +624,7 @@ Où $p\geq 1$ est le facteur de Minkowski et $N$ la dimension de l’espace cara
 
 On distingue:
 \begin{table}[H]
+	\caption{Les distances de Minkowski}
 	\begin{tabular}{|c|c|c|}
 		\hline
 		\textbf{Distance} & \textbf{Caractéristiques}\\
@@ -658,7 +663,7 @@ On distingue:
 		
 	
 	\end{tabular}
-	\caption{Les distances de Minkowski}
+	
 \end{table}
 
 \subsection{Distance quadratique}
@@ -675,20 +680,20 @@ Ou $A = (a_{ij}) $est la matrice de similarité. $a_{ij}$ représente la distanc
 
 
 \begin{equation}
-	a_{ij} = 1 - \frac{d_{ij}}{\max d_{ij}} 
+	a_{ij} = 1 - \frac{d_{ij}}{ d_{max}} 
 \end{equation}
 
 Où $ d_{ij} $ est la distance dans l’espace couleur considéré et $ d_{max} $ le maximum global
 de cette distance. Notons que si l’on remplace $  A $ par la matrice identité, nous retrouvons la distance euclidienne.
 \subsection{Distance de Swain}
-Cette mesure est l'une des premières distances utilisée dans la recherche d'image par le contenu, si les images d’une base des images sont indexées par des histogrammes, les distances géométriques s’appliquent. Cependant, il est possible de définir des mesures de similarité propres à cette représentation. Ainsi, l’intersection d’histogrammes est l’une des premières distances utilisée dans les systèmes CBIR [Swain91].Elle permet de comparer deux histogrammes normalisés $H_1$ et $H_2$ . La distance de Swain s’exprime ainsi :
+Cette mesure est l'une des premières distances utilisée dans la recherche d'image par le contenu, si les images d’une base des images sont indexées par des histogrammes, les distances géométriques s’appliquent. Cependant, il est possible de définir des mesures de similarité propres à cette représentation. Ainsi, l’intersection d’histogrammes est l’une des premières distances utilisée dans les systèmes CBIR [Swain91]. Elle permet de comparer deux histogrammes normalisés $H_1$ et $H_2$ . La distance de Swain s’exprime ainsi :
 
 	\begin{equation}
 	 d_2(H_1, H_2) = 1- \frac{\sum_{i=1}^{N} \min(H_1(i),  H_2(i))}{\sum_{i=1}^{N}  H_2(i)}  
 	\end{equation}
 
 \subsection{Distance de Canberra}
-Elle est introduite par G. N. Lance et W. T. Williams [Lance 67]. C'est une version
+Elle est introduite par G. N. Lance et W. T. Williams [Lance67]. C'est une version
 pondérée de la distance Manhattan. La distance de Canberra entre les vecteurs et dans un espace vectoriel réel à N dimensions est la suivante:
 
 \begin{equation}
@@ -698,10 +703,8 @@ pondérée de la distance Manhattan. La distance de Canberra entre les vecteurs 
 
 Il existe d’autres distances dans la littérature qui ne sont pas abordées dans ce mémoire.
 
-\subsubsection{Conclusion}
-Le choix des descripteurs pour un système de recherche d'images par contenu est important,
-dans le sens où, ce choix influe sur les résultats attendus. Cependant, d'une part il n'y a pas
-d'attributs universels, et d'autre part le choix des descripteurs dépend fortement de la base
-d'image à utiliser et des connaissances à priori qu'on peut avoir sur la base.
+
 \subsection{Conclusion}
+Le choix des descripteurs ou mesures de similarité pour un système de recherche d'images par contenu est important, dans le sens où, ce choix influe sur les résultats attendus. Cependant, d'une part il n'y a pas d'attributs universels, et d'autre part le choix des descripteurs dépend fortement de la base d'image à utiliser et des connaissances à priori qu'on peut avoir sur la base.\\
+
 Ce chapitre a fait l’état de l’art sans exhaustivité des différents descripteurs des attributs visuels pouvant être utilisés pour la recherche d’images par le contenu ainsi que les approches correspondantes. Aussi, nous avons dressé une liste des types de descripteurs et les mesures de similarités avec leurs avantages et leurs inconvénients. Le chapitre suivant se focalisera sur les méthodes d'indexation pour accélérer la recherche et leurs importance dans un systeme CBIR.
