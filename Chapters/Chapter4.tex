@@ -2,7 +2,7 @@
 
 \chapter{Implémentation et évaluation expérimentale} % Main chapter title
 
-\label{ChapterX} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+\label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
@@ -12,7 +12,7 @@
 Après avoir étudié le domaine de CBIR (les systèmes de recherche d’images par le contenu ) et leur principe de fonctionnement, l’implémentation d’une application ou d’un système de recherche d’images par le contenu devient une nécessité afin d’avoir une vue plus claire de ce que nous avons introduit dans les premiers chapitres. \\
 
 Nous présenterons alors, dans ce chapitre, notre application,
-les descripteurs utilisés et les bases d’images choisi afin de pouvoir évaluer le système, ainsi les différentes étapes par lesquelles nous sommes passés pour sa réalisation.
+les descripteurs utilisés et les bases d’images choisies afin de pouvoir évaluer le système, ainsi les différentes étapes par lesquelles nous sommes passés pour sa réalisation.
 
 \section{L'outil d’implémentation}
 Dans la conception de notre application, nous avons choisi Python
@@ -26,17 +26,24 @@ facteurs, parmi eux on cite:
 	\item Opensource contrairement à Matlab.
 \end{itemize}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{python}
+	\caption{Exemple de librairies Python.}
+\end{figure}
+
 \section{Les descripteurs d’image utilisés}
 La première étape de création d'un système CBIR est le choix d'un descripteur pour indexer les images. \\
 Pour la création de notre vecteur descripteur (signature), nous avons utilisé des caractéristiques de bas niveau comme déjà spécifier dans le chapitre 2. L'extraction se fait selon l'attribut visuel choisi: couleur, texture ou forme.
 \subsection{Les descripteurs de couleur}
 \textbf{Les modèles de couleur: }
-Dans notre système, nous avons intégré l'espaces RGB et l'espace TSV (HSV):\\
+Dans notre système, nous avons intégré l'espace RGB et l'espace TSV (HSV):\\
 
 \begin{itemize}
 	\item Le modèle TSV (Teinte Saturation Valeur) : est une représentation physique de la couleur, cet espace présente l’avantage de simuler le comportement visuel humain.
 	
-	\item Le modèle RVB (Rouge, Vert, Bleu) : est l’espace de couleur le plus utilisé pour la représentation de la couleur. L’avantage d’utiliser ce modèle est que cette représentation est extrêmement basique, puisqu’aucun traitement n’est nécessaire.
+	\item Le modèle RVB (Rouge, Vert, Bleu) : est l’espace de couleur le plus utilisé pour la représentation de la couleur. L’avantage d’utiliser ce modèle est que cette représentation est extrêmement basique, puisqu’aucun traitement n’est nécessaire.\\
+	
 \end{itemize}
 
 Notre système présente à l'utilisateur les descripteurs suivants :
@@ -46,8 +53,8 @@ Notre système présente à l'utilisateur les descripteurs suivants :
 \end{itemize}
 
 \subsubsection{Histogramme}
-\paragraph{RVB (RGB)}
-Dans la création d’application, nous avons choisi d’utiliser les histogrammes par bloc dans l’espace RVB comme une technique de base.
+\paragraph{RVB (RGB):}
+Dans la création de l’application, nous avons choisi d’utiliser les histogrammes par bloc dans l’espace RVB comme une technique de base comme spécifier dans l'article [Abed15].
 On a choisi de diviser l'histogramme en 17 blocs pour chaque composante; Rouge, Verte et Bleu. Le vecteur de caractéristiques $ V_{histRGB} $ est généralement de taille 17x17x17 = 4913.
 \begin{table}[H]
 	\centering
@@ -78,23 +85,23 @@ On a choisi de diviser l'histogramme en 17 blocs pour chaque composante; Rouge, 
 	
 	
 \end{table}
-\paragraph{TSV (HSV)}
+\paragraph{TSV (HSV):}
 Pour notre moteur de recherche d'images, nous utiliserons un histogramme couleur 3D dans l'espace couleur HSV avec 8 blocs pour le canal teinte, 12 blocs pour le canal saturation et 3 blocs pour le canal valeur en divisant l'image en 5 régions, ce qui donne un vecteur de caractéristiques $ V_{histHSV} $ est de  dimension 8 x 12 x 3 x 5 = 288 x 5 = 1440.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.3\textwidth]{5regions}
-	\caption{Exemple de division d'une image en 5 régions différentes [Site06].}
+	\caption{Exemple de division d'une image en 5 régions différentes [Site01].}
 \end{figure}
 \subsubsection{Les moments de couleur}
-Pour enrichir les index de la couleur, nous avons utilisé les moments de couleur au lieu de calculer la distribution complète commepour les histogrammes. Dans cette étape, nous avons calculé les trois premiers moments de couleur (la moyenne, l’écart-type et le moment d'ordre 3) pour chaque canal (R,G,B) dans le but de garder seulement les neuf valeurs obtenues, ainsi le vecteur de caractéristiques $ V_{moments} $ est de tailles 9.
+Pour enrichir les index de la couleur, nous avons utilisé les moments de couleur au lieu de calculer la distribution complète comme pour les histogrammes. Dans cette étape, nous avons calculé les trois premiers moments de couleur (la moyenne, l’écart-type et le moment d'ordre 3) pour chaque canal (R,G,B) dans le but de garder seulement les neuf valeurs obtenues, ainsi le vecteur de caractéristiques $ V_{moments} $ est de tailles 9.
 
 \subsection{Les descripteurs de texture}
 Pour caractériser la texture, nous avons choisi l'un des descripteurs classiques à savoir les mesures de Haralick basé sur les matrices de co-occurrence. De plus, nous avons intégré les filtres de Gabor comme étant l'un des descripteurs fortement utilisés dans la littérature.
 \subsubsection{Les mesures de Haralick}
-Les mesures de Haralick sont calculées à partir de la matrice de co-occurrence de l'image. Haralick décrit 14 statistiques qui peuvent être calculées à partir de la matrice de co-occurrence dans le but de décrire la texture de l'image [Site03]. Nous adoptant l'implémentation de la librairie Mahotas [Site04] qui met en œuvre seulement les 13 premières mesures. La dernière (14ème) est normalement considérée comme instable. Alors, le vecteur de caractéristiques $ V_{Haralick} $ est de taille 13.
+Les mesures de Haralick sont calculées à partir de la matrice de co-occurrence de l'image. Haralick décrit 14 statistiques qui peuvent être calculées à partir de la matrice de co-occurrence dans le but de décrire la texture de l'image [Site02]. Nous adoptant l'implémentation de la librairie Mahotas [Site03] qui met en œuvre seulement les 13 premières mesures. La dernière (14ème) est normalement considérée comme instable. Alors, le vecteur de caractéristiques $ V_{Haralick} $ est de taille 13.
 
 \subsubsection{Les filtres de Gabor}
-Dans le but d'améliorer les performances lié à la recherche basé sur la texture, nous avons utilisé les filtres de Gabor vue leurs robustesse prouvé par de nombreuse travaux de recherche dans la littérature.\\
+Dans le but d'améliorer les performances lié à la recherche basé sur la texture, nous avons utilisé les filtres de Gabor vue leurs robustesse prouvé par de nombreuse travaux de recherche dans la littérature [ElHasnaoui17] et [ZZ18].\\
 
 Les filtres d'ondelettes de Gabor s'étendent sur 5 fréquences : 0.06, 0.09, 0.13, 0.18, 0.25 avec huit orientations $ \theta_0 = 0, \theta_n = \theta_{n-1} + \frac{\pi}{8} , n = 1,...,7$  et qui sont appliqués sur l'image. La moyenne et l'écart-type des coefficients d'ondelettes de Gabor des images résultante sont utilisés pour former un vecteur de caractéristiques $ V_{Gabor} $ de taille 5x8x2 = 240.
 
@@ -104,7 +111,7 @@ Dans la partie basé sur la forme, nous avons intégré les moments de Hu comme 
 Les moments de Hu sont basés sur les moments géométriques discutés dans le chapitre II section 2.2.3.\\
 Si ƒ(x, y) est une image numérique, alors l'équation précédente devient:
 \begin{equation}
-\mu_{p,q} = \sum_{x=0}^{M-1}\sum_{y=0}^{N-1} (x- \bar{x})^p (y-\bar{x})^q f(x, y)
+\mu_{p,q} = \sum_{x=0}^{M-1}\sum_{y=0}^{N-1} (x- \bar{x})^p (y-\bar{y})^q f(x, y)
 \end{equation}
 D'où les moments géométriques (centraux):
 \begin{figure}[H]
@@ -115,7 +122,7 @@ Les moments $ \mu_{p,q} $ invariants en ce qui concerne à la fois la translatio
 \eta _{{ij}}={\frac  {\mu _{{ij}}}{\mu _{{00}}^{{\left(1+{\frac  {i+j}{2}}\right)}}}}\,\!
 \end{equation}
 où $ i + j \ge 2 $.
-Comme le montre le travail de Hu, [Hu] les invariants en matière de translation, d'échelle et de rotation peuvent être construits :
+Comme le montre le travail de Hu, [Hu62] les invariants en matière de translation, d'échelle et de rotation peuvent être construits :
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{huMom}
@@ -124,7 +131,7 @@ Comme le montre le travail de Hu, [Hu] les invariants en matière de translation
 
 Le vecteur de caractéristiques $ V_{Hu} $ est alors de taille 7.
 \subsubsection{Moments de Zernike}
-En 1934, Zernike [6] a proposé un ensemble de polynômes orthogonaux définis sur le cercle unité, à savoir les polynômes orthogonaux de Zernike, leur formule de définition est la suivante :
+En 1934, Zernike a proposé un ensemble de polynômes orthogonaux définis sur le cercle unité, à savoir les polynômes orthogonaux de Zernike, leur formule de définition est la suivante :
 \begin{equation}
 V_{mn}(x, y)~=~V_{mn}(r,\theta)~=~R_{mn}(r)\exp(jn\theta)
 \end{equation}
@@ -137,35 +144,32 @@ F(m,n,s,r) = \frac{(m-s)!}{s!(\frac{m+\mid n \mid}{2}~-s)!~(\frac{m-\mid n \mid}
 \end{displaymath}
 $ R_{mn}(r) $  est le polynôme radial orthogonal, $ V_{mn}(x, y) $ est le polynôme orthogonal de Zernike, c'est un ensemble de fonctions orthogonales à valeurs complexes avec complétude définies sur le disque unité $x^{2} + y^{2} \leq ~1$ , n et m sont les ordres des polynômes orthogonaux de Zernike, où n est un entier positif ou zéro, m est un entier positif ou négatif, ils sont soumis aux conditions 
 \begin{equation}
-m- \mid n \mid ~=~even~~,~~\mid n \mid~\leq~m
+m- \mid n \mid ~=~pair~~,~~\mid n \mid~\leq~m
 \end{equation}
 
-\paragraph{Définition des Moments de Zernike}
+\paragraph{Définition des Moments de Zernike:}
 En 1980, sur la base des polynômes orthogonaux de Zernike, Teague a proposé pour la première fois la définition des moments de Zernike d'une fonction d'image f( x, y) en deux dimensions
-\begin{displaymath}
+\begin{equation}
 Z_{mn} = \frac{m+1}{\pi} \int_{x} \int_{y} f(x,y)[V_{mn}(x,y)]^{*} ~dx~dy~~~~~\mbox{where $x^{2} + y^{2} \leq ~1$}
-\end{displaymath}
+\end{equation}
 où $m = 0,1,2,...,\infty$ et définit l'ordre, $f(x,y)$ est la fonction décrite et $*$ désigne le conjugué complexe. Alors que $n$ est un nombre entier (qui peut être positif ou négatif) décrivant la dépendance angulaire, ou rotation, sous conditions (4.4). Pour les images numériques, les intégrales sont remplacées par des sommations, alors les moments de Zernike sont réécrits comme :
 
-\begin{displaymath}
+\begin{equation}
 Z_{mn} = \frac{m+1}{\pi} \sum_{x} \sum_{y} P_{xy}[V_{mn}(x,y)]^{*} ~~~~~\mbox{where $x^{2} + y^{2} \leq ~1$}
-\end{displaymath}
+\end{equation}
 Dans la littérature on trouve d'autres variants ou améliorations des moments de Zernike. Pour nous, on a adopter l'implémentation de la librairie Mahotas pour nous simplifier la vie. On générale, il faut fixer un rayon centré sur le centre de masse de l'image (le rayon du cercle enveloppant minimal de la forme).
 Le vecteur de caractéristiques $ V_{Zernike} $ et de taille 25.
 
 \subsection{Combinaison des descripteurs}
-Les attributs: couleur, texture, forme décrivent les images par leur contenu visuel. La
-combinaison de ces attributs peut être mieux caractérisée le contenu. Il est donc intéressant de
-combiner ces différents attributs pour une recherche plus efficace et plus discriminante. Les
-problèmes qui se posent lors de la combinaison de ces différents attributs pour la recherche et
-l’indexation sont au moins de trois ordres :
+Les attributs: couleur, texture, forme décrivent les images par leur contenu visuel. La combinaison de ces attributs peut caractériser mieux le contenu. Il est donc intéressant de
+combiner ces différents attributs pour une recherche plus efficace et plus discriminante. Les problèmes qui se posent lors de la combinaison de ces différents attributs pour la recherche et l’indexation sont au moins de trois ordres :
 
 \begin{itemize}
-	\item  \textit{L'espace de description} : Le choix de l'espace de description consiste à rechercher les attributs visuels significatifs de la base de données d'images, l'ensemble de ces
+	\item  \textbf{L'espace de description} : Le choix de l'espace de description consiste à rechercher les attributs visuels significatifs de la base de données d'images, l'ensemble de ces
 	attributs étant représenté par un nuage de points dans un espace dimensionnel haut, alors les vecteurs contiennent plusieurs attributs, un problème qui se pose est celui de la dimension de l'espace de description. Ce problème est connu dans la communauté
 	des bases de données par la malédiction de la dimension, lorsque le nombre de dimensions augmente, le volume de l'espace croît rapidement si bien que les données se retrouvent isolées et deviennent éparses.
 	
-	\item \textit{ La mesure de la similarité} : Il s'agit d'une étape essentielle dans tout système de
+	\item \textbf{ La mesure de la similarité} : Il s'agit d'une étape essentielle dans tout système de
 	recherche. Dans le cas où les images sont décrites par différents attributs, une solution
 	classique pour mesurer la similarité est de calculer séparément les mesures de
 	similarité pour chaque attribut et de déduire ensuite une mesure composite de la
@@ -177,7 +181,7 @@ l’indexation sont au moins de trois ordres :
 	différentes, des degrés d'importance différents, surtout pour l'utilisateur, mais aussi de
 	natures différentes.
 	
-	\item \textit{Structuration} : la phase de construction d'une structure d'index est une étape utile dans
+	\item \textbf{Structuration} : la phase de construction d'une structure d'index est une étape utile dans
 	le cas où les données sont volumineuses et appartiennent à un grand espace de
 	description. Il s'agit de structurer les nuages de points relatifs aux descripteurs des
 	images et de les stocker efficacement dans une machine. Cette tâche de structuration
@@ -186,7 +190,7 @@ l’indexation sont au moins de trois ordres :
 	d'un index) et dans la standardisation des différents types de données.
 \end{itemize}
 \subsubsection{La couleur et la texture}
-Pour diminuer la taille du vecteur descripteur (signature) autant que possible nous avons choisi d'utiliser les moments de couleur, qui produit un signature de taille 9, pour caractériser la couleur. En ce qui concerne la caractérisation de la texture on travaille avec les filtres de Gabor.
+Pour diminuer la taille du vecteur descripteur (signature) autant que possible nous avons choisi d'utiliser les moments de couleur, qui produit une signature de taille 9, pour caractériser la couleur. En ce qui concerne la caractérisation de la texture on travaille avec les filtres de Gabor.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{clrtxtr}
@@ -198,7 +202,7 @@ M: Moyenne, E: Ecart-type, T: moment d'ordre trois.
 V_{final} = V_{moments} \bigcup V_{Gabor}
 \end{equation}
 \subsubsection{La couleur et la forme}
-nous utilisons les moments de couleur pour les mêmes raisons pour caractériser la couleur. En ce qui concerne la caractérisation de la forme on travaille avec les moments de Zernike.
+Nous utilisons les moments de couleur pour les mêmes raisons pour caractériser la couleur. En ce qui concerne la caractérisation de la forme on travaille avec les moments de Zernike car l'expérience preuve qu'il sont plus performant que les moments de Hu.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{clrshp}
@@ -210,11 +214,11 @@ $ M_i $: Moment i.
 V_{final} = V_{moments} \bigcup V_{Zernike}
 \end{equation}
 
-Pour fusionner les différents descripteurs, une méthode utilisée dans différents travaux [Iqba02] consiste à pondérer les distances de similarité. Ainsi les descripteurs pertinents pour la recherche se verront attribuer des poids les plus importants, et auront donc plus d’influence dans le résultat final. La combinaison des descripteurs est donnée par la relation suivante :
+Pour fusionner les différents descripteurs, une méthode utilisée dans différents travaux [ElAsnaoui17] consiste à pondérer les distances de similarité. Ainsi les descripteurs pertinents pour la recherche se verront attribuer des poids les plus importants, et auront donc plus d’influence dans le résultat final. La combinaison des descripteurs est donnée par la relation suivante :
 \begin{equation}
 	D_{global}(Q, I) = w_1 \times 	D_{1}(Q, I) + w_2 \times 	D_{2}(Q, I)
 \end{equation}
-où $ w_i $ est un poids qui prend une valeur entre 0 et 1.
+où $ w_i $ est un poids qui prend une valeur entre 0 et 1 avec $ w_1+w_2= 1 $.
 \section{Mesures de similarité}
 La deuxième étape dans les systèmes de recherche d'image par le contenu est le choix d'une mesure de similarité pour effectuer la recherche.\\
 
@@ -258,6 +262,7 @@ Ou :\\
 $ I_1, I_2 $ sont les deux vecteurs de caractéristiques.\\
 $ N $ est la dimension de vecteur.\\
 $ i $ indice.
+$ bar{I_i} $ la moyenne.
 
 \section{Les bases d’mages utilisées }
 \textbf{Corel-1000 - Wang:}
@@ -280,7 +285,7 @@ Cette base d’images est très connue pour la reconnaissance des objets. Il y a
 \end{figure}
 
 \textbf{Columbia-Utrecht Reflectance and Texture Database (CuRRET):}
-Des chercheurs des universités de Columbia et d'Utrecht ont collaboré dans une étude approfondie de l'aspect visuel des surfaces du monde réel. Cet effort conjoint, parrainé en partie par REALISE de la Commission européenne, la National Science Foundation et par le DARPA/ONR dans le cadre de la subvention MURI n° N00014-95-1-0601, a donné lieu à 3 bases de données [Site05]. Nous avons choisi 33 échantillons parmi 61 échantillons avec 50 images par échantillon.
+Des chercheurs des universités de Columbia et d'Utrecht ont collaboré dans une étude approfondie de l'aspect visuel des surfaces du monde réel. Cet effort conjoint, parrainé en partie par REALISE de la Commission européenne, la National Science Foundation et par le DARPA/ONR dans le cadre de la subvention MURI n° N00014-95-1-0601, a donné lieu à 3 bases de données [Site04]. Nous avons choisi 33 échantillons parmi 61 échantillons avec 50 images par échantillon.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{curet} 
@@ -318,7 +323,7 @@ La précision peut ainsi être comprise comme une mesure de l'exactitude ou de l
 \begin{figure}[H]
 	\includegraphics[width=0.5\textwidth]{recpre} 
 	\includegraphics[width=0.5\textwidth]{recallprecision} 
-	\caption{Rappel et précision.}
+	\caption{Rappel et précision comme illustré par Wikipédia.}
 \end{figure}
 Le rappel et la précision sont deux mesures très utilisées pour l’évaluation des performances d’un système CBIR. 
 
@@ -328,7 +333,7 @@ R = \frac{\text{VP}}{\text{FN et VP}} = \frac{\text{Nombre d'images pértinentes
 \begin{equation}
 P = \frac{\text{VP}}{\text{VP et FP}} = \frac{\text{Nombre d'images pértinentes retrouvées}}{\text{Nombre total d'images retrouvées}}
 \end{equation}
-Ou: \\
+Où: \\
 VP: Vrais Positifs\\
 VN: Vrais Négatifs\\
 FP: Faux Positifs\\
@@ -346,7 +351,7 @@ Il faut noter que nous avons ajouter la possibilité d'afficher la matrice de co
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Figures/cm.png} 
-	\caption{Exemple d'une matrice de confusion (source: Wikipedia).}
+	\caption{Exemple d'une matrice de confusion (source: Wikipédia).}
 \end{figure}
 Le système contient une fenètre pour calculer la pértinance de chaque requête:
 \begin{figure}[H]
@@ -355,7 +360,7 @@ Le système contient une fenètre pour calculer la pértinance de chaque requêt
 	\caption{Exemple d'une matrice de confusion calculé par le système.}
 \end{figure}
 \section{Architecture de l’application}
-Dans un système d’extraction d’images par le contenu il existe deux différents types de traitements :
+Dans un système d’extraction d’images par le contenu il existe deux types de traitements :
 \begin{itemize}
 	\item \textbf{Traitement offline :}
 	Ce type de traitement représente la phase de la construction de la base des signatures (d’attributs/vecteurs descripteurs).
@@ -367,13 +372,13 @@ Dans un système d’extraction d’images par le contenu il existe deux différ
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{architectureBDMM} 
-	\caption{architecture de l’application.}
+	\caption{Architecture de l’application.}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{architecture} 
-	\caption{architecture de l’application avec utiles}
+	\caption{Architecture de l’application avec utiles utilisés.}
 \end{figure}
 \paragraph{La base de signatures}
 La base d’attributs ou signatures est constituée d’un ensemble de fichiers CSV (un fichier par image). Chaque fichier est constituée de $ n+1 $ champs :
@@ -391,7 +396,7 @@ Généralement, l'interface utilisateur de notre système permet à l'utilisateu
 
 L'interface principale permet à l’utilisateur (Figure 4.8): 
 \begin{itemize}
-	\item Indexer une bases d'images (phase hors ligne) ou una bases de signatures,
+	\item d'indexer une bases d'images (phase hors ligne) ou una bases de signatures,
 	\item d’introduire son image requête,
 	\item de choisir le descripteur à utiliser avec le type d'images en cas d'indexation d'une base d'images,
 	\item de choisir la mesure de similarité à utiliser,
@@ -444,7 +449,7 @@ Résultas:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{query result} 
-	\caption{L'interface d’utilisateur.}
+	\caption{Résultats de la recherche.}
 \end{figure}
 
 Le système affiche une liste d'images ordonnées par le degré de similarité.
@@ -453,22 +458,22 @@ Pour mesurer la qualité de la réponse on va vers le menu \textbf{fenêtre->mes
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{mesuresQu} 
-	\caption{L'interface d’utilisateur.}
+	\caption{La fenêtre des mesures de la pertinence.}
 \end{figure}
 On calcule:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{QUresult} 
-	\caption{L'interface d’utilisateur.}
+	\caption{Résultatsdes mesures de la pertinence.}
 \end{figure}
 
 \section{Évaluation de système}
-Nous avons testé la performance de chaque descripteurs utilisé et dans cette section nous avons présenté les différents résultats.
+Nous avons testé la performance de chaque descripteurs utilisé et dans cette section nous présenterons les différents résultats.
 
 \paragraph{Processus suivi:}
 Dans cette partie nous avons évalué l’application avec le calcule du rappel, la précision et F-mesure pour chaque image requête. Le principe de fonctionnement est simple; les images requêtes sont sélectionnées de manière aléatoires (sans répétition de la même image requête) et on calcul les mesures de pertinence. 
 \subsection{Descripteurs de la couleur}
-Pour cette section, nous avons effectué un ensemble de tests sur 50 images requêtes (5 images pour chaque classe) de la base Wang. Les mesures de chaque classe sont calculées par la moyenne ses images. Puis à la phase finale, on peut déduire la précision globale de système qui représente la moyenne de toutes les classes. On travailler avec les mêmes requêtes pour les deux descripteurs.
+Pour cette section, nous avons effectué un ensemble de tests sur 50 images requêtes (5 images pour chaque classe) de la base Wang. Les mesures de chaque classe sont calculées par la moyenne de ses images. Puis à la phase finale, on peut déduire la précision globale de système qui représente la moyenne de toutes les classes. On travailler avec les mêmes requêtes pour les deux descripteurs.
 
 \begin{figure}[H]
 	\centering
@@ -481,79 +486,94 @@ Pour cette section, nous avons effectué un ensemble de tests sur 50 images requ
 	\includegraphics[width=.7\textwidth]{histRGBPert} 
 	\caption{Pertinence de l'histogramme RGB.}
 \end{figure}
-On remarque que les résultats sont proches avec les deux descripteurs sauf que l'histogramme présente presque 0,70 en précision contre 0,63 pour les moments de couleur.
+On remarque, d'après les deux figures 4.22 et 4.23, que les résultats sont proches avec les deux descripteurs sauf que l'histogramme présente presque 0,70 en précision contre 0,63 pour les moments de couleur.
 \subsection{Descripteurs de la texture}
-Pour cette section, nous avons effectué un ensemble de tests sur 25 images requêtes de la base CuRRET. On travaille avec les mêmes requêtes pour les deux descripteurs.\\
+Pour cette section, nous avons effectué un ensemble de tests sur 25 images requêtes de la base CuRRET avec la distance de Manhatan. On travaille avec les mêmes requêtes pour les deux descripteurs. Généralement, on effectue une segmentation des images avant d'extraire les informations.\\
 On fixe les options comme suite:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{Haralick options} 
-	\caption{Options des mesures de Haralick.}
+	\includegraphics[width=.45\textwidth]{Haralick options} \space
+	\includegraphics[width=.45\textwidth]{GaborOptions} 
+	\caption{Options: des mesures de Haralick (Gauche),  des filtres de Gabor (Droite).}
 \end{figure}
-
+On obtient:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{HaralickPert} 
 	\caption{Pertinence des mesures de Haralick.}
 \end{figure}
 
-On fixe les options comme suite:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=.7\textwidth]{GaborOptions} 
-	\caption{Options  des filtres de Gabor.}
-\end{figure}
+
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{GaborPert} 
 	\caption{Pertinence des filtres de Gabor.}
 \end{figure}
-Comme les résultats le montre, les filtres de Gabor présente des réponse de bonne qualité comparant aux mesures de Haralick.
+Comme les résultats le montre, les filtres de Gabor présente des réponse de bonne qualité comparant aux mesures de Haralick (Comme le montre les figure 4.25 et 4.26, 75\% en précision pour Gabor contre 43\% pour Haralick). 
 \subsection{Descripteurs de la forme}
 Pour évaluer les descripteurs de la forme, nous avons effectué un ensemble de testes sur 25 images requêtes de la base COIL-100 avec la distance de Manhatan. On a travaillé avec les mêmes requêtes pour les deux descripteurs.\\
 
 On fixe les options comme suite:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{HuOptions} 
-	\caption{Options des mesures de Hu.}
+	\includegraphics[width=.45\textwidth]{HuOptions} \space
+	\includegraphics[width=.45\textwidth]{ZernikeOptions} 
+	\caption{Options: des mesures de Hu (Gauche), des mesures de Zernike (Droite).}
 \end{figure}
-
+On obtient:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{HuPert} 
 	\caption{Pertinence des moments de Hu.}
 \end{figure}
 
-On fixe les options comme suite:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=.7\textwidth]{ZernikeOptions} 
-	\caption{Options des mesures de Zernike.}
-\end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{ZernikePert} 
 	\caption{Pertinence des moments de Zernike.}
 \end{figure}
-On remarque que les moments de Zernike sont plus performant que les moments de Hu.
+On remarque que les moments de Zernike sont plus performant que les moments de Hu. Comme le montre les figures 4.28 et 4.29, les moments de Zernike donnent une précision de 55\% alors que ceux de Hu donnent seulement 37\%.
 \subsection{Descripteurs combinés}
-Dans cette partie nous travaillons avec les mêmes bases de données et mêmes images requêtes utilisés dans les deux parties précédentes; CuRRET pour la texture et COIL-100 pour la forme. Nous avons fixer$  0,5 $ pour les deux poids.
-
+Dans cette partie nous travaillons avec les mêmes bases de données et mêmes images requêtes utilisés dans les deux parties précédentes; CuRRET pour la texture et COIL-100 pour la forme. Nous avons fixer $  0,5 $ pour les deux poids dans un premier temps.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{colShpPert} 
+	\includegraphics[width=.45\textwidth]{ColTxtrOptions2} \space
+	\includegraphics[width=.45\textwidth]{ColShpOptions} 
+	\caption{Options des moments de couleur combiné avec les filtres de Gabor (Gauche), et des moments de couleur combiné avec les moments de Zernike (Droite).}
+\end{figure}
+On obtient:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{colTxtrPert} 
 	\caption{Pertinence des moments de couleur combiné avec les filtres de Gabor.}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{colTxtrPert} 
+	\includegraphics[width=.7\textwidth]{colShpPert} 
 	\caption{Pertinence des moments de couleur combiné avec les moments de Zernike.}
 \end{figure}
-En générale, on remarque que la combinaison des descripteurs améliore la précisions des résultats obtenus. 
-\section{Problèmes rencontré}
+Les résultats donner dans la figure 4.31 ne présent pas une précision acceptable par rapport à celui donner dans la figure 4.24. Alors, nous avons changer les poids dans le but de l'améliorer comme suite:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.5\textwidth]{ColTxtrOptions}
+	\caption{Options des moments de couleur combiné avec les filtres de Gabor (Deuxième expérience):
+		20\% Couleur avec 80\% Texture.}
+\end{figure}
+On obtient:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{colTxtrPer2} 
+	\caption{Pertinence des moments de couleur combiné avec les filtres de Gabor (Deuxième expérience).}
+\end{figure}
+
+En générale, on remarque que la combinaison des descripteurs améliore la précisions des résultats obtenus:
+\begin{itemize}
+	\item Pour la couleur et la texture: comme le montre le figures 4.34, on obtient une précision de 70\% contre  75\% (Figure 4.26) avec la texture seul (le choix des poids compte dans la qualité ici).
+	\item Pour la couleur et la forme: comme le montre les figures 4.32, on obtient une précision de 92\% contre  55\% (Figure 4.29) avec la forme seul.
+\end{itemize}
+\section{Problèmes rencontrés}
 \begin{itemize}
 	\item La première problématique qui s’est imposée durant la réalisation du notre
 	application est le choix des descripteurs discriminants d’image pour s’assurer de
@@ -568,7 +588,7 @@ En générale, on remarque que la combinaison des descripteurs améliore la pré
 	\item Pour les descripteur de forme nous avons hésiter avec la méthode de segmentation à utiliser et nous avons adobter un simple seuillage (thesholding) pour transformer les images en noir et blanc.
 	\item ...etc.
 \end{itemize}
-\section{Perspective}
+\section{Perspectives}
 Comme perspectives, Nous proposons :
 \begin{itemize}
 	\item D’utiliser les descripteurs de l'apprentissage automatique (Machine Learning).
@@ -579,5 +599,4 @@ Comme perspectives, Nous proposons :
     \item Tester notre application avec d’autres bases de données.
 \end{itemize}
 \section{Conclusion}
-Au cours de ce dernier chapitre, nous avons présenté de notre système de
-recherche d’images par le contenu où nous avons essayer d’utiliser les descripteurs et mesures de similarité les plus recommandés dans la littérature. Les tests ont été effectué avec des bases d’images universellement connu. La comparaison de nos résultats avec ceux de la littérature permet de valider notre travail.
+Au cours de ce dernier chapitre, nous avons présenté notre système de recherche d’images par le contenu où nous avons essayé d’utiliser les descripteurs connues et les mesures de similarité les plus recommandés dans la littérature. Les tests ont été effectués avec des bases d’images universellement connues. La comparaison de nos résultats avec ceux de la littérature permet de valider notre travail.

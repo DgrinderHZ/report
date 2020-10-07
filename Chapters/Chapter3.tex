@@ -2,7 +2,7 @@
 
 \chapter{Apport de la structure d’index M-Tree dans un CBIR} % Main chapter title
 
-\label{ChapterX} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+\label{Chapter3} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
@@ -78,6 +78,15 @@ R = \left\{ o_1,...,o_k \in E / \forall o \in E, d(o, q) \ge \max_{1\leq i \leq 
 \end{figure}
 La Figure 3.2 représente un exemple d’une requête des k plus proches voisins, l’exécution d’une requête de trois plus proches voisins de la requête q retourne les trois objets $ O_4 $, $ O_5 $ et $ O_6 $.
 
+Nous avons effectuer une expérience pour comparer entre la performance de recherche linéaire et de recherche des k-NN de M-Tree. Nous avons effectuer la recherche dans une liste triée allant de 0 à 2001 avec des valeurs différentes à chaque test; n = 10, 100, 200, ..., 2000. la recherche linéaire retourne une seul valeur contre k=6 valeurs retourné par k-NN. Par ce fait, nous observons l'intérêts des structures d'index dans la figure 3.3 qui montre que M-tree accélère la recherche.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.65\textwidth]{Figures/mtreeVSlinear.png} % Include the image .png
+	\caption{Comapraisons entre la recherche linéaire et la recherche des k-NN M-tree.
+	}
+\end{figure}
+
+
 \subsection{Les fonctions métriques}
 Les fonctions métriques sont des fonctions qui permettent de mesurer la distance entre les objets d’un espace métrique. Le choix de la distance métrique convenable de comparaison se fait selon le type des données traitées, en effet, chaque type d’espace métrique à des distances métriques appropriées qui sont spécifiées par les experts. Généralement, les distances métriques sont classifiées en deux catégories [Chávez01]: les distances discrètes et les distances continues. Le choix de distance influence directement sur l’efficacité de la structure utilisée, et le choix de type de distance adéquate, pour construire une telle structure, dépend fortement de la base traitée [Hanif18]. Dans ce qui suit, un aperçu général sur quelques exemples de fonctions métriques continues et des fonctions métriques discrètes.
 
@@ -140,7 +149,7 @@ L’extraction automatique des caractéristiques d'images directement à partir 
 	\includegraphics[width=0.55\textwidth]{Figures/horsligne.png} % Include the image .png
 	\caption{Exemple de la représentation vectorielle d'une base d'image et d'une image requête.}
 \end{figure}
-La Figure 3.4 représente un exemple de l’extraction du contenu visuel des images sous forme des vecteurs ; A partir d’une base d’image on peut obtenir une base des vecteurs caractéristiques (indexes) qu’on peut comparer par des distances métriques.
+La Figure 3.5 représente un exemple de l’extraction du contenu visuel des images sous forme des vecteurs ; A partir d’une base d’image on peut obtenir une base des vecteurs caractéristiques (indexes) qu’on peut comparer par des distances métriques.
 
 Les distances de Monkowski sont beaucoup utilisées pour mesurer la similarité entre les descripteurs, notamment la distance Euclidienne. 
 
@@ -159,7 +168,7 @@ Les distances de Monkowski sont beaucoup utilisées pour mesurer la similarité 
 \section{Les méthodes d’accès Métriques}
 L'objectif principal des méthodes d’accès métrique (MAM) est la minimisation du temps de recherche. Le calcul de distance entre les objets métriques est souvent coûteux et consomme beaucoup du temps. Par exemple, le calcul des distances de Minkowski consomme un temps de complexité linéaire, le calcul de la distance Edit entre deux chaines de taille m et n est d’ordre $ O(n\times m) $. De même, la complexité de la distance de Hamming est d’ordre $ O(n\times m) $,certaines distances usuelles peuvent atteindre une complexité d’ordre $ O(n^4)  $ comme la distance Edit-tree [Zezula06]. Donc, la complexité de comparaison d’objets dans une base est un critère crucial qui influence directement sur la performance de la structure métrique utilisée. La mesure de performance se calcule en fonction du nombre de distances calculées lors du parcours de structure pour répondre à une requête parce que la complexité des autres parties des algorithmes de recherche est négligeable devant la complexité de calcul de distance [Chávez01].\\
 
-Le but de MAMs vise à minimiser le nombre de distances calculées lors du stockage et lors de la recherche par l’exploitation des distances pré-calculées et en évitant le parcours des régions inutiles sans faire des calculs supplémentaires. La Figure 3.5 illustre un exemple de cette approche dans les bases de données d’images [Chávez01].\\
+Le but de MAMs vise à minimiser le nombre de distances calculées lors du stockage et lors de la recherche par l’exploitation des distances pré-calculées et en évitant le parcours des régions inutiles sans faire des calculs supplémentaires. La Figure 3.6 illustre un exemple de cette approche dans les bases de données d’images [Chávez01].\\
 
 
 La technique la plus simple pour éviter le calcul des distances est l’exploitation directe de l’inégalité triangulaire. Supposons que, les distances entre objet pivot $ p $ des objets $ o_i $ sont pré-calculées, la distance entre une requête $ q $ et les objets $ o_i $ peut être estimée sans besoin du calcul direct des distances, il suffit de calculer la distance $ d(q,p) $ entre la requête et le pivot, ensuite, toutes les distances $ d(q,o_i) $ sont majorées par $ d(q,p)+d(p,o_i) $, et avec un simple effort de calcul nous pouvons déduire que la distance $ d(q,o_i) $ est minorée par $ |d(q,p)-d(p,o_i)| $. En effet, si $ q $ présente un objet requête, $ p $ un objet pivot et $ o $ un objet de la base. Si la distance $ d(q,p) $ entre la requête et le pivot est déjà calculée et la distance entre l’objet $ o $ et le pivot est pré-calculée. On peut estimer la distance entre la requête et l’objet par la formule suivante 
@@ -203,7 +212,7 @@ L’utilisation directe des pivots nécessite le stockage des distances entres l
 
 La première technique est l’utilisation du double pivot qui sert à regrouper, en chaque niveau de la structure, les objets d’une manière récursive à partir de deux pivots $ p_1 $ et $ p_2 $. Les objets qui sont plus proche au pivot $ p_1 $ que le pivot $ p_2 $ seront regroupés dans la région $ S(p_1) $ du pivot $ p_1 $ et les autres objets seront regroupés ainsi dans la deuxième région $ S(p_2 $) du pivot $ p_1 $.\\
 
-La deuxième technique sert à réduire le calcul des distances lors de stockage par l’utilisation des rayons de couverture d’un pivot au lieu de stocker les distances entre le pivot $ p $ et les objets d'une région, seulement deux valeurs $ r_{max} $ et $ r_{min} $, qui vérifie $  r_{min}  \le d(p,o) \le r_{max}  $, sont mémorisées (voir la Figure 3.9 qui suit comme un exemple). En remplaçant la distance $ d(p,o) $ par ses bornes et en utilisant la formule $ |d(q,p)-d(p,o)| \le d(q,o) \le d(q,p)+d(p,o) $, on peut facilement montrer que la distance $ d(q,o) $ est majorée par la valeur $ d(q,p) + r_{max} $ et qu’il est minorée par la valeur
+La deuxième technique sert à réduire le calcul des distances lors de stockage par l’utilisation des rayons de couverture d’un pivot au lieu de stocker les distances entre le pivot $ p $ et les objets d'une région, seulement deux valeurs $ r_{max} $ et $ r_{min} $, qui vérifie $  r_{min}  \le d(p,o) \le r_{max}  $, sont mémorisées (voir la Figure 3.10 qui suit comme un exemple). En remplaçant la distance $ d(p,o) $ par ses bornes et en utilisant la formule $ |d(q,p)-d(p,o)| \le d(q,o) \le d(q,p)+d(p,o) $, on peut facilement montrer que la distance $ d(q,o) $ est majorée par la valeur $ d(q,p) + r_{max} $ et qu’il est minorée par la valeur
 $ \max \left\{d(q,p) - r_{max}, r_{min} - d(q,p), 0\right\} $,
 avec:
 \begin{center}
@@ -267,7 +276,7 @@ La sémantique du rayon de recouvrement est exprimé par ce qui suit:
 	\item[Proprièté:] Le rayon de couverture d'un pivot (objet de routage), $ O_r $, satisfait l'inégalité $ d(O_j, O_r) \le r(O_r) $ pour chaque objet $ O_j $ stocké dans l'arbre de couverture de $ O_r $.
 \end{description}
 
-Un pivote définit donc une région dans l'espace métrique $ E $, centrée sur $ O_r $ et de rayon $ r(O_r) $, et $ O_r $ est le parent de chaque objet $ O_j $ stocké dans le nœud référencé par $ ptr(T(O_r)) $, c'est-à-dire $ O_r \equiv P(O_j)$ (voir figure 3.11 ).  Cela implique que le M-tree organise l'espace métrique en un ensemble de régions, qui peuvent se chevaucher, auxquelles le même principe est appliqué de manière récursive.
+Un pivote définit donc une région dans l'espace métrique $ E $, centrée sur $ O_r $ et de rayon $ r(O_r) $, et $ O_r $ est le parent de chaque objet $ O_j $ stocké dans le nœud référencé par $ ptr(T(O_r)) $, c'est-à-dire $ O_r \equiv P(O_j)$ (voir figure 3.12 ).  Cela implique que le M-tree organise l'espace métrique en un ensemble de régions, qui peuvent se chevaucher, auxquelles le même principe est appliqué de manière récursive.
 
 \begin{figure}[H]
 	\centering
@@ -304,7 +313,7 @@ Lorsque la division implique un nœud interne, $ N $, chaque entrée $ O_j $ dan
 r(O_{p1}) = \max \left\{d(O_j, O_{p1}) + r(O_j) | O_j \in N_1 \right\}
 \end{equation}
 
-Il est garanti, par la propriété d'inégalité triangulaire, qu'aucun objet dans $ T(O_{p1}) $ ne peut être distant de $  O_{p1} $ plus que $ r(O_{p1}) $. La figure 3.12 le montre dans le cas $ E = ( \mathbb{R^2}, L_2) $, c'est-à-dire le plan réel avec la distance euclidienne.
+Il est garanti, par la propriété d'inégalité triangulaire, qu'aucun objet dans $ T(O_{p1}) $ ne peut être distant de $  O_{p1} $ plus que $ r(O_{p1}) $. La figure 3.13 le montre dans le cas $ E = ( \mathbb{R^2}, L_2) $, c'est-à-dire le plan réel avec la distance euclidienne.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.6 \textwidth]{Figures/splitexep.png} % Include the image .png
@@ -332,7 +341,7 @@ Pour appliquer le Lemme 1, il faut calculer la distance $ d(O_r, Q) $. Cela peut
 	\item[Lemme 2 :]  Si $ | d(O_p, Q) - d(O_r, Op) |> r(Q) + r(O_r) $, alors $ d(O_r, Q) > r(Q) + r(O_r) $.
 \end{description}
 
-C'est une conséquence directe de l'inégalité triangulaire, qui garantit que $ d(O_r, Q) \ge d(O_p, Q)-d(O_r, O_p) $ et$  d(O_r, Q) \ge d(O_r, O_p)-d(O_p, Q) $ sont tous les deux vrais (voir figure 3.13 en dessous). Le même principe d'optimisation est appliqué aux nœuds feuilles. Les résultats expérimentaux montrent que cette technique permet d'économiser jusqu'à 40\% de calculs de distances [CiPaZe97]. Le seul cas où les distances doivent nécessairement être calculées est celui du nœud racine, pour lequel l'$ O_p $ est indéfini.
+C'est une conséquence directe de l'inégalité triangulaire, qui garantit que $ d(O_r, Q) \ge d(O_p, Q)-d(O_r, O_p) $ et$  d(O_r, Q) \ge d(O_r, O_p)-d(O_p, Q) $ sont tous les deux vrais (voir figure 3.14 en dessous). Le même principe d'optimisation est appliqué aux nœuds feuilles. Les résultats expérimentaux montrent que cette technique permet d'économiser jusqu'à 40\% de calculs de distances [CiPaZe97]. Le seul cas où les distances doivent nécessairement être calculées est celui du nœud racine, pour lequel l'$ O_p $ est indéfini.
 
 \begin{figure}[H]
 	\centering
