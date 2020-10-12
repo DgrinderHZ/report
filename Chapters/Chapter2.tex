@@ -71,7 +71,7 @@ La plus grande majorité des systèmes de recherche d'images par le contenu se b
 
 Ce type d'histogramme est calculé typiquement sur un espace caractéristique quantifié. Chaque valeur de caractère dans l'histogramme représente donc un rang de couleur dans la palette. 
 
-L'histogramme a été introduit pour la première fois en RIC (Recherche d'iformation par le contenu) par [Swain 91], depuis il est très utilisé à cause de sa simplicité de calcul, son invariante aux changements d'échelle et aux transformations géométriques.\\
+L'histogramme a été introduit pour la première fois en RIC (Recherche d'iformation par le contenu) par [Swain91], depuis il est très utilisé à cause de sa simplicité de calcul, son invariance aux changements d'échelle et aux transformations géométriques.\\
 
 \begin{figure}[H]
 	\label{fig:hist}
@@ -142,7 +142,7 @@ La méthode d'histogramme utilise la distribution complète de la couleur. On do
 %	SUBSECTION 2
 %----------------------------------------------------------------------------------------
 \subsection{Descripteur de la texture}
-Au même titre que la couleur, la texture est un  attribut visuel largement utilisé dans la recherche d’images par le contenu. Elle est également importante pour caractériser les motifs présents dans l’image. Elle permet de combler un vide que la couleur est incapable de faire, notamment lorsque les distributions de couleurs sont très proches. L'identification de la texture est une partie importante du système visuel humain, c'est un arrangement spatial de pixels, habituellement dans des modèles visuels homogènes que la couleur ne décrivent suffisamment. La modélisation et la description des textures sont un problème difficile. La texture est une caractéristique intuitive facile à reconnaître mais difficile à définir.
+Au même titre que la couleur, la texture est un  attribut visuel largement utilisé dans la recherche d’images par le contenu. Elle est également importante pour caractériser les motifs présents dans l’image. Elle permet de combler un vide que la couleur est incapable de faire, notamment lorsque les distributions de couleurs sont très proches. L'identification de la texture est une partie importante du système visuel humain, c'est un arrangement spatial de pixels, habituellement dans des modèles visuels homogènes que la couleur ne décrivent suffisamment. La modélisation et la description des textures est un problème difficile. La texture est une caractéristique intuitive facile à reconnaître mais difficile à définir.
 
 %-------------------------------------
 %            SUBSUBSECTION
@@ -348,8 +348,6 @@ Les filtres de Gabor permettent une bonne résolution spatiale à haute fréquen
 
 Un filtre de Gabor 2D est le produit d'une gaussienne elliptique dans toute rotation et un exponentiel complexe représentant une onde plane sinusoïdale. Nous rappelons que, dans le domaine spatial, la fonction de Gabor bidimensionnelle est une somme de deux fonctions sinusoïdales, l'une paire et réelle, l'autre impaire et imaginaire, modulée par une enveloppe gaussienne. Une fonction Gabor 2D $g(x, y)$ et sa transformée de Fourier $G(u, v)$ s'écrivent comme suit [Manjunathi96]:
 
-
-
 \begin{equation}
 	g(x, y) = \frac{1}{2\pi \sigma_x \sigma_y} \exp\left[-\frac{1}{2} (\frac{x^2}{\sigma_x^2} + \frac{y^2}{\sigma_y^2}) + 2\pi j W_x\right]
 \end{equation}
@@ -357,7 +355,6 @@ Un filtre de Gabor 2D est le produit d'une gaussienne elliptique dans toute rota
 \begin{equation}
 	g_{mn}(x, y) = a^{-m} \exp\left[-\frac{1}{2} (\frac{(u-W)^2}{\sigma_u^2} + \frac{v^2}{\sigma_v^2})\right] 
 \end{equation}
-
 
  avec : $\sigma_u = \frac{1}{2\pi \sigma_x } $ et  $ \sigma_v = \frac{1}{2\pi  \sigma_y} $. \\
  
@@ -379,7 +376,7 @@ Un filtre de Gabor 2D est le produit d'une gaussienne elliptique dans toute rota
 	\caption{Contour à mi-niveau de la réponse en fréquence d’un filtre de Gabor 2D de fréquence centrale $W_0$ et d’orientation $\theta$.}
 \end{figure}
 
-L'utilisation des filtres de Gabor permet d'extraire de l'image considérée des informations pertinentes, à la fois en espace et en fréquence. Ils peuvent capturer le spectre de fréquence d'une image, en amplitude zt en phase. Ces filtres sont toujours utilisés par bancs dans lesquels chacun des filtres est réglé à une orientation et une fréquence précise. Les recherches conduites dans la littérature montrent que les fonctions de Gabor simulent de manière convenable le système visuel humain en reconnaissance des textures; le système visuel étant considéré comme un ensemble de canaux de filtrage dans le domaine fréquentiel.
+L'utilisation des filtres de Gabor permet d'extraire de l'image considérée des informations pertinentes, à la fois en espace et en fréquence. Ils peuvent capturer le spectre de fréquence d'une image, en amplitude et en phase. Ces filtres sont toujours utilisés par bancs dans lesquels chacun des filtres est réglé à une orientation et une fréquence précise. Les recherches conduites dans la littérature montrent que les fonctions de Gabor simulent de manière convenable le système visuel humain en reconnaissance des textures; le système visuel étant considéré comme un ensemble de canaux de filtrage dans le domaine fréquentiel.
  \begin{figure}[H]
  	\label{fig:gabor49}
  	\centering

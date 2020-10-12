@@ -103,6 +103,16 @@ Les mesures de Haralick sont calculées à partir de la matrice de co-occurrence
 \subsubsection{Les filtres de Gabor}
 Dans le but d'améliorer les performances lié à la recherche basé sur la texture, nous avons utilisé les filtres de Gabor vue leurs robustesse prouvé par de nombreuse travaux de recherche dans la littérature [ElHasnaoui17] et [ZZ18].\\
 
+En traitement d'images, un filtre de Gabor, nommé d'après Dennis Gabor, est un filtre linéaire utilisé pour l'analyse de la texture:
+
+\begin{equation}
+g(x,y;\lambda,\theta,\psi,\sigma_x,\sigma_y) = \frac{1}{2\pi \sigma_x \sigma_y} \exp\left(\frac{-x'^2}{\sigma_x^2} + \frac{y'^2}{\sigma_y^2}\right)\exp\left(i\left(2\pi\frac{x'}{\lambda}+\psi\right)\right) 
+\end{equation}
+Où: $ x' = x \cos\theta + y \sin\theta\, $, $ y' = -x \sin\theta + y \cos\theta\, $, \\
+$\psi$ : La phase, \\
+$\theta$ : la direction, \\
+et $ \lambda $: la fréquence.\\
+
 Les filtres d'ondelettes de Gabor s'étendent sur 5 fréquences : 0.06, 0.09, 0.13, 0.18, 0.25 avec huit orientations $ \theta_0 = 0, \theta_n = \theta_{n-1} + \frac{\pi}{8} , n = 1,...,7$  et qui sont appliqués sur l'image. La moyenne et l'écart-type des coefficients d'ondelettes de Gabor des images résultante sont utilisés pour former un vecteur de caractéristiques $ V_{Gabor} $ de taille 5x8x2 = 240.
 
 \subsection{Les descripteurs de forme}
@@ -117,6 +127,12 @@ D'où les moments géométriques (centraux):
 \begin{figure}[H]
 	\includegraphics[width=0.5\textwidth]{momentCent} \includegraphics[width=0.5\textwidth]{momentCent1}
 \end{figure}
+Où:
+\begin{equation}
+\begin{tabular}{cc}
+$\bar{x} = \frac{M_{1,0}}{M_{0,0}}$ & $\bar{y} = \frac{M_{0,1}}{M_{0,0}}$
+\end{tabular}
+\end{equation}
 Les moments $ \mu_{p,q} $ invariants en ce qui concerne à la fois la translation et l'échelle peuvent être construits à partir des moments géométriques en divisant par un moment central zéro-ième correctement mis à l'échelle :
 \begin{equation}
 \eta _{{ij}}={\frac  {\mu _{{ij}}}{\mu _{{00}}^{{\left(1+{\frac  {i+j}{2}}\right)}}}}\,\!
@@ -131,7 +147,7 @@ Comme le montre le travail de Hu, [Hu62] les invariants en matière de translati
 
 Le vecteur de caractéristiques $ V_{Hu} $ est alors de taille 7.
 \subsubsection{Moments de Zernike}
-En 1934, Zernike a proposé un ensemble de polynômes orthogonaux définis sur le cercle unité, à savoir les polynômes orthogonaux de Zernike, leur formule de définition est la suivante :
+En 1934, Zernike [Site05] [MYB07] a proposé un ensemble de polynômes orthogonaux définis sur le cercle unité, à savoir les polynômes orthogonaux de Zernike, leur formule de définition est la suivante :
 \begin{equation}
 V_{mn}(x, y)~=~V_{mn}(r,\theta)~=~R_{mn}(r)\exp(jn\theta)
 \end{equation}
@@ -214,7 +230,7 @@ $ M_i $: Moment i.
 V_{final} = V_{moments} \bigcup V_{Zernike}
 \end{equation}
 
-Pour fusionner les différents descripteurs, une méthode utilisée dans différents travaux [ElAsnaoui17] consiste à pondérer les distances de similarité. Ainsi les descripteurs pertinents pour la recherche se verront attribuer des poids les plus importants, et auront donc plus d’influence dans le résultat final. La combinaison des descripteurs est donnée par la relation suivante :
+Pour fusionner les différents descripteurs, une méthode utilisée dans différents travaux [ElAsnaoui17] consiste à pondérer les distances de similarité. Ainsi les descripteurs pertinents pour la recherche se verront attribuer des poids les plus importants, et auront donc plus d’influence dans le résultat final. La combinaison des distances est donnée par la relation suivante :
 \begin{equation}
 	D_{global}(Q, I) = w_1 \times 	D_{1}(Q, I) + w_2 \times 	D_{2}(Q, I)
 \end{equation}
