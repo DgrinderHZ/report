@@ -446,7 +446,7 @@ On peut principalement citer :
 Les contours représentent la frontière entre les objets de l’image, ou la
 limite entre deux pixels dont les niveaux de gris représentent une différence significative [ZZ18]. Une texture se caractérise par la répétition d’un motif ou de quelques éléments. Plus précisément, la texture peut être vue comme un ensemble de pixels (niveaux de gris) spatialement agencés selon un certain nombre de relations spatiales, ainsi créant une région homogène [ZZ18]. On peut ainsi grâce à la texture faire la différence entre un coucher du soleil et une orange. Elle traduit donc l’aspect homogène d’une zone et peut être décrite selon ses propriétés spatiales et fréquentielles.\\
 
-Dans le troisième chapitre nous allons étudier la textures avec plus de détails.
+Dans le deuxième chapitre nous allons étudier la textures avec plus de détails.
 
 \subsection{Luminance et Contraste}
 
@@ -612,17 +612,17 @@ sur laquelle on travaille, et selon la nature des outils de segmentation
 utilisés, certain sont plus performantes que d’autres, mais comme nous
 allons le voir, les plus souvent sont destinées à un domaine particulier.
 On considère principalement de nombreux types de segmentation, que l'on
-peut regrouper en quatre principales classes [ZZ18] :
+peut regrouper en quatre classes principales [ZZ18] :
 \begin{itemize}
-	\item Segmentation par régions : consiste à caractériser les régions d’une image
+	\item \textbf{Segmentation par régions : }consiste à caractériser les régions d’une image
 	présentant un ensemble de pixels ayant des propriétés identiques
 	différentes de celles des autres régions. On utilise généralement la
 	méthode de "segmentation par croissance de régions" ou la méthode de
 	"segmentation par division et rassemblement ".
-	\item Segmentation par détection de contour : permet de borner les différentes
+	\item \textbf{Segmentation par détection de contour :} permet de borner les différentes
 	régions par leurs frontières tout en utilisant la détection de discontinuité
 	de ces trois composants : les points, les lignes et les contours.
-	\item Segmentation par seuillage : cette opération utilise l’histogramme pour
+	\item \textbf{Segmentation par seuillage :} cette opération utilise l’histogramme pour
 	séparer et extraire les différentes régions de l’image (segmenter une image
 	en plusieurs classes), à chaque pic de l’histogramme est associée une
 	classe qui se caractérise par un intervalle de niveaux de gris.
@@ -668,7 +668,7 @@ Lors de la phase d'indexation, le calcul de descripteur consiste en l'extraction
 	\item la texture (filtre de Gabor, transformée en ondelettes discrète…)
 	\item la couleur (la segmentation, les points d’intérêts, les régions d’intérêts,
 	histogramme de couleurs, histogrammes dans l'espace RGB ou dans TSV, …),
-	\item les formes (descripteurs de Fourier, Les moments de Zernik, …),
+	\item les formes (descripteurs de Fourier, Les moments de Zernike, …),
 	\item une combinaison de plusieurs de ces caractéristiques.
 \end{itemize}
 
@@ -716,7 +716,7 @@ L’ensemble de données contient 500 groupes d’images, qui représentent une 
 
 
 \subsection{Les requêtes}
-La plupart des systèmes de recherche d’images disposent d'une interface graphique permet aux utilisateurs d'effectuer une recherche par le biais d'une requête. L’utilisateur peut spécifier directement les attributs de bas niveau de l'image cible dans sa requête, interroger le système en esquissant un croquis, ou bien en présentant au système une image exemple de ce qu'il recherche.
+La plupart des systèmes de recherche d’images disposent d'une interface graphique permettant aux utilisateurs d'effectuer une recherche par le biais d'une requête. L’utilisateur peut spécifier directement les attributs de bas niveau de l'image cible dans sa requête, interroger le système en esquissant un croquis, ou bien en présentant au système une image exemple de ce qu'il recherche.
 
 Voici les quatre façons (types) pour faire une requête dans un système de recherche d'images :
 
@@ -734,7 +734,7 @@ Voici les quatre façons (types) pour faire une requête dans un système de rec
 		\caption{Capture d’écran d’une recherche effectuée sur Google avec des mot-clés et une image, réalisée le 27/06/2020.}
 	\end{figure}
 
-	\item \textbf{Requête par esquisse :} Puisque les deux méthodes précédentes ont des désavantages, les chercheurs développent d'autres approches pour renforcent les moteurs
+	\item \textbf{Requête par esquisse :} Puisque les deux méthodes précédentes ont des désavantages, les chercheurs développent d'autres approches pour renforcer les moteurs
 	de recherche d’images tel que la requête par esquisse ou bien par crayonnage. Dans cette approche, le système propose à l’utilisateur un ensemble d'outils de dessin et une palette de couleurs qui lui permet de spécifier sa requête en forme d’un sketch. Après, le système calcule les ressemblances entre le dessin et les images de sa base.
 		\begin{figure}[H]
 			\centering
@@ -777,7 +777,7 @@ choisir des mots clés correspondants à chaque image. Après l’annotation, on
 	\begin{equation}
 		R = \frac{| A \cap B|}{| A |} = \frac{\text{Nombre d'images pértinentes retrouvées}}{\text{Nombre total d'images pértinentes}}
 	\end{equation}
-	Ou A l’ensemble des images résultat pertinentes pour une requête donnée et B l’ensemble des images résultat retournées par le système.
+	Où A l’ensemble des images résultat pertinentes pour une requête donnée et B l’ensemble des images résultat retournées par le système.
 	
 	\item \textbf{La précision :}
 	La précision représente le rapport entre le nombre d’images pertinentes à la requête dans l’ensemble des images trouvées et le nombre d’images trouvées.
@@ -804,12 +804,12 @@ respectivement égale à un [Imane12].
 En pratique, le calcul d’une paire de valeurs (rappel et précision) ne
 peut pas indiquer la performance du système. Donc il est nécessaire
 d’utiliser plusieurs requêtes afin de donner une distribution de
-rappel/précision sous forme d’une courbe, ou chaque point de cette courbe
+rappel/précision sous forme d’une courbe, où chaque point de cette courbe
 représente la précision moyenne calculée pour toutes les images
 correspondant à ce niveau de rappel. Ce calcul statistique permet de suivre
 la qualité du résultat en fonction du nombre d’images affichées par le
 système en réponse à une requête.
-La figure donne un exemple de courbe de rappel et précision.
+La figure 1.22 donne un exemple de courbe de rappel et précision.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{courve} 

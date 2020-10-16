@@ -222,8 +222,8 @@ les approches statistiques, les méthodes géométriques, les méthodes à base 
  La texture d'une image peut être interprétée comme la régularité d'apparition de couples de niveaux de gris selon une distance (pas $k=1, 2, 3, ...etc$) donnée dans l’image. La matrice de co-occurrences contient les fréquences spatiales relatives d’apparition des niveaux
  de gris selon quatre directions: $\theta = 0◦$,  $\theta =  \frac{\pi}{4} = 45◦$,  $\theta =  \frac{\pi}{2} = 90◦$,  $\theta =  3 \times \frac{\pi}{4} = 135◦$. Une matrice de co-occurrences est définie au moyen d’une relation entre deux pixels .\\
 
-\begin{description}
-	\item[Définition] La matrice de coocurrence $P_{d,\theta}=(P_{d,\theta}(i, j))_{1\leq i,j \leq Ng}$ est une matrice carrée de taille $Ng \times Ng$. Avec:
+\begin{itemize}
+	\item[Définition:] La matrice de co-occurrence $P_{d,\theta}=(P_{d,\theta}(i, j))_{1\leq i,j \leq Ng}$ est une matrice carrée de taille $Ng \times Ng$. Avec:
 	\begin{itemize}
 		\item Ng étant le nombre de niveaux de gris de l'image (256x256). Les indices de la matrice de co-occurrences sont
 		donc les niveaux de gris de la texture étudiée.
@@ -236,7 +236,7 @@ les approches statistiques, les méthodes géométriques, les méthodes à base 
 		Où: $ 1_{ [bool]} = 1 $ si $ bool = vrai $ sinon 0.
 	\end{itemize} 
 Pour obtenir de véritables fréquences relatives, il faut normaliser les éléments de la matrice en les divisant par le nombre total de paires de points élémentaires séparés par la distance d dans la direction dans toute l’image.
-\end{description}
+\end{itemize}
 
 Alors on peut calculer plusieurs matrices, pour chaque distance (pas) et direction, mais avec un temps de calcul de ces matrices est assez long.
 
@@ -399,8 +399,8 @@ Comme c'était le cas pour la texture, l'information de la forme est complément
 
 La forme est un descripteur très important dans l'indexation des images. Elle est utilisée pour décrire la structure géométrique générique du contenu visuel. Généralement, les descripteurs de formes se divisent en deux catégories: 
 \begin{itemize}
-	\item les méthodes régions s'appuient sur la forme entière (règion). 
-	\item les méthodes régions s'appuient sur le contour.
+	\item les méthodes régions qui s'appuient sur la forme entière (règion). 
+	\item les méthodes régions qui s'appuient sur le contour.
 \end{itemize}
 On peut ensuite distinguer deux familles pour chacune de ces catégories, une famille qui considère les objets comme une seule partie, et celle qui décrit les objets en les considérant comme un assemblage de sous parties. Une segmentation des objets est généralement utilisée avant l'extraction des attributs.\\
 
@@ -465,12 +465,12 @@ Nous les présenterons dans le chapitre 4.
 
 
 \subsubsection{Moments orthogonaux}
-Par opposition aux moments géométriques qui sont définis par rapport à une base quelconque $(x^p, y^q)$, les moments orthogonaux, comme leur nom l’indique, sont définis dans une base orthogonale, ce qui évite la redondance des informations portées par chacun des moments. Les deux types de moments orthogonaux les plus utilisés sont : les moments de Legendre et les moments de Zernike. (Les moments de Zernike a voir dans le chapitre 4) .
+Par opposition aux moments géométriques qui sont définis par rapport à une base quelconque $(x^p, y^q)$, les moments orthogonaux, comme leur nom l’indique, sont définis dans une base orthogonale, ce qui évite la redondance des informations portées par chacun des moments. Les deux types de moments orthogonaux les plus utilisés sont : les moments de Legendre et les moments de Zernike. (Les moments de Zernike sont à voir dans le chapitre 4) .
 
 \subsubsection{Transformation ART}
-Angular Radial Transform (ART) est un descripteur de forme robuste au changement d’échelle, à la translation et à la rotation et utilisé dans plusieurs travaux [Chawki16] et [AlAsnaoui17]. Ce descripteur consiste à projeter l’objet à étudier sur une série de fonctions de base [Kim99].
+Angular Radial Transform (ART) est un descripteur de forme robuste au changement d’échelle, à la translation et à la rotation et utilisé dans plusieurs travaux [Chawki16] et [ElAsnaoui17]. Ce descripteur consiste à projeter l’objet à étudier sur une série de fonctions de base [Kim99].
 
-ART est un descripteur de formes par approche région qui caractérise la distribution des pixels dans un objet ou une région 2D. Il est basé sur l’étude des frontières et des pixels internes de la région à décrire. Il s’applique à un grand nombre d’objets, comme des objets complexes constitués de multiples régions discontinues ou des objets simples avec ou sans trou. Le descripteur de formes par approche régions se calcule en décomposant la forme sur plusieurs fonctions de base 2D orthogonales, définies par la transformation ART. Les coefficients ainsi obtenus sont utilisés après normalisation et quantification pour décrire la forme. ART donne un moyen compact et efficace pour exprimer la distribution de pixels dans une région de l’objet 2D [AlAsnaoui17]. Il peut décrire les deux formes de la région connectés et déconnectés.\\
+ART est un descripteur de formes par approche région qui caractérise la distribution des pixels dans un objet ou une région 2D. Il est basé sur l’étude des frontières et des pixels internes de la région à décrire. Il s’applique à un grand nombre d’objets, comme des objets complexes constitués de multiples régions discontinues ou des objets simples avec ou sans trou. Le descripteur de formes par approche régions se calcule en décomposant la forme sur plusieurs fonctions de base 2D orthogonales, définies par la transformation ART. Les coefficients ainsi obtenus sont utilisés après normalisation et quantification pour décrire la forme. ART donne un moyen compact et efficace pour exprimer la distribution de pixels dans une région de l’objet 2D [ElAsnaoui17]. Il peut décrire les deux formes de la région connectés et déconnectés.\\
 
 L’ART [Kim99] décrit une forme à travers la distribution de ses pixels de façon invariante aux transformations affines. La transformation ART est utilisée comme descripteur par approche
 région dans le standard MPEG-7. Elle est définie par la formule suivante :
@@ -479,7 +479,7 @@ région dans le standard MPEG-7. Elle est définie par la formule suivante :
     F_{nm} = {\int }_0^{2\pi} {\int }_0^{1} V_{nm}(\rho, \theta) f(\rho, \theta) \rho d\rho  d\theta
 \end{equation}
 
-Dans cette formule, $ F_{nm} $ est un coefficient d’ART d’ordre $ n $ et $ m $ , $ f(\rho, \theta) \longrightarrow {0,1} $ est une fonction image binaire définie en coordonnées polaires, et$  V_{nm}(\rho, \theta) $ st une fonction de base d’ART qui est séparable dans la direction angulaire et radiale :
+Dans cette formule, $ F_{nm} $ est un coefficient d’ART d’ordre $ n $ et $ m $ , $ f(\rho, \theta) \longrightarrow {0,1} $ est une fonction image binaire définie en coordonnées polaires, et $  V_{nm}(\rho, \theta) $ est une fonction de base d’ART qui est séparable dans la direction angulaire et radiale :
 \begin{equation}
 	V_{nm}(\rho, \theta)= A_m(\theta) R_n(\rho) 
 \end{equation}
@@ -537,7 +537,7 @@ transformations géométriques subies par un objet à l’intérieur d’une ima
 
 
 \section{Les mesures de similarité entre attributs}
-L'étape de la recherche dans les systèmes CBIR est la raison d'être d'un tel système et nécessite des techniques de comparaison entres attributs d'image (signatures). La mesure de similarité est alors une étape fondamentale dans la recherche d'images par le contenu. Elle compte sur la mesure de la ressemblance visuelle entre une image requête et les images de la base.\\
+L'étape de la recherche dans les systèmes CBIR est la raison d'être d'un tel système et nécessite des techniques de comparaison entre attributs d'image (signatures). La mesure de similarité est alors une étape fondamentale dans la recherche d'images par le contenu. Elle compte sur la mesure de la ressemblance visuelle entre une image requête et les images de la base.\\
 
 Les performances d'un CBIR dépendent largement de la mesure de similarité utilisée pour la comparaison des descripteurs des images.  de la recherche mais également de la représentation des caractéristiques.\\
 
@@ -570,7 +570,7 @@ vérifiant les propriétés suivantes :
 \end{figure}
 \end{table}
 
-Un ensemble muni d'une distance est un espace métrique.\\
+%Un ensemble muni d'une distance est un espace métrique.\\
 
 Au lieu d'un appariement exact, la recherche d’images par le contenu calcule des similarités visuelles entre une image requête et les images de la base d'images. En conséquent, le résultat d'une recherche n'est pas une seule image mais une liste d'images ordonnées selon leur degré de similitude avec l'image requête. Plusieurs mesures de similarités ont été proposées dans la littérature. Les différentes mesures de similarité influencent les performances de recherche des systèmes de recherche par le contenu.\\
 
@@ -580,7 +580,7 @@ représentation de l'image : images brutes (pixels) ou attributs (vecteurs descr
 	\item \textbf{Images brutes (pixels): }Au plus bas niveau d'abstraction, les images sont tout simplement des agrégations de pixels. La comparaison entre les images, est réalisée pixel par pixel, et les mesures de similarité couramment utilisées comprennent : le coefficient de corrélation, la somme des valeurs absolue des différences (SVAD), la distance des moindres carrés, et l’information mutuelle.
 	La comparaison au niveau des pixels est très spécifique et, par conséquent, n'est utilisée que lorsque des appariements relativement précis sont nécessaires.
 	
-	\item \textbf{Attributs:} Les attributs ou vecteurs descripteurs sont des valeurs numériques de données extraites des images ou des objets dans les images, tels que la couleur, la forme et la texture. Plusieurs mesures de similarité sont couramment utilisées pour la comparaison d’attributs: la distance euclidienne, la distance de Minkowsky et la distance d’intersection  [Khouloud09].
+	\item \textbf{Attributs:} Les attributs ou vecteurs descripteurs sont des valeurs numériques de données extraites des images ou des objets dans les images, tels que la couleur, la forme et la texture. Plusieurs mesures de similarité sont couramment utilisées pour la comparaison d’attributs: la distance euclidienne, la distance de Minkowski et la distance d’intersection  [Khouloud09].
 \end{itemize}
 
 Julien Fauqueur à classifier les distances pour les distributions de couleurs [Fauqueurs03] comme suite:

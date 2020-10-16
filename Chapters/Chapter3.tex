@@ -29,7 +29,7 @@ Etant donné un ensemble E des objets, chaque fonction $d: E\times E\rightarrow 
 	\end{array}
 \end{equation}
 
-Une distance métrique est une distance qui satisfait les trois propriétés ci-dessus plus une quatrième propriété. Cette propriété est connue sous le nom « l’inégalité triangulaire », elle est définie formellement comme le suivant :
+Une distance métrique est une distance qui satisfait les trois propriétés ci-dessus plus une quatrième propriété. Cette propriété est connue sous le nom « l’inégalité triangulaire », elle est définie formellement ci-dessous:
 
 \begin{equation}
 \begin{array}{cc}
@@ -139,7 +139,7 @@ Par exemple, la distance de Hamming entre les deux vecteurs $ (1,2,1,3) $ et $ (
 L’utilisation de la distance de Hamming est très large [Deza09], elle peut être utilisée pour mesurer de similarité de déférent type des donnés comme images, DNA, Protéine et Textes.
 
 \section{Les données métriques}
-La plupart des données acquises aujourd’hui peuvent être modélisées  des objets dans un espace métrique muni d’une distance métrique. Dans cette section, nous présentons des exemples des types bases de données qui peuvent utiliser des distances métriques pour faire la recherche par similarité.
+La plupart des données acquises aujourd’hui peuvent être modélisées  des objets dans un espace métrique muni d’une distance métrique. Dans cette section, nous présentons des exemples des types de bases de données qui peuvent utiliser des distances métriques pour faire la recherche par similarité.
 
 \subsection{Les images 2D}
 L’extraction automatique des caractéristiques d'images directement à partir de leur contenu numérique est une solution parmi les solutions possibles pour gérer efficacement les bases de données d'images. Chaque image est représentée par un ou plusieurs vecteurs qui représentent leurs contenus visuels. Par conséquence, la similarité entre deux images peut être mesurée par la comparaison entre leurs descripteurs. La génération d’une base de descripteurs des images représente une phase nécessaire dans les systèmes de recherche d’image par contenu. La description de contenu d’image est souvent faite par des descripteurs de bas niveau, appelés aussi vecteurs caractéristiques, tels que la couleur, la texture et la forme.
@@ -182,7 +182,7 @@ La technique la plus simple pour éviter le calcul des distances est l’exploit
 	\caption{Modèle d'indexation métrique et la recherche par similarité.}
 \end{figure}
 
-Lors de la recherche par une requête intervalle $ R(q,r) $, les bornes supérieures et inférieures peuvent être utilisées pour accélérer la recherche. Trois situations sont possibles : si la borne supérieure est inférieure à $  r (d(q,p)+d(p,o) \leq r ) $ alors il est sûr que l’objet $ o $ est pertinent car il vérifie $ d(q,o) \leq r $, si la borne inferieure dépasse le rayon $ r ( |d(q,p)-d(p,o)| > r )  $ alors il est sûr que $ d(q,o) > r $ et par conséquence l’objet $ o $ ne peut être parmi les résultats de la requête. La dernière situation est le pire des cas, il correspond au cas où la borne supérieure est supérieure à $ r $ et la borne inférieure est inférieure à  $ r $  $  (d(q,p)+d(p,o) \geq d(q,o)\geq |d(q,p)-d(p,o)|) $, il est indispensable de calculer la distance $ d(q,o) $ pour déterminer si l’objet $ o_i $ est pertinent ou non.
+Lors de la recherche par une requête intervalle $ R(q,r) $, les bornes supérieures et inférieures peuvent être utilisées pour accélérer la recherche. Trois situations sont possibles : si la borne supérieure est inférieure à $  r (d(q,p)+d(p,o) \leq r ) $ alors il est sûr que l’objet $ o $ est pertinent car il vérifie $ d(q,o) \leq r $, si la borne inferieure dépasse le rayon $ r ( |d(q,p)-d(p,o)| > r )  $ alors il est sûr que $ d(q,o) > r $ et par conséquence l’objet $ o $ ne peut être parmi les résultats de la requête. La dernière situation est le pire des cas, il correspond au cas où la borne supérieure est supérieure à $ r $ et la borne inférieure est inférieure à  $ r $  $  (d(q,p)+d(p,o) \geq r\geq |d(q,p)-d(p,o)|) $, il est indispensable de calculer la distance $ d(q,o) $ pour déterminer si l’objet $ o_i $ est pertinent ou non.
 
 \begin{figure}[H]
 	\centering
@@ -230,7 +230,7 @@ Dans la littérature, l’indexation de base de données par les méthodes d’a
 Plusieurs Méthodes d’accès métrique proposées en littérature sont basées sur l’idée de partitionnement des données. Elles peuvent se classifier sous quatre catégories; Les méthodes de partitionnement par boule, Les méthodes de partitionnement par hyperplan, Les méthodes de partitionnement par « Cut région » et les méthodes qui combinent plusieurs types de partitionnement [Hanif18].
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.55\textwidth]{Figures/class.png} % Include the image .png
+	\includegraphics[width=0.8\textwidth]{Figures/class.png} % Include the image .png
 	\caption{ Classification des méthodes d’accès métriques.}
 \end{figure}
 On s'intéresse principalement aux méthodes de partitionnement par boule.
@@ -241,7 +241,7 @@ Les méthodes de partitionnement en boule servent à partitionner l'espace des d
 \subsection{La structuration de M-tree}
 La méthode M-tree [CiPaZe97] est une structure efficace dans les environnements dynamiques caractérisés par un fréquent besoin de supprimer et d'ajouter des éléments. Le processus de construction de l'arbre M-tree consiste à partitionner l'espace métrique par des sphères région en se basant sur un pivot et un rayon de couverture. \\
 
-M-Tree organise les objets en nœuds de taille fixe, qui correspondent aux régions de l'espace métrique. Les nœuds de l'arbre peuvent stocker jusqu'à \textbf{$ M $} entrées, c'est la capacité des nœuds. Les feuilles de l’arbre différent dans leur structure avec les nœuds internes:
+M-Tree organise les objets en nœuds de taille fixe, qui correspondent aux régions de l'espace métrique. Les nœuds de l'arbre peuvent stocker jusqu'à \textbf{$ M $} entrées (Les résultats présentées dans le dernier chapitre ont été obtenues en fixant $ M = 8 $), c'est la capacité des nœuds. Les feuilles d l’arbre différent dans leur structure avec les nœuds internes:
 \begin{itemize}
 	\item Pour chaque objet indexé, une entrée au format 
 	\begin{figure}[H]
@@ -265,7 +265,7 @@ M-Tree organise les objets en nœuds de taille fixe, qui correspondent aux régi
 		\item \textbf{$ O_r $} est une valeur de caractéristique, également appelée un objet de routage,
 		\item \textbf{$ r(O_r) $}$>0$ est un rayon de couverture, 
 		\item \textbf{$ ptr(T( O_r)) $} est un pointeur à la racine du sous-arbre \textbf{$ T(O_r) $} - l'arbre couvrant d'\textbf{$ O_r $}, 
-		\item et \textbf{$ d(O_r, P(O_r)) $} est la distance entre \textbf{$ O_j $} et \textbf{$ P(O_j) $}, l'objet parent d'\textbf{$ O_j $}\\
+		\item et \textbf{$ d(O_r, P(O_r)) $} est la distance entre \textbf{$ O_r $} et \textbf{$ P(O_r) $}, l'objet parent d'\textbf{$ O_r $}\\
 		
 	\end{itemize}
 \end{itemize}
@@ -288,9 +288,9 @@ Les feuilles de l’arbre contiennent les identifiants des objets et leurs dista
 
 \subsection{Comment M-tree grandit?}
 
-Comme tout autre arbre dynamique équilibré (ou balancé), Le processus de construction de M-tree, qui se fait de bas en haut (un mode ascendant buttom-up), parcourt l'arbre à partir de la racine pour insérer le nouvel objet dans le sous arbre qui n'impose pas un changement de rayon de couverture. Si plusieurs sous arbre sont qualifiés, l'objet s'inséra dans le sous arbre de pivot le plus proche à l'objet inséré, sinon l'algorithme cherche le sous arbre qui peut avoir le minimum prolongement pour couvrir le nouvel objet.\\
+Comme tout autre arbre dynamique équilibré (ou balancé), Le processus de construction de M-tree (MT), qui se fait de bas en haut (un mode ascendant buttom-up), parcourt l'arbre à partir de la racine pour insérer le nouvel objet dans le sous arbre qui n'impose pas un changement de rayon de couverture. Si plusieurs sous arbre sont qualifiés, l'objet s'inséra dans le sous arbre de pivot le plus proche à l'objet inséré, sinon l'algorithme cherche le sous arbre qui peut avoir le minimum prolongement pour couvrir le nouvel objet.\\
 
-M-tree est constitué d’un ensemble de nœuds de taille fixe $ M $, si l'insertion d'un objet produit un dépassement de capacité d'un nœud $ N $, le processus de construction fait appel à la fonction Split qui sert à créer un nouveau nœud $ N' $ de même niveau que le nœud saturé $ N  $ et d’appliquer un algorithme de redistribution de $ M+1 $ données entre l’ancien nœud et le nouveau nœud créer. Lorsque la racine se divise, une nouvelle racine est créée et l'arbre $ M $ grandit d'un niveau. La méthode Split est décrite de manière concise comme suit :\\
+M-tree est constitué d’un ensemble de nœuds de taille fixe $ M $, si l'insertion d'un objet produit un dépassement de capacité d'un nœud $ N $, le processus de construction fait appel à la fonction Split qui sert à créer un nouveau nœud $ N' $ de même niveau que le nœud saturé $ N  $ et d’appliquer un algorithme de redistribution de $ M+1 $ données entre l’ancien nœud et le nouveau nœud créer. Lorsque la racine se divise, une nouvelle racine est créée et l'arbre $ MT $ grandit d'un niveau. La méthode Split est décrite de manière concise comme suit :\\
 
 \begin{figure}[H]
 	\centering
@@ -324,7 +324,7 @@ Il est garanti, par la propriété d'inégalité triangulaire, qu'aucun objet da
 Les algorithmes M-tree pour le traitement des requêtes de similarité visent à réduire le nombre de nœuds accessibles ainsi que le nombre de  de distances calculées. Cela est particulièrement important lorsque la recherche s'avère être orienté CPU, ce qui peut être le cas pour les fonctions de calcul de distance intensives. À cette fin, toutes les distances (pré-calculées) stockées dans les nœuds des M-trees, c'est-à-dire $ d(O_r, P(O_r)) $ et $ r(O_r) $, sont utilisées.
 
 \subsubsection{Les requêtes intervalle (Range Queries)}
-La requête $ range(Q, r(Q)) $ sélectionne tous les objets $ O_j $ de la base de données tels que $ d(O_j, Q) \le r(Q) $. L'algorithme \textbf{RangeSearch} part du nœud racine et parcourt récursivement tous les chemins qui ne peuvent pas être exclus pour aboutir à les objets qualifiants.
+La requête $ range(Q, r(Q)) $ sélectionne tous les objets $ O_j $ de la base de données tels que $ d(O_j, Q) \le r(Q) $. L'algorithme \textbf{RangeSearch} part du nœud racine et parcourt récursivement tous les chemins qui ne peuvent pas être exclus pour aboutir aux objets qualifiants.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.9 \textwidth]{Figures/rangesearxh.png} % Include the image .png
@@ -341,7 +341,7 @@ Pour appliquer le Lemme 1, il faut calculer la distance $ d(O_r, Q) $. Cela peut
 	\item[Lemme 2 :]  Si $ | d(O_p, Q) - d(O_r, Op) |> r(Q) + r(O_r) $, alors $ d(O_r, Q) > r(Q) + r(O_r) $.
 \end{description}
 
-C'est une conséquence directe de l'inégalité triangulaire, qui garantit que $ d(O_r, Q) \ge d(O_p, Q)-d(O_r, O_p) $ et$  d(O_r, Q) \ge d(O_r, O_p)-d(O_p, Q) $ sont tous les deux vrais (voir figure 3.14 en dessous). Le même principe d'optimisation est appliqué aux nœuds feuilles. Les résultats expérimentaux montrent que cette technique permet d'économiser jusqu'à 40\% de calculs de distances [CiPaZe97]. Le seul cas où les distances doivent nécessairement être calculées est celui du nœud racine, pour lequel l'$ O_p $ est indéfini.
+C'est une conséquence directe de l'inégalité triangulaire, qui garantit que $ d(O_r, Q) \ge d(O_p, Q)-d(O_r, O_p) $ et $  d(O_r, Q) \ge d(O_r, O_p)-d(O_p, Q) $ sont tous les deux vrais (voir figure 3.14 en dessous). Le même principe d'optimisation est appliqué aux nœuds feuilles. Les résultats expérimentaux montrent que cette technique permet d'économiser jusqu'à 40\% de calculs de distances [CiPaZe97]. Le seul cas où les distances doivent nécessairement être calculées est celui du nœud racine, pour lequel l'$ O_p $ est indéfini.
 
 \begin{figure}[H]
 	\centering
@@ -360,14 +360,14 @@ $ PR $ est une file d'attente de pointeurs vers des sous-arbres actifs, c'est-à
     d_{\min}(T(O_r)) = \max \left\{d(O_r, Q), 0\right\}
 \end{equation}
 puisqu'aucun objet dans $ T(O_r) $ ne peut avoir une distance de $  Q  $ inférieure à $ d(O_r, Q)-r(O_r) $.
-Ces limites sont utilisées par la fonction \textit{ChooseNode} pour extraire de $ PR $ le noeud suivant à examiner. Comme le critère d'élagage de la recherche k-NN est dynamique - le rayon de recherche est la distance entre $ Q $ et son k-ième voisin le plus proche actuel - l'ordre dans lequel les nœuds sont visités peut affecter les performances. Le critère heuristique mis en œuvre par la fonction \textit{ChooseNode} consiste à sélectionner le nœud pour lequel la limite inférieure de $ d_{min} $ est minimale.(D'après les observations expérimentales, d'autres critères ne conduisent pas à une meilleure performance [CiPaZe97].).
+Ces limites sont utilisées par la fonction \textit{ChooseNode} pour extraire de $ PR $ le noeud suivant à examiner. Comme le critère d'élagage de la recherche k-NN est dynamique - le rayon de recherche est la distance entre $ Q $ et son k-ième voisin le plus proche actuel - l'ordre dans lequel les nœuds sont visités peut affecter les performances. Le critère heuristique mis en œuvre par la fonction \textit{ChooseNode} consiste à sélectionner le nœud pour lequel la limite inférieure de $ d_{min} $ est minimale. (D'après les observations expérimentales, d'autres critères ne conduisent pas à une meilleure performance [CiPaZe97].).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.9 \textwidth]{Figures/choosenode.png} % Include the image .png
 \end{figure} 
 
 
-À la fin de l'exécution, la i-ième entrée du tableau $ NN $ aura la valeur $ NN[i] = [oid(O_j),d(O_j, Q)] $, $ O_j $ étant le i-ième voisin le plus proche de $ Q $. La valeur de la distance dans la i-ième entrée est désignée par $ d_i $, de sorte que $ d_k $ est la plus grande valeur de distance dans $ NN $. Il est clair que $ d_k $ joue le rôle d'un rayon de recherche dynamique, puisque tout sous-arbre pour lequel $ d_{min}(T(O_r)) > d_k $ peut être \textbf{élagué} en toute sécurité.\\
+À la fin de l'exécution, la i-ième entrée du tableau $ NN $ aura la valeur $ NN[i] = [oid(O_j),d(O_j, Q)] $, $ O_j $ étant le i-ième voisin le plus proche de $ Q $. La valeur de la distance dans la i-ième entrée est désignée par $ d_i $, de sorte que $ d_k $ est la plus grande valeur de distance dans $ NN $. Il est clair que $ d_k $ joue le rôle d'un rayon de recherche dynamique, puisque tout sous-arbre pour lequel $ d_{min}(T(O_r)) > d_k $ peut être élagué en toute sécurité.\\
 
 Les entrées du tableau $ NN $ sont initialement fixées à $ NN[i] = [null ,\infty] (i= 1,..., k) $, c'est-à-dire que les $ oid $ sont indéfinis et $ d_i = \infty $. Lorsque la recherche commence et que l'on accède aux nœuds (internes), l'idée est de calculer, pour chaque sous-arbre $ T(O_r) $, une limite supérieure, $ d_{max}(T(O_r)) $, sur la distance de tout objet dans $ T(O_r) $ par rapport à $ Q $. La limite supérieure est fixée à
 
@@ -389,7 +389,7 @@ La méthode \textit{k-NN-NodeSearch} implémente la majorité de la logique de r
 \end{figure} 
 
 \subsection{Insertion d'objets}
-L'algorithme d'insertion descend récursivement l'arbre MT pour localiser le nœud feuille le plus approprié pour accueillir un nouvel objet, $ O_n $, déclenchant éventuellement une division si la feuille est pleine. Le raisonnement de base pour déterminer le nœud feuille "le plus approprié" est de descendre, à chaque niveau de l'arbre, le long d'un sous-arbre, $ T(O_r) $, pour lequel aucun élargissement du rayon de couverture n'est nécessaire, c'est-à-dire$  d(O_r, O_n) \le r(O_r) $. S'il existe plusieurs sous-arbres ayant cette propriété, on choisit celui pour lequel l'objet $ O_n $ est le plus proche de $ O_r $. Ce critère heuristique tente d'obtenir des sous-arbres bien regroupés, ce qui a un effet bénéfique sur les performances.\\
+L'algorithme d'insertion descend récursivement l'arbre MT pour localiser le nœud feuille le plus approprié pour accueillir un nouvel objet, $ O_n $, déclenchant éventuellement une division si la feuille est pleine. Le raisonnement de base pour déterminer le nœud feuille "le plus approprié" est de descendre, à chaque niveau de l'arbre, le long d'un sous-arbre, $ T(O_r) $, pour lequel aucun élargissement du rayon de couverture n'est nécessaire, c'est-à-dire $  d(O_r, O_n) \le r(O_r) $. S'il existe plusieurs sous-arbres ayant cette propriété, on choisit celui pour lequel l'objet $ O_n $ est le plus proche de $ O_r $. Ce critère heuristique tente d'obtenir des sous-arbres bien regroupés, ce qui a un effet bénéfique sur les performances.\\
 
 Si aucun pivot pour lequel $ d(O_r, O_n) \le r(O_r) $ existe - donc un rayon de couverture doit être élargi - notre choix est de minimiser l'augmentation du rayon de couverture, c'est-à-dire $ d(O_r, O_n)-r(O_r) $. Ceci est étroitement lié au critère heuristique qui suggère de minimiser le "volume" global couvert par les pivots dans le nœud actuel. L'algorithme Insert résume les arguments ci-dessus.
 \begin{figure}[H]
@@ -407,7 +407,7 @@ Le critère du volume minimum conduit à concevoir des stratégies de fractionne
 La méthode Promote détermine, à partir d'un ensemble d'entrées, $ Ne $ , deux objets à promouvoir et à stocker dans le nœud parent (voir section 3.5.2). Les algorithmes spécifiques que nous considérons peuvent d'abord être classés selon qu'ils "confirment" ou non l'objet parent dans son rôle.
 
 \begin{description}
-	\item[Définition]  Une stratégie de fractionnement confirmée choisit l'un des deux objets à promouvoir, par exemple l'$ O_{p1} $, pour être l'objet parent lui-même, $ O_p $, du nœud de fractionnement.
+	\item[Définition : ]  Une stratégie de fractionnement confirmée choisit l'un des deux objets à promouvoir, par exemple l'$ O_{p1} $, pour être l'objet parent lui-même, $ O_p $, du nœud de fractionnement.
 \end{description}
 
 En d'autres termes, une stratégie de fractionnement confirmée ne fait que "extraire" une région, centrée sur le deuxième Pivot, l'$ O_{p2} $, de la région qui restera centrée sur l'$ O_p $. En général, cela simplifie l'exécution du fractionnement et réduit le nombre de calculs de distance.\\
@@ -435,7 +435,7 @@ Les alternatives que nous décrivons pour la mise en œuvre de Promote ne sont q
 Dans notre système nous avons choisi la dernière mèthode qui est M\_LB\_DIST.
 
 \subsubsection{Répartition des entrées}
-Étant donné un ensemble d'entrées $ Ne $ et les deux pivots $ O_{p1} $ et $ O_{p2} $, le problème est de savoir comment partitionner efficacement $ Ne $ en deux sous-ensembles, $  N_1 $ et $ N_2 $. À cette fin, nous envisager deux stratégies de base. La première est basée sur l'idée de la décomposition généralisée de l'hyperplan [Uhl91] et conduit à des fractionnements déséquilibrés, alors que la second obtient une répartition équilibrée. Ils peuvent être brièvement décrits comme suit.
+Étant donné un ensemble d'entrées $ Ne $ et les deux pivots $ O_{p1} $ et $ O_{p2} $, le problème est de savoir comment partitionner efficacement $ Ne $ en deux sous-ensembles, $  N_1 $ et $ N_2 $. À cette fin, nous envisageons deux stratégies de base. La première est basée sur l'idée de la décomposition généralisée de l'hyperplan [Uhl91] et conduit à des fractionnements déséquilibrés, alors que la second obtient une répartition équilibrée. Ils peuvent être brièvement décrits comme suit.
 \begin{itemize}
 	\item \textbf{Hyperplan généralisé (Generalized Hyperplane) :} Assignez chaque objet $ O_j \in Ne $ au  pivot le plus proche, c'est-à-dire si $ d(O_j, O_{p1}) \le d(O_j, O_{p2}) $ alors assignez $ O_j $ à $ N_1 $, sinon assignez $ O_j $ à $ N_2 $.
 	
@@ -443,7 +443,7 @@ Dans notre système nous avons choisi la dernière mèthode qui est M\_LB\_DIST.
 	 - Affecter à $ N_1 $ le plus proche voisin de l'$ O_{p1} $ dans $ Ne $ et le retirer de $ Ne $ ;\\
 	 - Attribuer à $ N_2 $ le plus proche voisin de l'$ O_{p2} $ dans $ Ne $ et le retirer de $ Ne $.
 \end{itemize}
-En fonction de la distribution des données et de la manière dont les objets de routage sont choisis, une stratégie de fractionnement déséquilibrée peut conduire à un meilleur partitionnement des objets, en raison du degré de liberté supplémentaire que l'on obtient. En particulier, il faut remarquer que, si l'obtention d'un fractionnement équilibré avec des méthodes d'accès spatiale oblige à n'élargir les régions que selon les dimensions nécessaires, dans un espace métrique, l'augmentation conséquente du rayon de couverture se propagerait à toutes les "dimensions".\\
+En fonction de la distribution des données et de la manière dont les pivots sont choisis, une stratégie de fractionnement déséquilibrée peut conduire à un meilleur partitionnement des objets, en raison du degré de liberté supplémentaire que l'on obtient. En particulier, il faut remarquer que, si l'obtention d'un fractionnement équilibré avec des méthodes d'accès spatiale oblige à n'élargir les régions que selon les dimensions nécessaires, dans un espace métrique, l'augmentation conséquente du rayon de couverture se propagerait à toutes les "dimensions".\\
 
 Un comportement intermédiaire peut être obtenu en combinant les deux algorithmes ci-dessus et en fixant un seuil minimum d'utilisation des nœuds. Si au moins $ m \le M/2 $ entrées par nœud sont nécessaires, la distribution équilibrée peut être appliquée aux 2 premiers $ m $ objets, après quoi l'hyperplan généralisé pourrait être utilisé. 
 

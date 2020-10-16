@@ -164,14 +164,14 @@ m- \mid n \mid ~=~pair~~,~~\mid n \mid~\leq~m
 \end{equation}
 
 \paragraph{Définition des Moments de Zernike:}
-En 1980, sur la base des polynômes orthogonaux de Zernike, Teague a proposé pour la première fois la définition des moments de Zernike d'une fonction d'image f( x, y) en deux dimensions
+En 1980, sur la base des polynômes orthogonaux de Zernike, Teague [Teague80] a proposé pour la première fois la définition des moments de Zernike d'une fonction d'image f( x, y) en deux dimensions
 \begin{equation}
-Z_{mn} = \frac{m+1}{\pi} \int_{x} \int_{y} f(x,y)[V_{mn}(x,y)]^{*} ~dx~dy~~~~~\mbox{where $x^{2} + y^{2} \leq ~1$}
+Z_{mn} = \frac{m+1}{\pi} \int_{x} \int_{y} f(x,y)[V_{mn}(x,y)]^{*} ~dx~dy~~~~~\mbox{ avec $x^{2} + y^{2} \leq ~1$}
 \end{equation}
 où $m = 0,1,2,...,\infty$ et définit l'ordre, $f(x,y)$ est la fonction décrite et $*$ désigne le conjugué complexe. Alors que $n$ est un nombre entier (qui peut être positif ou négatif) décrivant la dépendance angulaire, ou rotation, sous conditions (4.4). Pour les images numériques, les intégrales sont remplacées par des sommations, alors les moments de Zernike sont réécrits comme :
 
 \begin{equation}
-Z_{mn} = \frac{m+1}{\pi} \sum_{x} \sum_{y} P_{xy}[V_{mn}(x,y)]^{*} ~~~~~\mbox{where $x^{2} + y^{2} \leq ~1$}
+Z_{mn} = \frac{m+1}{\pi} \sum_{x} \sum_{y} P_{xy}[V_{mn}(x,y)]^{*} ~~~~~\mbox{ avec $x^{2} + y^{2} \leq ~1$}
 \end{equation}
 Dans la littérature on trouve d'autres variants ou améliorations des moments de Zernike. Pour nous, on a adopter l'implémentation de la librairie Mahotas pour nous simplifier la vie. On générale, il faut fixer un rayon centré sur le centre de masse de l'image (le rayon du cercle enveloppant minimal de la forme).
 Le vecteur de caractéristiques $ V_{Zernike} $ et de taille 25.
@@ -305,7 +305,7 @@ Des chercheurs des universités de Columbia et d'Utrecht ont collaboré dans une
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{curet} 
-	\caption{Quelques images de la base d’image CurRRET.}
+	\caption{Quelques images de la base d’image CuRRET.}
 \end{figure}
 
 %\textbf{MIT1995 - VisTex:}
@@ -396,7 +396,7 @@ Dans un système d’extraction d’images par le contenu il existe deux types d
 	\includegraphics[width=0.9\textwidth]{architecture} 
 	\caption{Architecture de l’application avec utiles utilisés.}
 \end{figure}
-\paragraph{La base de signatures}
+\paragraph{La base de signatures:}
 La base d’attributs ou signatures est constituée d’un ensemble de fichiers CSV (un fichier par image). Chaque fichier est constituée de $ n+1 $ champs :
 \begin{itemize}
 	\item 1 champ pour le chemin absolu de l'image (oid pour M-Tree),
@@ -424,7 +424,7 @@ L'interface principale permet à l’utilisateur (Figure 4.8):
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{gui} 
+	\includegraphics[width=0.9\textwidth]{gui} 
 	\caption{L'interface d’utilisateur.}
 \end{figure}
 
@@ -504,7 +504,7 @@ Pour cette section, nous avons effectué un ensemble de tests sur 50 images requ
 \end{figure}
 On remarque, d'après les deux figures 4.22 et 4.23, que les résultats sont proches avec les deux descripteurs sauf que l'histogramme présente presque 0,70 en précision contre 0,63 pour les moments de couleur.
 \subsection{Descripteurs de la texture}
-Pour cette section, nous avons effectué un ensemble de tests sur 25 images requêtes de la base CuRRET avec la distance de Manhatan. On travaille avec les mêmes requêtes pour les deux descripteurs. Généralement, on effectue une segmentation des images avant d'extraire les informations.\\
+Pour cette section, nous avons effectué un ensemble de tests sur 25 images requêtes de la base CuRRET avec la distance de Manhatan. On travaille avec les mêmes requêtes pour les deux descripteurs. 
 On fixe les options comme suite:
 \begin{figure}[H]
 	\centering
@@ -528,14 +528,14 @@ On obtient:
 \end{figure}
 Comme les résultats le montre, les filtres de Gabor présente des réponse de bonne qualité comparant aux mesures de Haralick (Comme le montre les figure 4.25 et 4.26, 75\% en précision pour Gabor contre 43\% pour Haralick). 
 \subsection{Descripteurs de la forme}
-Pour évaluer les descripteurs de la forme, nous avons effectué un ensemble de testes sur 25 images requêtes de la base COIL-100 avec la distance de Manhatan. On a travaillé avec les mêmes requêtes pour les deux descripteurs.\\
+Pour évaluer les descripteurs de la forme, nous avons effectué un ensemble de testes sur 25 images requêtes de la base COIL-100 avec la distance de Manhatan. On a travaillé avec les mêmes requêtes pour les deux descripteurs. Généralement, on effectue une segmentation des images avant d'extraire les informations.\\
 
 On fixe les options comme suite:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.45\textwidth]{HuOptions} \space
 	\includegraphics[width=.45\textwidth]{ZernikeOptions} 
-	\caption{Options: des mesures de Hu (Gauche), des mesures de Zernike (Droite).}
+	\caption{Options: des moments de Hu (Gauche), des moments de Zernike (Droite).}
 \end{figure}
 On obtient:
 \begin{figure}[H]
@@ -600,8 +600,8 @@ En générale, on remarque que la combinaison des descripteurs améliore la pré
 	qu’avec les images .jpg après, nous avons pu utiliser des images .png après une
 	petite adaptation de code (il est possible d'ajouter d'autres format en modifiant une seul ligne de code).
 	
-	\item Dans la phase d'indexation de quelques descripteur à savoir les filtres de Gabor, l'opération prend des dizaines de minutes, une qui nous a compliqué les testes d'avancement.
-	\item Pour les descripteur de forme nous avons hésiter avec la méthode de segmentation à utiliser et nous avons adobter un simple seuillage (thesholding) pour transformer les images en noir et blanc.
+	\item Dans la phase d'indexation de quelques descripteurs à savoir les filtres de Gabor, l'opération prend des dizaines de minutes, une qui nous a compliqué les testes d'avancement.
+	\item Pour les descripteurs de forme nous avons hésiter avec la méthode de segmentation à utiliser et nous avons adobter un simple seuillage (thresholding) pour transformer les images en noir et blanc.
 	\item ...etc.
 \end{itemize}
 \section{Perspectives}
