@@ -174,7 +174,7 @@ où $m = 0,1,2,...,\infty$ et définit l'ordre, $f(x,y)$ est la fonction décrit
 Z_{mn} = \frac{m+1}{\pi} \sum_{x} \sum_{y} P_{xy}[V_{mn}(x,y)]^{*} ~~~~~\mbox{ avec $x^{2} + y^{2} \leq ~1$}
 \end{equation}
 Dans la littérature on trouve d'autres variants ou améliorations des moments de Zernike. Pour nous, on a adopter l'implémentation de la librairie Mahotas pour nous simplifier la vie. On générale, il faut fixer un rayon centré sur le centre de masse de l'image (le rayon du cercle enveloppant minimal de la forme).
-Le vecteur de caractéristiques $ V_{Zernike} $ et de taille 25.
+Le vecteur de caractéristiques $ V_{Zernike} $ et de taille 25 puisque nous avons fixé $ m = 8 $ la valeur par défaut de l'implémentation (On peut augmenter la taille de vecteur en l'augmentant).
 
 \subsection{Combinaison des descripteurs}
 Les attributs: couleur, texture, forme décrivent les images par leur contenu visuel. La combinaison de ces attributs peut caractériser mieux le contenu. Il est donc intéressant de
@@ -242,7 +242,7 @@ Pour rechercher les images les plus similaires à une image requête, il faut po
 
 D'une façon générale, nous avons choisi d’utiliser les distances dérivées de la famille de distances de Minkowski; la distance de Manhatan et la distance Euclidienne.\\
 
-Pour les distributions statistiques à savoir les histogrammes, nous avons ajouter les distances:  $\chi^2$ (CHI-square) et Bhattacharyya  .
+Pour les distributions statistiques à savoir les histogrammes, nous avons ajouter les distances:  $\chi^2$ (CHI-square) et Bhattacharyya mais nous ne somme pas assuré pour le moment s'elles vérifier les propriétaire d'une distances: $\chi^2$ c'est clair qu'elle ne vérifie pas la symétrie. Alors, on utilise les distances de Minkowski pour les testes.
 
 \begin{table}[H]
 	\centering
@@ -275,10 +275,10 @@ Pour les distributions statistiques à savoir les histogrammes, nous avons ajout
 	
 \end{table}
 Ou :\\
-$ I_1, I_2 $ sont les deux vecteurs de caractéristiques.\\
-$ N $ est la dimension de vecteur.\\
-$ i $ indice.
-$ bar{I_i} $ la moyenne.
+$ I_1, I_2 $ sont les deux vecteurs de caractéristiques,\\
+$ N $ est la dimension de vecteur,\\
+$ i $ indice,\\
+$ \bar{I_i} $ la moyenne.
 
 \section{Les bases d’mages utilisées }
 \textbf{Corel-1000 - Wang:}
@@ -372,24 +372,24 @@ Il faut noter que nous avons ajouter la possibilité d'afficher la matrice de co
 Le système contient une fenètre pour calculer la pértinance de chaque requête:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\textwidth]{mesures} 
+	\includegraphics[width=0.8\textwidth]{mesures} 
 	\caption{Exemple d'une matrice de confusion calculé par le système.}
 \end{figure}
 \section{Architecture de l’application}
-Dans un système d’extraction d’images par le contenu il existe deux types de traitements :
-\begin{itemize}
-	\item \textbf{Traitement offline :}
-	Ce type de traitement représente la phase de la construction de la base des signatures (d’attributs/vecteurs descripteurs).
-	Cette opération est réalisée durant la construction du système.
-	\item \textbf{Traitement online :}
-	Ce type de traitement est effectué lors de l’introduction de la requête de l’utilisateur.
-	Les signatures sont extraits de l’image requête puis comparés à ceux de la base de signatures qui a été déjà construite au préalable.
-\end{itemize}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\textwidth]{architectureBDMM} 
-	\caption{Architecture de l’application.}
-\end{figure}
+Dans un système d’extraction d’images par le contenu il existe deux types de traitements comme déjà présenter dan la section 1.6.1.
+%\begin{itemize}
+%	\item \textbf{Traitement offline :}
+%	Ce type de traitement représente la phase de la construction de la base des signatures (d’attributs/vecteurs descripteurs).
+%	Cette opération est réalisée durant la construction du système.
+%	\item \textbf{Traitement online :}
+%	Ce type de traitement est effectué lors de l’introduction de la requête de l’utilisateur.
+%	Les signatures sont extraits de l’image requête puis comparés à ceux de la base de signatures qui a été déjà construite au préalable.
+%\end{itemize}
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.9\textwidth]{architectureBDMM} 
+%	\caption{Architecture de l’application.}
+%\end{figure}
 
 \begin{figure}[H]
 	\centering
@@ -410,9 +410,9 @@ Généralement, l'interface utilisateur de notre système permet à l'utilisateu
  	\item Calculer la qualité de chaque réponse ou requête,
  \end{itemize}
 
-L'interface principale permet à l’utilisateur (Figure 4.8): 
+L'interface principale permet à l’utilisateur (Figure 4.13): 
 \begin{itemize}
-	\item d'indexer une bases d'images (phase hors ligne) ou una bases de signatures,
+	\item d'indexer une bases d'images (phase hors ligne) ou une bases de signatures,
 	\item d’introduire son image requête,
 	\item de choisir le descripteur à utiliser avec le type d'images en cas d'indexation d'une base d'images,
 	\item de choisir la mesure de similarité à utiliser,
@@ -424,7 +424,7 @@ L'interface principale permet à l’utilisateur (Figure 4.8):
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{gui} 
+	\includegraphics[width=1\textwidth]{gui} 
 	\caption{L'interface d’utilisateur.}
 \end{figure}
 
@@ -479,8 +479,8 @@ Pour mesurer la qualité de la réponse on va vers le menu \textbf{fenêtre->mes
 On calcule:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{QUresult} 
-	\caption{Résultatsdes mesures de la pertinence.}
+	\includegraphics[width=0.7\textwidth]{mesures} 
+	\caption{Résultats des mesures de la pertinence.}
 \end{figure}
 
 \section{Évaluation de système}
@@ -489,20 +489,20 @@ Nous avons testé la performance de chaque descripteurs utilisé et dans cette s
 \paragraph{Processus suivi:}
 Dans cette partie nous avons évalué l’application avec le calcule du rappel, la précision et F-mesure pour chaque image requête. Le principe de fonctionnement est simple; les images requêtes sont sélectionnées de manière aléatoires (sans répétition de la même image requête) et on calcul les mesures de pertinence. 
 \subsection{Descripteurs de la couleur}
-Pour cette section, nous avons effectué un ensemble de tests sur 50 images requêtes (5 images pour chaque classe) de la base Wang. Les mesures de chaque classe sont calculées par la moyenne de ses images. Puis à la phase finale, on peut déduire la précision globale de système qui représente la moyenne de toutes les classes. On travailler avec les mêmes requêtes pour les deux descripteurs.
+Pour cette section, nous avons effectué un ensemble de testes sur 50 images requêtes (5 images pour chaque classe) de la base Wang. Les mesures de chaque classe sont calculées par la moyenne de ses images. Puis à la phase finale, on peut déduire la précision globale de système qui représente la moyenne de toutes les classes. On travailler avec les mêmes requêtes pour les deux descripteurs.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{MomentsColPert} 
-	\caption{Pertinence des moments de couleur.}
+	\includegraphics[width=.4\textwidth]{MomentsColPert} \space \space
+	\includegraphics[width=.4\textwidth]{histRGBPert}  
+	\caption{Moyennes des Mesures: (Gauche) Moments de couleur (Droite) L'histogramme RGB.}
 \end{figure}
 
+On remarque, d'après la figure 4.21, que les résultats sont proches avec les deux descripteurs sauf que l'histogramme présente presque 0,70 en précision contre 0,63 pour les moments de couleur. Dans la courbe ci-dessous on remarque la différence pour chaque classe:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{histRGBPert} 
-	\caption{Pertinence de l'histogramme RGB.}
+	\includegraphics[width=.8\textwidth]{courbeCol}
 \end{figure}
-On remarque, d'après les deux figures 4.22 et 4.23, que les résultats sont proches avec les deux descripteurs sauf que l'histogramme présente presque 0,70 en précision contre 0,63 pour les moments de couleur.
 \subsection{Descripteurs de la texture}
 Pour cette section, nous avons effectué un ensemble de tests sur 25 images requêtes de la base CuRRET avec la distance de Manhatan. On travaille avec les mêmes requêtes pour les deux descripteurs. 
 On fixe les options comme suite:
@@ -515,18 +515,17 @@ On fixe les options comme suite:
 On obtient:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{HaralickPert} 
-	\caption{Pertinence des mesures de Haralick.}
+	\includegraphics[width=.4\textwidth]{HaralickPert} \space \space
+	\includegraphics[width=.4\textwidth]{GaborPert} 
+	\caption{Moyennes des mesures: (Gauche) Les mesures de Haralick (Droite) Les filtres de Gabor..}
 \end{figure}
 
 
-
+Comme les résultats le montre, les filtres de Gabor présente des réponse de bonne qualité comparant aux mesures de Haralick (dans la figure 4.23, 75\% en précision pour Gabor contre 43\% pour Haralick). Dans la courbe ci-dessous on remarque la différence pour chaque requête:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{GaborPert} 
-	\caption{Pertinence des filtres de Gabor.}
+	\includegraphics[width=.8\textwidth]{courbeText}
 \end{figure}
-Comme les résultats le montre, les filtres de Gabor présente des réponse de bonne qualité comparant aux mesures de Haralick (Comme le montre les figure 4.25 et 4.26, 75\% en précision pour Gabor contre 43\% pour Haralick). 
 \subsection{Descripteurs de la forme}
 Pour évaluer les descripteurs de la forme, nous avons effectué un ensemble de testes sur 25 images requêtes de la base COIL-100 avec la distance de Manhatan. On a travaillé avec les mêmes requêtes pour les deux descripteurs. Généralement, on effectue une segmentation des images avant d'extraire les informations.\\
 
@@ -540,16 +539,17 @@ On fixe les options comme suite:
 On obtient:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{HuPert} 
-	\caption{Pertinence des moments de Hu.}
+	\includegraphics[width=.4\textwidth]{HuPert} \space \space 
+	\includegraphics[width=.4\textwidth]{ZernikePert}
+	\caption{Moyennes des mesures: (Gauche) Les moments de Hu (Droite) Les moments de Zernike.}
 \end{figure}
 
+
+On remarque que les moments de Zernike sont plus performant que les moments de Hu. Comme le montre la figure 4.25, les moments de Zernike donnent une précision de 55\% alors que ceux de Hu donnent seulement 37\%. Dans la courbe ci-dessous on remarque la différence pour chaque requête:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{ZernikePert} 
-	\caption{Pertinence des moments de Zernike.}
+	\includegraphics[width=.8\textwidth]{courbeForme}
 \end{figure}
-On remarque que les moments de Zernike sont plus performant que les moments de Hu. Comme le montre les figures 4.28 et 4.29, les moments de Zernike donnent une précision de 55\% alors que ceux de Hu donnent seulement 37\%.
 \subsection{Descripteurs combinés}
 Dans cette partie nous travaillons avec les mêmes bases de données et mêmes images requêtes utilisés dans les deux parties précédentes; CuRRET pour la texture et COIL-100 pour la forme. Nous avons fixer $  0,5 $ pour les deux poids dans un premier temps.
 \begin{figure}[H]
@@ -561,34 +561,40 @@ Dans cette partie nous travaillons avec les mêmes bases de données et mêmes i
 On obtient:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{colTxtrPert} 
-	\caption{Pertinence des moments de couleur combiné avec les filtres de Gabor.}
+	\includegraphics[width=.33\textwidth]{colTxtrPert} \space \space
+	\includegraphics[width=.4\textwidth]{colShpPert} 
+	\caption{Moyennes des mesures: 
+		(Gauche) des moments de couleur combiné avec les filtres de Gabor (Droite)des moments de couleur combiné avec les moments de Zernike.}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=.7\textwidth]{colShpPert} 
-	\caption{Pertinence des moments de couleur combiné avec les moments de Zernike.}
-\end{figure}
-Les résultats donner dans la figure 4.31 ne présent pas une précision acceptable par rapport à celui donner dans la figure 4.24. Alors, nous avons changer les poids dans le but de l'améliorer comme suite:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=.5\textwidth]{ColTxtrOptions}
-	\caption{Options des moments de couleur combiné avec les filtres de Gabor (Deuxième expérience):
-		20\% Couleur avec 80\% Texture.}
-\end{figure}
-On obtient:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=.7\textwidth]{colTxtrPer2} 
-	\caption{Pertinence des moments de couleur combiné avec les filtres de Gabor (Deuxième expérience).}
-\end{figure}
+%Les résultats donner dans la figure 4.31 ne présent pas une précision acceptable par rapport à celui donner dans la figure 4.24. Alors, nous avons changer les poids dans le but de l'améliorer comme suite:
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=.5\textwidth]{ColTxtrOptions}
+%	\caption{Options des moments de couleur combiné avec les filtres de Gabor (Deuxième expérience):
+%		20\% Couleur avec 80\% Texture.}
+%\end{figure}
+%On obtient:
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=.5\textwidth]{colTxtrPer2} 
+%	\caption{Pertinence des moments de couleur combiné avec les filtres de Gabor (Deuxième expérience).}
+%\end{figure}
 
 En générale, on remarque que la combinaison des descripteurs améliore la précisions des résultats obtenus:
 \begin{itemize}
-	\item Pour la couleur et la texture: comme le montre le figures 4.34, on obtient une précision de 70\% contre  75\% (Figure 4.26) avec la texture seul (le choix des poids compte dans la qualité ici).
-	\item Pour la couleur et la forme: comme le montre les figures 4.32, on obtient une précision de 92\% contre  55\% (Figure 4.29) avec la forme seul.
+	\item Pour la couleur et la texture: comme le montre la figures 4.27, on obtient une précision de 85\% contre  75\% (Figure 4.23) avec la texture seul (les filtres de Gabor).
+	\item Pour la couleur et la forme: comme le montre les figures 4.27, on obtient une précision de 92\% contre  55\% (Figure 4.25) avec la forme seul (Moments de Zernike).
 \end{itemize}
+Les deux courbes suivant montrent les différence pour chaque requête:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{courbeColText}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{courbeColForme}
+\end{figure}
 \section{Problèmes rencontrés}
 \begin{itemize}
 	\item La première problématique qui s’est imposée durant la réalisation du notre

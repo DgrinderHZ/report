@@ -182,7 +182,9 @@ La technique la plus simple pour éviter le calcul des distances est l’exploit
 	\caption{Modèle d'indexation métrique et la recherche par similarité.}
 \end{figure}
 
-Lors de la recherche par une requête intervalle $ R(q,r) $, les bornes supérieures et inférieures peuvent être utilisées pour accélérer la recherche. Trois situations sont possibles : si la borne supérieure est inférieure à $  r (d(q,p)+d(p,o) \leq r ) $ alors il est sûr que l’objet $ o $ est pertinent car il vérifie $ d(q,o) \leq r $, si la borne inferieure dépasse le rayon $ r ( |d(q,p)-d(p,o)| > r )  $ alors il est sûr que $ d(q,o) > r $ et par conséquence l’objet $ o $ ne peut être parmi les résultats de la requête. La dernière situation est le pire des cas, il correspond au cas où la borne supérieure est supérieure à $ r $ et la borne inférieure est inférieure à  $ r $  $  (d(q,p)+d(p,o) \geq r\geq |d(q,p)-d(p,o)|) $, il est indispensable de calculer la distance $ d(q,o) $ pour déterminer si l’objet $ o_i $ est pertinent ou non.
+Lors de la recherche par une requête intervalle $ R(q,r) $, les bornes supérieures et inférieures peuvent être utilisées pour accélérer la recherche. Trois situations sont possibles : si la borne supérieure est inférieure à $  r ~~ (d(q,p)+d(p,o) \leq r ) $ alors il est sûr que l’objet $ o $ est pertinent car il vérifie $ d(q,o) \leq r $, si la borne inferieure dépasse le rayon $ r ( |d(q,p)-d(p,o)| > r )  $ alors il est sûr que \begin{displaymath}
+	d(q,o) > r
+\end{displaymath} et par conséquence l’objet $ o $ ne peut être parmi les résultats de la requête. La dernière situation est le pire des cas, il correspond au cas où la borne supérieure est supérieure à $ r $ et la borne inférieure est inférieure à  $ r $  $  (d(q,p)+d(p,o) \geq r\geq |d(q,p)-d(p,o)|) $, il est indispensable de calculer la distance $ d(q,o) $ pour déterminer si l’objet $ o_i $ est pertinent ou non.
 
 \begin{figure}[H]
 	\centering
@@ -193,7 +195,9 @@ Lors de la recherche par une requête intervalle $ R(q,r) $, les bornes supérie
 
 Les lignes solides représentent les distances connues, tandis que les lignes coupées représentent les distances non connues.\\
 
-Pour une structure métrique qui utilise un groupe de pivots $ (p_1,p_2,…, p_n) $, les distances entre les objets $ o_i $ et les pivots sont calculées et stockées au préalable. Ainsi, lors d’une recherche par requête intervalle $ R(q,r) $, chaque objet de la base qui satisfait la condition $ \max_{i=1,..,n}{|d(q,pi)-d(o,pi)|} > r $ est certainement non pertinent et donc il sera écarté de la recherche sans aucun calcul de distance. Comme nous avons vu précédemment, le filtrage par n pivots est vu comme un « mapping » de l’espace métrique $ (E,d) $ vers un espace vectoriel $ (R^n, L_\infty) $ en lequel chaque élément $ o \in E $ est représenté par le vecteur $ (d(o,p_1), d(o,p_2),..., d(o,p_n)) $, tout objet $ o $ qui satisfait la condition $ L_\infty((d(o,p_1),..., d(o,p_n)),(d(q,p_1),..., d(q,p_n))) > r  $ sera ignoré durant la résolution d’une requête de rayon $ r $.
+Pour une structure métrique qui utilise un groupe de pivots $ (p_1,p_2,…, p_n) $, les distances entre les objets $ o_i $ et les pivots sont calculées et stockées au préalable. Ainsi, lors d’une recherche par requête intervalle $ R(q,r) $, chaque objet de la base qui satisfait la condition  \begin{displaymath}
+	\max_{i=1,..,n}{|d(q,pi)-d(o,pi)|} > r
+\end{displaymath}  est certainement non pertinent et donc il sera écarté de la recherche sans aucun calcul de distance. Comme nous avons vu précédemment, le filtrage par n pivots est vu comme un « mapping » de l’espace métrique $ (E,d) $ vers un espace vectoriel $ (R^n, L_\infty) $ en lequel chaque élément $ o \in E $ est représenté par le vecteur $ (d(o,p_1), d(o,p_2),..., d(o,p_n)) $, tout objet $ o $ qui satisfait la condition $ L_\infty((d(o,p_1),..., d(o,p_n)),(d(q,p_1),..., d(q,p_n))) > r  $ sera ignoré durant la résolution d’une requête de rayon $ r $.
 
 \begin{figure}[H]
 	\centering
@@ -212,7 +216,12 @@ L’utilisation directe des pivots nécessite le stockage des distances entres l
 
 La première technique est l’utilisation du double pivot qui sert à regrouper, en chaque niveau de la structure, les objets d’une manière récursive à partir de deux pivots $ p_1 $ et $ p_2 $. Les objets qui sont plus proche au pivot $ p_1 $ que le pivot $ p_2 $ seront regroupés dans la région $ S(p_1) $ du pivot $ p_1 $ et les autres objets seront regroupés ainsi dans la deuxième région $ S(p_2 $) du pivot $ p_1 $.\\
 
-La deuxième technique sert à réduire le calcul des distances lors de stockage par l’utilisation des rayons de couverture d’un pivot au lieu de stocker les distances entre le pivot $ p $ et les objets d'une région, seulement deux valeurs $ r_{max} $ et $ r_{min} $, qui vérifie $  r_{min}  \le d(p,o) \le r_{max}  $, sont mémorisées (voir la Figure 3.10 qui suit comme un exemple). En remplaçant la distance $ d(p,o) $ par ses bornes et en utilisant la formule $ |d(q,p)-d(p,o)| \le d(q,o) \le d(q,p)+d(p,o) $, on peut facilement montrer que la distance $ d(q,o) $ est majorée par la valeur $ d(q,p) + r_{max} $ et qu’il est minorée par la valeur
+La deuxième technique sert à réduire le calcul des distances lors de stockage par l’utilisation des rayons de couverture d’un pivot au lieu de stocker les distances entre le pivot $ p $ et les objets d'une région, seulement deux valeurs $ r_{max} $ et $ r_{min} $, qui vérifie   \begin{displaymath}
+	r_{min}  \le d(p,o) \le r_{max}
+\end{displaymath}  sont mémorisées (voir la Figure 3.10 qui suit comme un exemple). \\
+En remplaçant la distance $ d(p,o) $ par ses bornes et en utilisant la formule  \begin{displaymath}
+	|d(q,p)-d(p,o)| \le d(q,o) \le d(q,p)+d(p,o)
+\end{displaymath}  on peut facilement montrer que la distance $ d(q,o) $ est majorée par la valeur $ d(q,p) + r_{max} $ et qu’il est minorée par la valeur
 $ \max \left\{d(q,p) - r_{max}, r_{min} - d(q,p), 0\right\} $,
 avec:
 \begin{center}
@@ -234,7 +243,28 @@ Plusieurs Méthodes d’accès métrique proposées en littérature sont basées
 	\caption{ Classification des méthodes d’accès métriques.}
 \end{figure}
 On s'intéresse principalement aux méthodes de partitionnement par boule.
-Pour plus d'information sur les méthodes d'indexation, leurs avantages et inconvénients, le lecteur peut se référer à [Hanif18].
+Pour plus d'information sur les méthodes d'indexation, leurs avantages et inconvénients, le lecteur peut se référer à [Hanif18]. Ici on présente les avantages et inconvénients de la méthodes M-tree que nous avons choisi pour notre système:
+\begin{table}[H]
+	\centering
+	\caption{Les avantages de M-tree.}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\textbf{Avantages} & \textbf{Inconvenients}\\
+		\hline
+		\makecell{- Coût de recherche\\
+			- Dynamique\\
+			- Résistante à l’augmentation\\
+			 de la dimension} 
+		& \makecell{- Coût de recherche
+			- Dynamique\\
+			- Résistante à l’augmentation\\
+			 de la dimension}   \\
+		\hline
+	
+	\end{tabular}
+	
+\end{table}
+Puisque notre objectif est de rechercher les images par similarité on a fait ce choix de faite que M-tree est efficace dans un tel système qui ne nécessite pas plusieurs opérations d'insertion et de suppression dans l'étape de la recherche.
 \section{La méthode partitionnement par boule M-tree}
 Les méthodes de partitionnement en boule servent à partitionner l'espace des données sous formes des boules, elles utilisent des pivots et des rayons de couverture pour diviser les données. Le nombre des pivots utilisés, le choix du type de couverture des pivots font la différence entre les méthodes de partitionnement par boule, dans cette section nous présentons la méthodes de partitionnement par boules M-tree.
 
@@ -334,14 +364,34 @@ Comme, lors de l'accès au nœud $ N $, la distance entre $ Q $ et $ O_p $, l'ob
 \begin{description}
 	\item[Lemme 1 :] Si $ d(O_r, Q) > r(Q) + r(O_r) $, alors, pour chaque objet $ O_j  $ dans $ T (O_r) $, c'est $ d(O_j, Q) > r(Q) $. Ainsi, $ T (O_r) $ peut être éliminé de la recherche en toute sécurité.
 \end{description}
-En fait, puisque $ d(O_j, Q) \ge d(O_r, Q) - d(O_j, O_r) $ (par l'inégalité triangulaire) et $ d(O_j, O_r) \le r(O_r) $ (par déf. du rayon de couverture), il s'agit de $ d(O_j, Q) \ge d(O_r, Q)-r(O_r) $.
-Puisque, par hypothèse, il est $ d(O_r, Q) - r(O_r) > r(Q) $, le résultat suit.
+En fait, puisque (par l'inégalité triangulaire)
+\begin{displaymath}
+    d(O_j, Q) \ge d(O_r, Q) - d(O_j, O_r) 
+\end{displaymath}  
+et (par déf. du rayon de couverture)
+\begin{displaymath}
+	d(O_j, O_r) \le r(O_r)
+\end{displaymath}
+il s'agit de 
+\begin{displaymath}
+	 d(O_j, Q) \ge d(O_r, Q)-r(O_r).
+\end{displaymath} 
+Puisque, par hypothèse,  
+\begin{displaymath}
+	 d(O_r, Q) - r(O_r) > r(Q)
+\end{displaymath}
+le résultat suit.\\
+ 
 Pour appliquer le Lemme 1, il faut calculer la distance $ d(O_r, Q) $. Cela peut être évité en tirant parti du résultat suivant.
 \begin{description}
 	\item[Lemme 2 :]  Si $ | d(O_p, Q) - d(O_r, Op) |> r(Q) + r(O_r) $, alors $ d(O_r, Q) > r(Q) + r(O_r) $.
 \end{description}
 
-C'est une conséquence directe de l'inégalité triangulaire, qui garantit que $ d(O_r, Q) \ge d(O_p, Q)-d(O_r, O_p) $ et $  d(O_r, Q) \ge d(O_r, O_p)-d(O_p, Q) $ sont tous les deux vrais (voir figure 3.14 en dessous). Le même principe d'optimisation est appliqué aux nœuds feuilles. Les résultats expérimentaux montrent que cette technique permet d'économiser jusqu'à 40\% de calculs de distances [CiPaZe97]. Le seul cas où les distances doivent nécessairement être calculées est celui du nœud racine, pour lequel l'$ O_p $ est indéfini.
+C'est une conséquence directe de l'inégalité triangulaire, qui garantit que 
+\begin{displaymath}
+	 d(O_r, Q) \ge d(O_p, Q)-d(O_r, O_p) ~~ et  ~~  d(O_r, Q) \ge d(O_r, O_p)-d(O_p, Q)
+\end{displaymath}
+  sont tous les deux vrais (voir figure 3.14 en dessous). Le même principe d'optimisation est appliqué aux nœuds feuilles. Les résultats expérimentaux montrent que cette technique permet d'économiser jusqu'à 40\% de calculs de distances [CiPaZe97]. Le seul cas où les distances doivent nécessairement être calculées est celui du nœud racine, pour lequel l'$ O_p $ est indéfini.
 
 \begin{figure}[H]
 	\centering
@@ -367,9 +417,14 @@ Ces limites sont utilisées par la fonction \textit{ChooseNode} pour extraire de
 \end{figure} 
 
 
-À la fin de l'exécution, la i-ième entrée du tableau $ NN $ aura la valeur $ NN[i] = [oid(O_j),d(O_j, Q)] $, $ O_j $ étant le i-ième voisin le plus proche de $ Q $. La valeur de la distance dans la i-ième entrée est désignée par $ d_i $, de sorte que $ d_k $ est la plus grande valeur de distance dans $ NN $. Il est clair que $ d_k $ joue le rôle d'un rayon de recherche dynamique, puisque tout sous-arbre pour lequel $ d_{min}(T(O_r)) > d_k $ peut être élagué en toute sécurité.\\
+À la fin de l'exécution, la i-ième entrée du tableau $ NN $ aura la valeur  \begin{displaymath}
+	NN[i] = [oid(O_j),d(O_j, Q)] 
+\end{displaymath}
+$ O_j $ étant le i-ième voisin le plus proche de $ Q $. La valeur de la distance dans la i-ième entrée est désignée par $ d_i $, de sorte que $ d_k $ est la plus grande valeur de distance dans $ NN $. Il est clair que $ d_k $ joue le rôle d'un rayon de recherche dynamique, puisque tout sous-arbre pour lequel $ d_{min}(T(O_r)) > d_k $ peut être élagué en toute sécurité.\\
 
-Les entrées du tableau $ NN $ sont initialement fixées à $ NN[i] = [null ,\infty] (i= 1,..., k) $, c'est-à-dire que les $ oid $ sont indéfinis et $ d_i = \infty $. Lorsque la recherche commence et que l'on accède aux nœuds (internes), l'idée est de calculer, pour chaque sous-arbre $ T(O_r) $, une limite supérieure, $ d_{max}(T(O_r)) $, sur la distance de tout objet dans $ T(O_r) $ par rapport à $ Q $. La limite supérieure est fixée à
+Les entrées du tableau $ NN $ sont initialement fixées à  \begin{displaymath}
+	NN[i] = [null ,\infty] (i= 1,..., k)
+\end{displaymath} c'est-à-dire que les $ oid $ sont indéfinis et $ d_i = \infty $. Lorsque la recherche commence et que l'on accède aux nœuds (internes), l'idée est de calculer, pour chaque sous-arbre $ T(O_r) $, une limite supérieure, $ d_{max}(T(O_r)) $, sur la distance de tout objet dans $ T(O_r) $ par rapport à $ Q $. La limite supérieure est fixée à
 
 \begin{equation}
 d_{\max}(T(O_r)) =  d(O_r, Q)+r(O_r)
@@ -389,7 +444,9 @@ La méthode \textit{k-NN-NodeSearch} implémente la majorité de la logique de r
 \end{figure} 
 
 \subsection{Insertion d'objets}
-L'algorithme d'insertion descend récursivement l'arbre MT pour localiser le nœud feuille le plus approprié pour accueillir un nouvel objet, $ O_n $, déclenchant éventuellement une division si la feuille est pleine. Le raisonnement de base pour déterminer le nœud feuille "le plus approprié" est de descendre, à chaque niveau de l'arbre, le long d'un sous-arbre, $ T(O_r) $, pour lequel aucun élargissement du rayon de couverture n'est nécessaire, c'est-à-dire $  d(O_r, O_n) \le r(O_r) $. S'il existe plusieurs sous-arbres ayant cette propriété, on choisit celui pour lequel l'objet $ O_n $ est le plus proche de $ O_r $. Ce critère heuristique tente d'obtenir des sous-arbres bien regroupés, ce qui a un effet bénéfique sur les performances.\\
+L'algorithme d'insertion descend récursivement l'arbre MT pour localiser le nœud feuille le plus approprié pour accueillir un nouvel objet, $ O_n $, déclenchant éventuellement une division si la feuille est pleine. Le raisonnement de base pour déterminer le nœud feuille "le plus approprié" est de descendre, à chaque niveau de l'arbre, le long d'un sous-arbre, $ T(O_r) $, pour lequel aucun élargissement du rayon de couverture n'est nécessaire, c'est-à-dire  \begin{displaymath}
+	 d(O_r, O_n) \le r(O_r).
+\end{displaymath}  S'il existe plusieurs sous-arbres ayant cette propriété, on choisit celui pour lequel l'objet $ O_n $ est le plus proche de $ O_r $. Ce critère heuristique tente d'obtenir des sous-arbres bien regroupés, ce qui a un effet bénéfique sur les performances.\\
 
 Si aucun pivot pour lequel $ d(O_r, O_n) \le r(O_r) $ existe - donc un rayon de couverture doit être élargi - notre choix est de minimiser l'augmentation du rayon de couverture, c'est-à-dire $ d(O_r, O_n)-r(O_r) $. Ceci est étroitement lié au critère heuristique qui suggère de minimiser le "volume" global couvert par les pivots dans le nœud actuel. L'algorithme Insert résume les arguments ci-dessus.
 \begin{figure}[H]
@@ -437,7 +494,9 @@ Dans notre système nous avons choisi la dernière mèthode qui est M\_LB\_DIST.
 \subsubsection{Répartition des entrées}
 Étant donné un ensemble d'entrées $ Ne $ et les deux pivots $ O_{p1} $ et $ O_{p2} $, le problème est de savoir comment partitionner efficacement $ Ne $ en deux sous-ensembles, $  N_1 $ et $ N_2 $. À cette fin, nous envisageons deux stratégies de base. La première est basée sur l'idée de la décomposition généralisée de l'hyperplan [Uhl91] et conduit à des fractionnements déséquilibrés, alors que la second obtient une répartition équilibrée. Ils peuvent être brièvement décrits comme suit.
 \begin{itemize}
-	\item \textbf{Hyperplan généralisé (Generalized Hyperplane) :} Assignez chaque objet $ O_j \in Ne $ au  pivot le plus proche, c'est-à-dire si $ d(O_j, O_{p1}) \le d(O_j, O_{p2}) $ alors assignez $ O_j $ à $ N_1 $, sinon assignez $ O_j $ à $ N_2 $.
+	\item \textbf{Hyperplan généralisé (Generalized Hyperplane) :} Assignez chaque objet $ O_j \in Ne $ au  pivot le plus proche, c'est-à-dire si  \begin{displaymath}
+		d(O_j, O_{p1}) \le d(O_j, O_{p2}) 
+	\end{displaymath} alors assignez $ O_j $ à $ N_1 $, sinon assignez $ O_j $ à $ N_2 $.
 	
 	\item \textbf{Équilibré (Balanced) :} Calculer $ d(O_j, O_{p1}) $ et $ d(O_j, O_{p2}) $ pour tous les $ O_j \in Ne $ Répéter jusqu'à ce que $ Ne $ soit vide :\\
 	 - Affecter à $ N_1 $ le plus proche voisin de l'$ O_{p1} $ dans $ Ne $ et le retirer de $ Ne $ ;\\
